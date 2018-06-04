@@ -21,6 +21,7 @@ package net.sf.freecol.common.model;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import net.sf.freecol.common.model.GoodsType;
@@ -248,6 +249,7 @@ public class AbstractGoods extends FreeColObject implements Named {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() {
         return null; // AbstractGoods are never serialized directly
     }
@@ -278,7 +280,7 @@ public class AbstractGoods extends FreeColObject implements Named {
         if (this == o) return true;
         if (o instanceof AbstractGoods) {
             AbstractGoods ag = (AbstractGoods)o;
-            return type == ag.type && amount == ag.amount;
+            return Objects.equals(type, ag.type) && amount == ag.amount;
         }
         return false;
     }
@@ -299,7 +301,7 @@ public class AbstractGoods extends FreeColObject implements Named {
      */
     @Override
     public String toString() {
-        return AbstractGoods.toString(this);
+        return AbstractGoods.goodsToString(this);
     }
 
     /**
@@ -308,8 +310,8 @@ public class AbstractGoods extends FreeColObject implements Named {
      * @param ag The {@code AbstractGoods} to make a string from.
      * @return A string version of the goods.
      */     
-    public static String toString(AbstractGoods ag) {
-        return toString(ag.getType(), ag.getAmount());
+    public static String goodsToString(AbstractGoods ag) {
+        return typeToString(ag.getType(), ag.getAmount());
     }
 
     /**
@@ -319,7 +321,7 @@ public class AbstractGoods extends FreeColObject implements Named {
      * @param amount The amount of goods.
      * @return A string version of the goods.
      */     
-    public static String toString(GoodsType goodsType, int amount) {
+    public static String typeToString(GoodsType goodsType, int amount) {
         return amount + " "
             + ((goodsType == null) ? "(null)" : goodsType.getSuffix());
     }

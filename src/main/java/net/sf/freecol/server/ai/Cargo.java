@@ -21,6 +21,7 @@ package net.sf.freecol.server.ai;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.xml.stream.XMLStreamException;
@@ -553,7 +554,7 @@ public class Cargo {
      */
     public boolean isEuropeanTrade(GoodsType type) {
         return transportable instanceof AIGoods
-            && ((AIGoods)transportable).getGoodsType() == type
+            && Objects.equals( ((AIGoods) transportable).getGoodsType(), type)
             && getCarrierTarget() instanceof Europe;
     }
 

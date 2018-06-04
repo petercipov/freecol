@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 import javax.xml.stream.XMLStreamException;
 
-import net.sf.freecol.common.i18n.Number.Category;
+import net.sf.freecol.common.i18n.Numeric.Category;
 import net.sf.freecol.common.io.FreeColXMLReader;
 
 
@@ -43,28 +43,28 @@ public class NumberRules {
     /**
      * A rule that always returns category "other".
      */
-    public static final Number OTHER_NUMBER_RULE = new OtherNumberRule();
+    public static final Numeric OTHER_NUMBER_RULE = new OtherNumberRule();
 
     /**
      * A rule that assigns 1 to category "one", 2 to category "two"
      * and all other numbers to category "other".
      */
-    public static final Number DUAL_NUMBER_RULE = new DualNumberRule();
+    public static final Numeric DUAL_NUMBER_RULE = new DualNumberRule();
 
     /**
      * A rule that assigns 1 to category "one" and all other numbers
      * to category "other".
      */
-    public static final Number PLURAL_NUMBER_RULE = new PluralNumberRule();
+    public static final Numeric PLURAL_NUMBER_RULE = new PluralNumberRule();
 
     /**
      * A rule that assigns 0 and 1 to category "one", and all other
      * number to category "other".
      */
-    public static final Number ZERO_ONE_NUMBER_RULE = new ZeroOneNumberRule();
+    public static final Numeric ZERO_ONE_NUMBER_RULE = new ZeroOneNumberRule();
 
 
-    private static final Map<String, Number> numberMap = new HashMap<>();
+    private static final Map<String, Numeric> numberMap = new HashMap<>();
 
 
     /**
@@ -84,10 +84,10 @@ public class NumberRules {
      * OTHER_NUMBER_RULE if none has been defined.
      *
      * @param lang a {@code String} value
-     * @return a {@code Number} value
+     * @return a {@code Numeric} value
      */
-    public static Number getNumberForLanguage(String lang) {
-        Number number = numberMap.get(lang);
+    public static Numeric getNumberForLanguage(String lang) {
+        Numeric number = numberMap.get(lang);
         return (number == null) ? OTHER_NUMBER_RULE : number;
     }
 
@@ -153,7 +153,7 @@ public class NumberRules {
                     numberRule.addRule(category, rule);
                 }
             }
-            Number number = null;
+            Numeric number = null;
             switch (numberRule.countRules()) {
             case 0:
                 number = OTHER_NUMBER_RULE;

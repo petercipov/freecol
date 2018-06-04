@@ -32,6 +32,8 @@ import net.sf.freecol.common.model.StringTemplate;
 import net.sf.freecol.server.FreeColServer;
 import net.sf.freecol.server.model.ServerPlayer;
 
+import java.util.Objects;
+
 
 /**
  * The message that sets the player nation.
@@ -102,7 +104,7 @@ public class SetNationMessage extends AttributeMessage {
         
         final Game game = freeColServer.getGame();
         final Player other = getPlayer(game);
-        if (other != null && (ServerPlayer)other != serverPlayer) {
+        if (other != null && !Objects.equals(other, serverPlayer)) {
             return serverPlayer.clientError("Player " + other.getId()
                 + " set from " + serverPlayer.getId());
         }

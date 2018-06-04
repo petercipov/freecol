@@ -125,6 +125,7 @@ public class BooleanOption extends AbstractOption<Boolean> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

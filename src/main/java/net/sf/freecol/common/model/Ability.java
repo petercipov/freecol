@@ -546,6 +546,7 @@ public final class Ability extends Feature {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

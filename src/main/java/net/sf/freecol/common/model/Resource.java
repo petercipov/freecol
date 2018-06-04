@@ -339,6 +339,7 @@ public class Resource extends TileItem {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

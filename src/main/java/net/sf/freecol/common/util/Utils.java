@@ -133,7 +133,7 @@ public class Utils {
         int pos = 0;
         for (int i = 0; i < bytes.length; i++) {
             bytes[i] = (byte) HEX_DIGITS.indexOf(state.charAt(pos++));
-            bytes[i] <<= 4;
+            bytes[i] = (byte) (bytes[i] << 4);
             bytes[i] |= (byte) HEX_DIGITS.indexOf(state.charAt(pos++));
         }
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
@@ -261,7 +261,7 @@ public class Utils {
         Transformer tf = null;
         try {
             TransformerFactory factory = TransformerFactory.newInstance();
-            factory.setAttribute("indent-number", new Integer(2));
+            factory.setAttribute("indent-number",  Integer.valueOf(2));
             tf = factory.newTransformer();
             tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
             tf.setOutputProperty(OutputKeys.METHOD, "xml");

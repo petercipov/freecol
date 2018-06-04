@@ -19,14 +19,7 @@
 
 package net.sf.freecol.common.networking;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
@@ -91,15 +84,14 @@ public class ChangeSet {
          * Check this visibility with respect to a player.
          *
          * @param player The {@code ServerPlayer} to consider.
-         * @param perhapsResult The result if the visibility is ambiguous.
          * @return If the player satisfies the visibility test return VISIBLE,
          *     or INVISIBLE on failure, or SPECIAL if indeterminate.
          */
         public SeeCheck check(ServerPlayer player) {
             return 
-                (player != null && player == seeNever) ? SeeCheck.INVISIBLE
-                : (player != null && player == seeAlways) ? SeeCheck.VISIBLE
-                : (player != null && player == seePerhaps) ? SeeCheck.SPECIAL
+                (player != null && Objects.equals(player, seeNever)) ? SeeCheck.INVISIBLE
+                : (player != null && Objects.equals(player, seeAlways)) ? SeeCheck.VISIBLE
+                : (player != null && Objects.equals(player, seePerhaps)) ? SeeCheck.SPECIAL
                 : (type == ONLY) ? SeeCheck.INVISIBLE
                 : (type == ALL) ? SeeCheck.VISIBLE
                 : SeeCheck.SPECIAL;
@@ -362,6 +354,7 @@ public class ChangeSet {
         /**
          * {@inheritDoc}
          */
+        @Override
         public AnimateAttackMessage toMessage(ServerPlayer serverPlayer) {
             if (!isNotifiable(serverPlayer)) return null;
             Unit a = (serverPlayer.owns(attacker)) ? attacker
@@ -419,6 +412,7 @@ public class ChangeSet {
         /**
          * {@inheritDoc}
          */
+        @Override
         public AttributeMessage toMessage(ServerPlayer serverPlayer) {
             return new AttributeMessage(AttributeMessage.TAG,
                                         key, value).setMergeable(true);
@@ -687,7 +681,7 @@ public class ChangeSet {
          */
         @Override
         public boolean matches(FreeColGameObject fcgo) {
-            return this.fcgo == fcgo;
+            return Objects.equals(this.fcgo, fcgo);
         }
 
         /**
@@ -1324,7 +1318,7 @@ public class ChangeSet {
     public ChangeSet addGlobalMessage(Game game, ServerPlayer omit,
                                       ModelMessage message) {
         for (Player p : game.getLiveEuropeanPlayerList()) {
-            if (p == (Player)omit) continue;
+            if (Objects.equals(p, (Player)omit)) continue;
             addMessage((ServerPlayer)p, message);
         }
         return this;
@@ -1505,7 +1499,7 @@ public class ChangeSet {
     /**
      * Merge a change set into this one.
      *
-     * @param cs The other {@code ChangeSet}.
+     * @param other The other {@code ChangeSet}.
      */
     public void merge(ChangeSet other) {
         this.changes.addAll(other.changes);

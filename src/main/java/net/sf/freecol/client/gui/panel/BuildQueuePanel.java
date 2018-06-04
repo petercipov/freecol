@@ -31,13 +31,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -123,7 +117,7 @@ public class BuildQueuePanel extends FreeColPanel implements ItemListener {
      * This class represents a buildable, that is dragged/dropped
      * accompanied by its index in the source list where it is dragged from.
      */
-    private class IndexedBuildable {
+    private static class IndexedBuildable {
         private final BuildableType buildable;
         private final int index;
 
@@ -821,7 +815,7 @@ public class BuildQueuePanel extends FreeColPanel implements ItemListener {
             Building colonyBuilding = this.colony.getBuilding(bt);
             BuildingType up = bt.getUpgradesFrom();
             if (up != null && !current.contains(up)
-                && (colonyBuilding == null || colonyBuilding.getType() != up)) {
+                && (colonyBuilding == null || !Objects.equals(colonyBuilding.getType(), up))) {
                 reasons.add(Messages.getName(up));
             }
 
@@ -941,12 +935,10 @@ public class BuildQueuePanel extends FreeColPanel implements ItemListener {
     }
 
     private void setBuyLabel(BuildableType buildable) {
-        this.buyBuildable.setText(Messages.message((buildable == null)
-                ? StringTemplate.template("buildQueuePanel.buyBuilding")
-                    .addStringTemplate("%buildable%",
-                        StringTemplate.key("nothing"))
-                : StringTemplate.template("buildQueuePanel.buyBuilding")
-                    .addNamed("%buildable%", buildable)));
+        final String text = Messages.message((StringTemplate)((buildable == null)
+            ? StringTemplate.template("buildQueuePanel.buyBuilding").addStringTemplate("%buildable%", StringTemplate.key("nothing"))
+            : StringTemplate.template("buildQueuePanel.buyBuilding").addNamed("%buildable%", buildable)));
+        this.buyBuildable.setText(text);
     }
 
     /**
@@ -960,7 +952,7 @@ public class BuildQueuePanel extends FreeColPanel implements ItemListener {
         while (true) {
             if (this.colony.getBuilding(buildingType) == null) {
                 return false;
-            } else if (colony.getBuilding(buildingType).getType() == buildingType) {
+            } else if (Objects.equals(colony.getBuilding(buildingType).getType(), buildingType)) {
                 return true;
             } else if (buildingType.getUpgradesTo() != null) {
                 buildingType = buildingType.getUpgradesTo();
@@ -1017,7 +1009,7 @@ public class BuildQueuePanel extends FreeColPanel implements ItemListener {
      */
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if (this.colony.getOwner() == getMyPlayer()) {
+        if (Objects.equals(this.colony.getOwner(), getMyPlayer())) {
             String command = ae.getActionCommand();
             List<BuildableType> buildables = getBuildableTypes(this
                     .buildQueueList);

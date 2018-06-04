@@ -19,15 +19,8 @@
 
 package net.sf.freecol.server.control;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Random;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -356,7 +349,7 @@ public final class InGameController extends Controller {
         final ServerPlayer refPlayer = getFreeColServer().makeAIPlayer(refNation);
         final Europe europe = refPlayer.getEurope();
         final Predicate<Tile> exploredPred = t ->
-            ((!t.isLand() || t.isCoastland() || t.getOwner() == serverPlayer)
+            ((!t.isLand() || t.isCoastland() || Objects.equals(t.getOwner(), serverPlayer))
                 && t.isExploredBy(serverPlayer));
         // Inherit rebel player knowledge of the seas, coasts, claimed
         // land but not full detailed scouting knowledge.
@@ -1169,13 +1162,13 @@ public final class InGameController extends Controller {
                 : null;
             Player owner = (colony == null) ? null : colony.getOwner();
             if (owner != null
-                && owner != unit.getOwner()
-                && serverPlayer.getStance(owner) != Stance.ALLIANCE
-                && serverPlayer.getStance(owner) != Stance.PEACE) {
+                && !Objects.equals(owner, unit.getOwner())
+                && !Objects.equals(serverPlayer.getStance(owner), Stance.ALLIANCE)
+                && !Objects.equals(serverPlayer.getStance(owner), Stance.PEACE)) {
                 if (colony.isTileInUse(tile)) {
                     colony.csEvictUsers(unit, cs);
                 }
-                if (serverPlayer.getStance(owner) == Stance.WAR) {
+                if (Objects.equals(serverPlayer.getStance(owner), Stance.WAR)) {
                     tile.changeOwnership(null, null); // Clear owner if at war
                     tileDirty = true;
                 }
@@ -1231,7 +1224,7 @@ public final class InGameController extends Controller {
      */
     public ChangeSet changeWorkType(ServerPlayer serverPlayer, Unit unit,
                                     GoodsType type) {
-        if (unit.getWorkType() != type) {
+        if (!Objects.equals(unit.getWorkType(), type)) {
             unit.setExperience(0);
             unit.changeWorkType(type);
         }
@@ -1383,7 +1376,7 @@ public final class InGameController extends Controller {
         final ServerGame game = getGame();
         if (!getFreeColServer().getSinglePlayer()) {
             logger.warning("Can not continue playing in multiplayer!");
-        } else if (serverPlayer != game.checkForWinner()) {
+        } else if (!Objects.equals(serverPlayer, game.checkForWinner())) {
             logger.warning("Can not continue playing, as "
                            + serverPlayer.getName()
                            + " has not won the game!");
@@ -1553,7 +1546,7 @@ public final class InGameController extends Controller {
             reverse(natives);
             ServerPlayer bad = null;
             for (Player p : natives) {
-                if (p == good
+                if (Objects.equals(p, good)
                     || p.getStance(serverPlayer) == Stance.ALLIANCE) break;
                 bad = (ServerPlayer)p;
                 if (!p.atWarWith(serverPlayer)) break;
@@ -2065,7 +2058,7 @@ public final class InGameController extends Controller {
         ServerPlayer winner = (ServerPlayer)serverGame.checkForWinner();
         ServerPlayer current = (ServerPlayer)serverGame.getCurrentPlayer();
 
-        if (serverPlayer != current) {
+        if (!Objects.equals(serverPlayer, current)) {
             throw new RuntimeException("It is not " + serverPlayer.getName()
                 + "'s turn, it is " + ((current == null) ? "noone"
                     : current.getName()) + "'s!");
@@ -2151,7 +2144,7 @@ public final class InGameController extends Controller {
             // Has the current player won?
             // Do not end single player games where an AI has won,
             // that would stop revenge mode.
-            if (winner == current
+            if (Objects.equals(winner, current)
                 && !(freeColServer.getSinglePlayer() && winner.isAI())) {
                 boolean highScore = !winner.isAI()
                     && HighScore.newHighScore(winner);
@@ -2183,7 +2176,7 @@ public final class InGameController extends Controller {
                 Monarch monarch = current.getMonarch();
                 MonarchAction action = null;
                 if (debugMonarchAction != null
-                    && current == debugMonarchPlayer) {
+                    && Objects.equals(current, debugMonarchPlayer)) {
                     action = debugMonarchAction;
                     debugMonarchAction = null;
                     debugMonarchPlayer = null;
@@ -2598,7 +2591,7 @@ public final class InGameController extends Controller {
         // Update with colony tile, and tiles now owned.
         cs.add(See.only(serverPlayer), tile);
         for (Tile t : transform(tile.getSurroundingTiles(1, colony.getRadius()),
-                t2 -> (t2.getOwningSettlement() == colony
+                t2 -> (Objects.equals(t2.getOwningSettlement(), colony)
                     && !ownedTiles.contains(t2)))) {
             cs.add(See.perhaps(), t);
         }
@@ -3372,7 +3365,7 @@ public final class InGameController extends Controller {
                 a.unit.setLocation(wl);
                 // Fall through
             case ALREADY_PRESENT:
-                if (a.unit.getWorkType() != a.work) {
+                if (!Objects.equals(a.unit.getWorkType(), a.work)) {
                     a.unit.changeWorkType(a.work);
                 }
                 break;
@@ -3387,7 +3380,7 @@ public final class InGameController extends Controller {
 
         // Collect roles that cause a change, ordered by simplest change
         for (Arrangement a : transform(arrangements,
-                a -> a.role != a.unit.getRole() && a.role != defaultRole,
+                a -> !Objects.equals(a.role, a.unit.getRole()) && !Objects.equals(a.role, defaultRole),
                 Function.identity(),
                 Comparator.<Arrangement>reverseOrder())) {
             if (!colony.equipForRole(a.unit, a.role, a.roleCount)) {
@@ -3506,7 +3499,7 @@ public final class InGameController extends Controller {
             if (is.hasAnyScouted()) {
                 // Do nothing if already spoken to.
                 result = "nothing";
-            } else if (scoutSkill != null && unit.getType() != scoutSkill
+            } else if (scoutSkill != null && !Objects.equals(unit.getType(), scoutSkill)
                 && ((skill != null && skill.hasAbility(Ability.EXPERT_SCOUT))
                     || rnd == 0)) {
                 // If the scout can be taught to be an expert it will be.
@@ -3626,7 +3619,7 @@ public final class InGameController extends Controller {
         colony.setBuildQueue(queue);
         if (getGame().getSpecification()
             .getBoolean(GameOptions.CLEAR_HAMMERS_ON_CONSTRUCTION_SWITCH)
-            && current != colony.getCurrentlyBuilding()) {
+            && !Objects.equals(current, colony.getCurrentlyBuilding())) {
             for (AbstractGoods ag : transform(current.getRequiredGoods(),
                     g -> !g.getType().isStorable())) {
                 colony.removeGoods(ag.getType());
@@ -3914,7 +3907,7 @@ public final class InGameController extends Controller {
 
         ChangeSet cs = new ChangeSet();
         Tile tile = workLocation.getWorkTile();
-        if (tile != null && tile.getOwningSettlement() != colony) {
+        if (tile != null && !Objects.equals(tile.getOwningSettlement(), colony)) {
             // Claim known free land (because canAdd() succeeded).
             serverPlayer.csClaimLand(tile, colony, 0, cs);
         }

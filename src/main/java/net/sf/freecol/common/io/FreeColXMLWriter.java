@@ -29,6 +29,7 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -109,13 +110,14 @@ public class FreeColXMLWriter implements Closeable, XMLStreamWriter {
 
         public boolean validFor(Player player) {
             return this.scopeType != WriteScopeType.CLIENT
-                || this.player == player;
+                || Objects.equals(this.player, player);
         }
 
         public Player getClient() {
             return this.player;
         }
 
+        @Override
         public String toString() {
             String ret = this.scopeType.toString();
             if (this.scopeType == WriteScopeType.CLIENT) {

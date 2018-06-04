@@ -21,6 +21,7 @@ package net.sf.freecol.server.ai.mission;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.xml.stream.XMLStreamException;
@@ -241,7 +242,7 @@ public class TransportMission extends Mission {
      */
     private Cargo tFind(TransportableAIObject t) {
         synchronized (cargoes) {
-            return find(cargoes, c -> c.getTransportable() == t);
+            return find(cargoes, c -> Objects.equals(c.getTransportable(), t));
         }
     }
 
@@ -291,7 +292,7 @@ public class TransportMission extends Mission {
         final TransportableAIObject t = cargo.getTransportable();
         synchronized (cargoes) {
             for (int i = 0; i < cargoes.size(); i++) {
-                if (cargoes.get(i).getTransportable() == t) {
+                if (Objects.equals(cargoes.get(i).getTransportable(), t)) {
                     cargoes.remove(i);
                     tSpace();
                     change = i == 0;
@@ -368,7 +369,7 @@ public class TransportMission extends Mission {
      */
     private void dropTransportable(TransportableAIObject t) {
         AIUnit carrier = getAIUnit();
-        if (t.getTransport() == carrier) t.setTransport(null);
+        if (Objects.equals(t.getTransport(), carrier)) t.setTransport(null);
     }
 
     /**
@@ -379,7 +380,7 @@ public class TransportMission extends Mission {
      */
     private void takeTransportable(TransportableAIObject t) {
         AIUnit carrier = getAIUnit();
-        if (t.getTransport() != carrier) t.setTransport(carrier);
+        if (!Objects.equals( t.getTransport(), carrier)) t.setTransport(carrier);
     }
 
     /**

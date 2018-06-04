@@ -132,5 +132,6 @@ public final class ResourceType extends FreeColSpecObjectType {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

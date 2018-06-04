@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -200,9 +201,9 @@ public final class SelectDestinationDialog extends FreeColDialog<Location>
                         String more = null;
                         if (loc instanceof IndianSettlement) {
                             IndianSettlement is = (IndianSettlement)loc;
-                            more = (g == is.getWantedGoods(0)) ? "***"
-                                : (g == is.getWantedGoods(1)) ? "**"
-                                : (g == is.getWantedGoods(2)) ? "*"
+                            more = (Objects.equals(g, is.getWantedGoods(0))) ? "***"
+                                : (Objects.equals(g, is.getWantedGoods(1))) ? "**"
+                                : (Objects.equals(g, is.getWantedGoods(2))) ? "*"
                                 : null;
                         }
                         if (sale != null && more != null) {
@@ -262,7 +263,7 @@ public final class SelectDestinationDialog extends FreeColDialog<Location>
         }
     }
 
-    private class NameComparator extends DestinationComparator {
+    private static class NameComparator extends DestinationComparator {
 
         public NameComparator(Player player) {
             super(player);
@@ -277,7 +278,7 @@ public final class SelectDestinationDialog extends FreeColDialog<Location>
         }
     }
 
-    private class DistanceComparator extends DestinationComparator {
+    private static class DistanceComparator extends DestinationComparator {
 
         public DistanceComparator(Player player) {
             super(player);
@@ -451,7 +452,7 @@ public final class SelectDestinationDialog extends FreeColDialog<Location>
 
         // Find all the player accessible settlements except the current one.
         td.addAll(transform(player.getSettlements(),
-                            s -> s != inSettlement && canReach.test(s),
+                            s -> Objects.equals(s, inSettlement) && canReach.test(s),
                             s -> new Destination(s, unit.getTurnsToReach(s),
                                                  unit, goodsTypes)));
 

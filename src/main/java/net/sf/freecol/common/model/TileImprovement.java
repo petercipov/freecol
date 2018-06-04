@@ -790,6 +790,7 @@ public class TileImprovement extends TileItem implements Named {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

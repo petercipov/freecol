@@ -136,7 +136,7 @@ final class UnitMoveAnimation extends FreeColClientHolder
         Point point = srcPoint;
         while (!point.equals(dstPoint)) {
             long time = System.currentTimeMillis();
-            point.x += stepX * xratio * movementRatio;
+            point.x += (int) (point.x + stepX * xratio * movementRatio);
             point.y += stepY * movementRatio;
             if ((stepX < 0 && point.x < dstPoint.x)
                 || (stepX > 0 && point.x > dstPoint.x)) {

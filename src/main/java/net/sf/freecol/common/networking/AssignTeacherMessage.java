@@ -28,6 +28,8 @@ import net.sf.freecol.common.model.Unit;
 import net.sf.freecol.server.FreeColServer;
 import net.sf.freecol.server.model.ServerPlayer;
 
+import java.util.Objects;
+
 
 /**
  * The message sent when assigning a teacher.
@@ -114,7 +116,7 @@ public class AssignTeacherMessage extends AttributeMessage {
         } else if (!teacher.getColony().canTrain(teacher)) {
             return serverPlayer.clientError("Teacher can not teach: "
                 + teacherId);
-        } else if (student.getColony() != teacher.getColony()) {
+        } else if (!Objects.equals(student.getColony(), teacher.getColony())) {
             return serverPlayer.clientError("Student and teacher not in same colony: "
                 + studentId);
         } else if (!student.canBeStudent(teacher)) {

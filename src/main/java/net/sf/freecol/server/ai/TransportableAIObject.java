@@ -32,6 +32,8 @@ import net.sf.freecol.common.model.Unit;
 import net.sf.freecol.common.util.Utils;
 import net.sf.freecol.server.ai.mission.TransportMission;
 
+import java.util.Objects;
+
 
 /**
  * A single item in a carrier's transport list.  Any {@link Locatable}
@@ -218,7 +220,7 @@ public abstract class TransportableAIObject extends ValuedAIObject {
 
         AIUnit old = getTransport();
         if (old != null) {
-            if (old == aiCarrier) return true;
+            if (Objects.equals(old, aiCarrier)) return true;
 
             TransportMission tm = old.getMission(TransportMission.class);
             if (tm != null) tm.removeTransportable(this);

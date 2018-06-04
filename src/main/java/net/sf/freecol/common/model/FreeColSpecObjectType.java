@@ -183,6 +183,7 @@ public abstract class FreeColSpecObjectType extends FreeColSpecObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public final List<Scope> getScopeList() {
         return (this.scopes == null) ? Collections.<Scope>emptyList()
             : this.scopes;
@@ -191,6 +192,7 @@ public abstract class FreeColSpecObjectType extends FreeColSpecObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public final Stream<Scope> getScopes() {
         return (this.scopes == null) ? Stream.<Scope>empty()
             : this.scopes.stream();
@@ -199,6 +201,7 @@ public abstract class FreeColSpecObjectType extends FreeColSpecObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public final void setScopes(List<Scope> scopes) {
         this.scopes = scopes;
     }
@@ -206,6 +209,7 @@ public abstract class FreeColSpecObjectType extends FreeColSpecObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public void addScope(Scope scope) {
         if (this.scopes == null) this.scopes = new ArrayList<>();
         this.scopes.add(scope);

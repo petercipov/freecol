@@ -21,11 +21,7 @@ package net.sf.freecol.client.gui.panel;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 import javax.swing.DefaultListCellRenderer;
@@ -164,7 +160,7 @@ public final class TradeRoutePanel extends FreeColPanel {
         this.deassignRouteButton = Utility.localizedButton("tradeRoutePanel.deassignRoute");
         Utility.localizeToolTip(this.deassignRouteButton, "tradeRoutePanel.deassign.tooltip");
         this.deassignRouteButton.addActionListener((ae) -> {
-                if (this.unit != null && getRoute() == this.unit.getTradeRoute()) {
+                if (this.unit != null && Objects.equals(getRoute(), this.unit.getTradeRoute())) {
                     igc().clearOrders(this.unit);
                 }
                 getGUI().removeComponent(this);

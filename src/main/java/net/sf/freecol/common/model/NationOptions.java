@@ -330,6 +330,7 @@ public class NationOptions extends FreeColSpecObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

@@ -62,7 +62,7 @@ public class PercentageOption extends IntegerOption {
 
 
     // Serialization
-
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

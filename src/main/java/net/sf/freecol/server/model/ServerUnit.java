@@ -20,10 +20,7 @@
 
 package net.sf.freecol.server.model;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 import net.sf.freecol.common.i18n.Messages;
@@ -291,8 +288,8 @@ public class ServerUnit extends Unit implements TurnTaker {
         // Cancel other co-located improvements of the same type
         for (Unit unit : transform(tile.getUnits(),
                 u -> (u.getWorkImprovement() != null
-                    && u.getWorkImprovement().getType() == ti.getType()
-                    && u.getState() == UnitState.IMPROVING))) {
+                    && Objects.equals(u.getWorkImprovement().getType(), ti.getType())
+                    && Objects.equals(u.getState(), UnitState.IMPROVING)))) {
             unit.setWorkLeft(-1);
             unit.setWorkImprovement(null);
             unit.setState(UnitState.ACTIVE);
@@ -378,7 +375,7 @@ public class ServerUnit extends Unit implements TurnTaker {
             if (tile.isLand()
                 || tile.getColony() != null
                 || tile.getFirstUnit() == null
-                || (enemy = tile.getFirstUnit().getOwner()) == player) continue;
+                || Objects.equals((enemy = tile.getFirstUnit().getOwner()), player)) continue;
             for (Unit enemyUnit : transform(tile.getUnits(), u ->
                     (u.isNaval()
                         && ((u.isOffensiveUnit() && player.atWarWith(enemy))
@@ -666,7 +663,7 @@ public class ServerUnit extends Unit implements TurnTaker {
                 ? (ServerPlayer)unit.getOwner()
                 : null;
             if (other == null
-                || other == serverPlayer
+                || Objects.equals(other, serverPlayer)
                 || pending.contains(other)) continue; // No contact
             if (serverPlayer.csContact(other, cs)) {
                 // First contact.  Note contact pending because
@@ -849,7 +846,7 @@ public class ServerUnit extends Unit implements TurnTaker {
             for (Tile t : transform(newTile.getSurroundingTiles(1, 1),
                     nt -> (nt != null && !nt.isLand()
                         && nt.getFirstUnit() != null
-                        && nt.getFirstUnit().getOwner() != serverPlayer))) {
+                        && !Objects.equals(nt.getFirstUnit().getOwner(), serverPlayer)))) {
                 csActivateSentries(t, cs);
             }
         }
@@ -951,7 +948,7 @@ public class ServerUnit extends Unit implements TurnTaker {
         if (isInColony()
             && (produce = getWorkType()) != null
             && (learn = spec.getExpertForProducing(produce)) != null
-            && learn != getType()
+            && !Objects.equals(learn, getType())
             && (uc = getUnitChange(UnitChangeType.EXPERIENCE,learn)) != null) {
             int maximumExperience = getType().getMaximumExperience();
             int maxValue = (100 * maximumExperience) / uc.probability;

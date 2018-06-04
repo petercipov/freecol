@@ -197,6 +197,7 @@ public class StringOption extends AbstractOption<String> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

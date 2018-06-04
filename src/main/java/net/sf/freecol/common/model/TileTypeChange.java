@@ -200,6 +200,7 @@ public class TileTypeChange extends FreeColSpecObjectType {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

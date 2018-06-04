@@ -86,6 +86,7 @@ public abstract class WrapperMessage extends AttributeMessage {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isEmpty() {
         return super.isEmpty() && this.message == null;
     }
@@ -93,6 +94,7 @@ public abstract class WrapperMessage extends AttributeMessage {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void clientHandler(FreeColClient freeColClient)
         throws FreeColException {
         if (this.message != null) {

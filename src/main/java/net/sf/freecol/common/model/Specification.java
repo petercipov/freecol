@@ -651,7 +651,7 @@ public final class Specification implements OptionContainer {
         String agesValue = "";
         if (!badAges) {
             agesValue = getText(GameOptions.AGES);
-            String a[] = agesValue.split(",");
+            String a[] = agesValue.split(",", -1);
             badAges = a.length != NUMBER_OF_AGES-1;
             if (!badAges) {
                 try {
@@ -1074,6 +1074,7 @@ public final class Specification implements OptionContainer {
     /**
      * {@inheritDoc}
      */
+    @Override
     public <R,T extends Option<R>> boolean hasOption(String id,
                                                      Class<T> returnClass) {
         return id != null && allOptions.containsKey(id)
@@ -1083,6 +1084,7 @@ public final class Specification implements OptionContainer {
     /**
      * {@inheritDoc}
      */
+    @Override
     public <R,T extends Option<R>> T getOption(String id,
                                                Class<T> returnClass) {
         if (id == null) {
@@ -1104,6 +1106,7 @@ public final class Specification implements OptionContainer {
     /**
      * {@inheritDoc}
      */
+    @Override
     public OptionGroup getOptionGroup(String id) {
         if (id == null) {
             throw new RuntimeException("OptionGroup with null id.");

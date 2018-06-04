@@ -19,10 +19,7 @@
 
 package net.sf.freecol.common.model;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -468,7 +465,7 @@ public final class GoodsType extends FreeColSpecObjectType {
      */
     public Set<GoodsType> getEquivalentTypes() {
         return transform(getSpecification().getGoodsTypeList(),
-                         gt -> gt == this || gt.getStoredAs() == this,
+                         gt -> Objects.equals(gt,  this) || Objects.equals(gt.getStoredAs(), this),
                          Function.identity(), Collectors.toSet());
     }
         
@@ -719,5 +716,6 @@ public final class GoodsType extends FreeColSpecObjectType {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

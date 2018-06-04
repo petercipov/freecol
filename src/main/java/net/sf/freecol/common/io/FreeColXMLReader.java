@@ -776,7 +776,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
         boolean required) throws XMLStreamException {
 
         T ret = getAttribute(game, attributeName, returnClass, (T)null);
-        if (ret == (T)null) {
+        if (ret == null) {
             if (required) {
                 throw new XMLStreamException("Missing " + attributeName
                     + " for " + returnClass.getName() + ": " + currentTag());
@@ -920,18 +920,17 @@ public class FreeColXMLReader extends StreamReaderDelegate
      * Read a {@code FreeColObject} from a stream.
      *
      * @param game The {@code Game} to look in.
-     * @param returnClass The class to expect.
      * @return The {@code FreeColObject} found.
      * @exception XMLStreamException if there is problem reading the stream.
      */
-    public <T extends FreeColObject> T readFreeColObject(Game game)
+    public FreeColObject readFreeColObject(Game game)
         throws XMLStreamException {
         final String tag = getLocalName();
-        Class<T> returnClass = FreeColObject.getFreeColObjectClass(tag);
-        if (returnClass == null) {
+        Class<FreeColObject> objectClass = FreeColObject.getFreeColObjectClass(tag);
+        if (objectClass == null) {
             throw new XMLStreamException("No class: " + tag);
         }
-        return readFreeColObject(game, returnClass);
+        return readFreeColObject(game, objectClass);
     }
 
     /**
@@ -951,7 +950,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
         boolean required) throws XMLStreamException {
 
         T ret = getAttribute(aiMain, attributeName, returnClass, (T)null);
-        if (ret == (T)null) {
+        if (ret == null) {
             if (required) {
                 throw new XMLStreamException("Missing " + attributeName
                     + " for " + returnClass.getName() + ": " + currentTag());

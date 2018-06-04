@@ -95,6 +95,7 @@ public class MultipleMessage extends AttributeMessage {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isEmpty() {
         return super.isEmpty() && this.messages.isEmpty();
     }

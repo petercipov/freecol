@@ -28,6 +28,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -482,7 +483,7 @@ public final class TileViewer extends FreeColClientHolder {
             SortableImage si;
             if (borderingTile == null
                 || !borderingTile.isExplored()
-                || (borderingTileType = borderingTile.getType()) == tileType) continue;
+                || Objects.equals( (borderingTileType = borderingTile.getType()), tileType)) continue;
             if (!tile.isLand() && borderingTile.isLand()) {
                 // If there is a Coast image (eg. beach) defined, use
                 // it, otherwise skip Draw the grass from the

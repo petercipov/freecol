@@ -26,6 +26,8 @@ import net.sf.freecol.common.io.FreeColXMLWriter;
 import net.sf.freecol.common.model.Stance;
 import net.sf.freecol.common.util.Utils;
 
+import java.util.Objects;
+
 
 /**
  * One of the items a DiplomaticTrade consists of.
@@ -114,7 +116,7 @@ public abstract class TradeItem extends FreeColGameObject {
      * @return The {@code Player} we want.
      */
     public final Player getOther(Player player) {
-        return (player == this.source) ? this.destination : this.source;
+        return Objects.equals(player, this.source) ? this.destination : this.source;
     }
 
 

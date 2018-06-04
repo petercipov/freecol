@@ -321,7 +321,7 @@ public abstract class Message {
             try {
                 result = Enum.valueOf(returnClass, kv);
             } catch (Exception e) {
-                logger.warning("Not a " + defaultValue.getClass().getName()
+                logger.warning("Not a " + defaultValue.getDeclaringClass().getName()
                     + ": " + kv);
             }
         }

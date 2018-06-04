@@ -19,6 +19,7 @@
 
 package net.sf.freecol.server.ai;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.xml.stream.XMLStreamException;
@@ -142,7 +143,7 @@ public class WorkerWish extends Wish {
      */
     public boolean satisfiedBy(Unit unit) {
         return (expertNeeded) 
-            ? unit.getType() == unitType
+            ? Objects.equals(unit.getType(), unitType)
             : unit.getType().isNaval() == unitType.isNaval();
     }
 

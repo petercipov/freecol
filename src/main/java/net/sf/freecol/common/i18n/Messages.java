@@ -25,9 +25,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.List;
@@ -41,7 +39,6 @@ import javax.swing.UIManager;
 
 import net.sf.freecol.common.ObjectWithId;
 import net.sf.freecol.common.io.FreeColDirectories;
-import net.sf.freecol.common.io.FreeColDataFile;
 import net.sf.freecol.common.io.FreeColModFile;
 import net.sf.freecol.common.io.FreeColTcFile;
 import net.sf.freecol.common.model.Named;
@@ -133,9 +130,9 @@ public class Messages {
     /**
      * Set the grammatical number rule.
      *
-     * @param number a {@code Number} value
+     * @param number a {@code Numeric} value
      */
-    public static void setGrammaticalNumber(Number number) {
+    public static void setGrammaticalNumber(Numeric number) {
         tagMap.put("plural", number);
     }
 

@@ -19,10 +19,7 @@
 
 package net.sf.freecol.common.model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 import javax.xml.stream.XMLStreamException;
@@ -206,7 +203,7 @@ public class TradeRoute extends FreeColGameObject
         synchronized (this.stops) {
             int i = 0;
             for (TradeRouteStop trs : this.stops) {
-                if (trs == stop) return i;
+                if (Objects.equals(trs, stop)) return i;
                 i++;
             }
         }
@@ -445,6 +442,7 @@ public class TradeRoute extends FreeColGameObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

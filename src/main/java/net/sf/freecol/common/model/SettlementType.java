@@ -495,5 +495,6 @@ public class SettlementType extends FreeColSpecObjectType {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

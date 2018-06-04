@@ -39,11 +39,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -1137,7 +1133,7 @@ public final class MapViewer extends FreeColClientHolder {
         if (unitTile == null || unitTile.isEmpty()) {
             result = null;
 
-        } else if (activeUnit != null && activeUnit.getTile() == unitTile
+        } else if (activeUnit != null && Objects.equals(activeUnit.getTile(), unitTile)
             && !isOutForAnimation(activeUnit)) {
             result = activeUnit;
 
@@ -1591,7 +1587,7 @@ public final class MapViewer extends FreeColClientHolder {
                                         backgroundColor.getBlue(), 128);
             TextSpecification[] specs = new TextSpecification[1];
             if (settlement instanceof Colony
-                && settlement.getOwner() == player) {
+                && Objects.equals(settlement.getOwner(), player)) {
                 Colony colony = (Colony) settlement;
                 BuildableType buildable = colony.getCurrentlyBuilding();
                 if (buildable != null) {
@@ -1660,17 +1656,17 @@ public final class MapViewer extends FreeColClientHolder {
                             * lib.getScaleFactor()) + spacing
                         : 0));
                 int labelOffset = (tileWidth - width)/2;
-                yOffset -= (nameImage.getHeight()
-                    * lib.getScaleFactor())/2;
+                yOffset = (int) (yOffset - (nameImage.getHeight()
+                    * lib.getScaleFactor())/2);
                 if (leftImage != null) {
                     g.drawImage(leftImage, labelOffset, yOffset, null);
-                    labelOffset += (leftImage.getWidth()
-                        * lib.getScaleFactor()) + spacing;
+                    labelOffset = (int) (labelOffset + ((leftImage.getWidth()
+                        * lib.getScaleFactor()) + spacing));
                 }
                 g.drawImage(nameImage, labelOffset, yOffset, null);
                 if (rightImage != null) {
-                    labelOffset += (nameImage.getWidth()
-                        * lib.getScaleFactor()) + spacing;
+                    labelOffset = (int) (labelOffset + ((nameImage.getWidth()
+                        * lib.getScaleFactor()) + spacing));
                     g.drawImage(rightImage, labelOffset, yOffset, null);
                 }
                 break;
@@ -2017,12 +2013,12 @@ public final class MapViewer extends FreeColClientHolder {
                 Direction next2 = next.getNextDirection();
                 if (otherTile == null
                     || (type == BorderType.COUNTRY && !owner.owns(otherTile))
-                    || (type == BorderType.REGION && otherTile.getRegion() != region)) {
+                    || (type == BorderType.REGION && !Objects.equals(otherTile.getRegion(),region))) {
                     Tile tile1 = tile.getNeighbourOrNull(next);
                     Tile tile2 = tile.getNeighbourOrNull(next2);
                     if (tile2 == null
                         || (type == BorderType.COUNTRY && !owner.owns(tile2))
-                        || (type == BorderType.REGION && tile2.getRegion() != region)) {
+                        || (type == BorderType.REGION && !Objects.equals(tile2.getRegion(), region))) {
                         // small corner
                         path.lineTo(borderPoints.get(next).x,
                                     borderPoints.get(next).y);
@@ -2041,7 +2037,7 @@ public final class MapViewer extends FreeColClientHolder {
                         }
                         if (tile1 != null
                             && ((type == BorderType.COUNTRY && owner.owns(tile1))
-                                || (type == BorderType.REGION && tile1.getRegion() == region))) {
+                                || (type == BorderType.REGION && Objects.equals(tile1.getRegion(), region)))) {
                             // short straight line
                             path.lineTo(borderPoints.get(next).x,
                                         borderPoints.get(next).y);

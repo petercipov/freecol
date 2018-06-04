@@ -521,7 +521,7 @@ public class FreeColTestCase extends TestCase {
 
         public IndianSettlementBuilder initialBravesInCamp(int nBraves){
             if(nBraves <= 0){
-                throw new IllegalArgumentException("Number of braves must be positive");
+                throw new IllegalArgumentException("Numeric of braves must be positive");
             }
             this.initialBravesInCamp = nBraves;
             return this;

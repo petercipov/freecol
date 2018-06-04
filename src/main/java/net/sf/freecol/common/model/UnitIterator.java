@@ -19,10 +19,7 @@
 
 package net.sf.freecol.common.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -82,12 +79,12 @@ public class UnitIterator implements Iterator<Unit> {
         if (this.predicate.test(unit)) { // Of course, it has to be valid...
             final Unit sentinel = first(this.units);
             while (!this.units.isEmpty()) {
-                if (this.units.get(0) == unit) return true;
+                if (Objects.equals(this.units.get(0), unit)) return true;
                 this.units.remove(0);
             }
             update();
-            while (!this.units.isEmpty() && this.units.get(0) != sentinel) {
-                if (this.units.get(0) == unit) return true;
+            while (!this.units.isEmpty() && !Objects.equals(this.units.get(0), sentinel)) {
+                if (Objects.equals(this.units.get(0), unit)) return true;
                 this.units.remove(0);
             }
         }

@@ -19,6 +19,7 @@
 
 package net.sf.freecol.server.control;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.xml.stream.XMLStreamException;
@@ -58,6 +59,7 @@ public final class ServerInputHandler extends FreeColServerHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public Message handle(Connection connection, Message message)
         throws FreeColException {
         final FreeColServer freeColServer = getFreeColServer();
@@ -69,7 +71,7 @@ public final class ServerInputHandler extends FreeColServerHolder
         final Game game = freeColServer.getGame();
         final boolean current = message.currentPlayerMessage();
         ChangeSet cs = (current && (game == null || serverPlayer == null
-                || serverPlayer != game.getCurrentPlayer()))
+                || !Objects.equals(serverPlayer, game.getCurrentPlayer())))
             ? serverPlayer.clientError("Received: " + message.getType()
                 + " out of turn from player: " + serverPlayer.getNation())
             : message.serverHandler(freeColServer, serverPlayer);
@@ -79,6 +81,7 @@ public final class ServerInputHandler extends FreeColServerHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public Message read(Connection connection)
         throws FreeColException, XMLStreamException {
         return Message.read(getGame(), connection.getFreeColXMLReader());

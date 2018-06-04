@@ -22,6 +22,7 @@ package net.sf.freecol.common.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import javax.xml.stream.XMLStreamException;
@@ -199,8 +200,8 @@ public abstract class Feature extends FreeColSpecObject
      */
     protected boolean appliesTo(final Turn turn) {
         return !(turn != null
-            && (firstTurn != null && turn.getNumber() < firstTurn.getNumber()
-                || lastTurn != null && turn.getNumber() > lastTurn.getNumber()));
+            && ((firstTurn != null && turn.getNumber() < firstTurn.getNumber())
+                || (lastTurn != null && turn.getNumber() > lastTurn.getNumber())));
     }
 
     /**
@@ -261,6 +262,7 @@ public abstract class Feature extends FreeColSpecObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public final List<Scope> getScopeList() {
         return (this.scopes == null) ? Collections.<Scope>emptyList()
             : new ArrayList<>(this.scopes);
@@ -269,6 +271,7 @@ public abstract class Feature extends FreeColSpecObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public final Stream<Scope> getScopes() {
         return (this.scopes == null) ? Stream.<Scope>empty()
             : getScopeList().stream();
@@ -277,6 +280,7 @@ public abstract class Feature extends FreeColSpecObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public final void setScopes(List<Scope> scopes) {
         this.scopes = scopes;
     }
@@ -284,6 +288,7 @@ public abstract class Feature extends FreeColSpecObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public void addScope(Scope scope) {
         if (this.scopes == null) this.scopes = new ArrayList<>();
         this.scopes.add(scope);
@@ -433,7 +438,7 @@ public abstract class Feature extends FreeColSpecObject
         if (o instanceof Feature) {
             Feature feature = (Feature)o;
             if (!super.equals(o)
-                || this.source != feature.source
+                || !Objects.equals(this.source, feature.source)
                 || this.duration != feature.duration
                 || this.temporary != feature.temporary)
                 return false;

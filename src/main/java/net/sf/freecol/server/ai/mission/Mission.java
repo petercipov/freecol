@@ -20,6 +20,7 @@
 package net.sf.freecol.server.ai.mission;
 
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -122,7 +123,7 @@ public abstract class Mission extends AIObject {
         this(aiMain, aiUnit);
 
         setTarget(target);
-        if (aiUnit != null && aiUnit.getMission() != this) {
+        if (aiUnit != null && !Objects.equals(aiUnit.getMission(), this)) {
             aiUnit.changeMission(this);
         }
     }
@@ -300,7 +301,7 @@ public abstract class Mission extends AIObject {
         boolean checkSrc = transport == null;
 
         if (carrier != null && transport != null
-            && carrier != transport.getUnit()) {
+            && !Objects.equals(carrier, transport.getUnit())) {
             return "transportable-on-other-carrier";
         }
 
@@ -334,7 +335,7 @@ public abstract class Mission extends AIObject {
     public static String invalidAttackReason(AIUnit aiUnit, Player other) {
         final Unit unit = aiUnit.getUnit();
         final Player player = unit.getOwner();
-        return (player == other)
+        return (Objects.equals(player, other))
             ? Mission.TARGETOWNERSHIP
             : (player.isIndian()
                 && player.getTension(other).getLevel()

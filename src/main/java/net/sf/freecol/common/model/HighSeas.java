@@ -258,6 +258,7 @@ public class HighSeas extends UnitLocation {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

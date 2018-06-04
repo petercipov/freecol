@@ -99,8 +99,8 @@ public final class MetaRegister {
      * @param name The name of the server.
      * @param address The IP-address of the server.
      * @param port The port number in which clients may connect.
-     * @param slotsAvailable Number of players that may conncet.
-     * @param currentlyPlaying Number of players that are currently connected.
+     * @param slotsAvailable Numeric of players that may conncet.
+     * @param currentlyPlaying Numeric of players that are currently connected.
      * @param isGameStarted <i>true</i> if the game has started.
      * @param version The version of the server.
      * @param gameState The current state of the game:

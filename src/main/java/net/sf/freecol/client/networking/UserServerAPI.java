@@ -71,6 +71,7 @@ public class UserServerAPI extends ServerAPI {
     /**
      * {@inheritDoc}
      */
+    @Override
     public synchronized Connection connect(String name, String host, int port)
         throws IOException {
         int tries;
@@ -102,6 +103,7 @@ public class UserServerAPI extends ServerAPI {
     /**
      * {@inheritDoc}
      */
+    @Override
     public synchronized boolean disconnect() {
         if (this.connection != null) {
             this.connection.disconnect();
@@ -113,6 +115,7 @@ public class UserServerAPI extends ServerAPI {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Connection reconnect() throws IOException {
         return connect(this.name, this.host, this.port);
     }
@@ -120,6 +123,7 @@ public class UserServerAPI extends ServerAPI {
     /**
      * {@inheritDoc}
      */
+    @Override
     public synchronized Connection getConnection() {
         return this.connection;
     }

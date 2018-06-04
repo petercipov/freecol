@@ -296,6 +296,7 @@ public class AbstractUnit extends FreeColObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

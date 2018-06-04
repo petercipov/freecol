@@ -19,11 +19,7 @@
 
 package net.sf.freecol.server.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -192,7 +188,7 @@ public class ServerColony extends Colony implements TurnTaker {
         if (units == null || units.isEmpty()) return false;
         unit: for (Unit u : units) {
             for (WorkLocation wl : transform(getAvailableWorkLocations(),
-                                             w -> w != workLocation && w.canAdd(u))) {
+                                             w -> Objects.equals(w, workLocation) && w.canAdd(u))) {
                 u.setLocation(wl);//-vis: safe/colony
                 continue unit;
             }
@@ -386,7 +382,7 @@ public class ServerColony extends Colony implements TurnTaker {
 
             // Make sure units are ejected when a tile is no longer
             // attached to the settlement.
-            for (Tile t : transform(owned, t2 -> t2.getOwningSettlement() != this)) {
+            for (Tile t : transform(owned, t2 -> !Objects.equals(t2.getOwningSettlement(), this))) {
                 ColonyTile ct = getColonyTile(t);
                 ejectUnits(ct, ct.getUnitList());
             }
@@ -578,7 +574,7 @@ public class ServerColony extends Colony implements TurnTaker {
             final int oldAmount = container.getOldGoodsCount(type);
 
             if (amount < low && oldAmount >= low
-                && type != spec.getPrimaryFoodType()) {
+                && !Objects.equals(type, spec.getPrimaryFoodType())) {
                 cs.addMessage(owner,
                     new ModelMessage(MessageType.WAREHOUSE_CAPACITY,
                                      "model.colony.warehouseEmpty",
@@ -700,7 +696,7 @@ public class ServerColony extends Colony implements TurnTaker {
                     UnitType expert = spec.getExpertForProducing(goods.getType());
                     int experience = goods.getAmount() / wl.getUnitCount();
                     for (Unit unit : transform(wl.getUnits(),
-                            u -> u.getExperienceType() == goods.getType()
+                            u -> Objects.equals(u.getExperienceType(), goods.getType())
                             && u.getUnitChange(UnitChangeType.EXPERIENCE,
                                                expert) != null)) {
                         unit.setExperience(unit.getExperience() + experience);
@@ -764,7 +760,7 @@ public class ServerColony extends Colony implements TurnTaker {
             }
 
             // Handle starvation at once.
-            if (goodsType == spec.getPrimaryFoodType()) {
+            if (Objects.equals(goodsType, spec.getPrimaryFoodType())) {
                 // Check for famine when total primary food goes negative.
                 if (net + stored < 0) {
                     if (getUnitCount() > 1) {

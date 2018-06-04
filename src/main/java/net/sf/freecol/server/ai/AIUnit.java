@@ -21,6 +21,7 @@ package net.sf.freecol.server.ai;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -196,7 +197,7 @@ public class AIUnit extends TransportableAIObject {
         AIUnit aiCarrier = (carrier == null) ? null
             : getAIMain().getAIUnit(carrier);
         AIUnit transport = getTransport();
-        if (transport != aiCarrier) {
+        if (!Objects.equals(transport, aiCarrier)) {
             if (transport != null) {
                 logger.warning("Taking different transport: " + aiCarrier);
                 dropTransport();
@@ -294,7 +295,7 @@ public class AIUnit extends TransportableAIObject {
      * @return The new current {@code Mission}.
      */
     public Mission changeMission(Mission mission) {
-        if (this.mission == mission) return this.mission;
+        if (Objects.equals(this.mission, mission)) return this.mission;
 
         removeMission();
         setMission(mission);
@@ -440,7 +441,7 @@ public class AIUnit extends TransportableAIObject {
         Tile start = unit.getTile();
         return unit.getMoveType(direction).isProgress()
             && AIMessage.askMove(this, direction)
-            && unit.getTile() != start;
+            && !Objects.equals(unit.getTile(), start);
     }
 
     /**
@@ -471,7 +472,7 @@ public class AIUnit extends TransportableAIObject {
             if (count <= 0) return false;
         }
         return AIMessage.askEquipForRole(this, role, count)
-            && unit.getRole() == role && unit.getRoleCount() == count;
+            && Objects.equals(unit.getRole(), role) && unit.getRoleCount() == count;
     }
 
     /**

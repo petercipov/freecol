@@ -19,10 +19,7 @@
 
 package net.sf.freecol.common.networking;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -124,9 +121,9 @@ public class RearrangeColonyMessage extends AttributeMessage {
             for (Unit u : workers) {
                 Unit su = scratch.getCorresponding(u);
                 if (u.getLocation().getId().equals(su.getLocation().getId())
-                    && u.getWorkType() == su.getWorkType()
-                    && u.getRole() == su.getRole()
-                    && u.getRoleCount() == su.getRoleCount()) continue;
+                    && Objects.equals(u.getWorkType(), su.getWorkType())
+                    && Objects.equals(u.getRole(), su.getRole())
+                    && Objects.equals(u.getRoleCount(), su.getRoleCount())) continue;
                 ret.add(new Arrangement(u,
                         (Location)colony.getCorresponding((FreeColObject)su.getLocation()),
                         su.getWorkType(), su.getRole(), su.getRoleCount()));
@@ -140,6 +137,7 @@ public class RearrangeColonyMessage extends AttributeMessage {
         /**
          * {@inheritDoc}
          */
+        @Override
         public int compareTo(Arrangement other) {
             int cmp = this.role.compareTo(other.role);
             if (cmp == 0) cmp = this.roleCount - other.roleCount;
@@ -297,6 +295,7 @@ public class RearrangeColonyMessage extends AttributeMessage {
      *
      * @return True if there are no arrangements.
      */
+    @Override
     public boolean isEmpty() {
         return getIntegerAttribute(FreeColObject.ARRAY_SIZE_TAG, 0) == 0;
     }

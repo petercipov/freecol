@@ -44,7 +44,7 @@ public class FreeColRadioButtonUI extends BasicRadioButtonUI {
     }
 
     @Override
-    public void paint(Graphics g, JComponent c) {
+    public synchronized void paint(Graphics g, JComponent c) {
         LAFUtilities.setProperties(g, c);
         super.paint(g, c);
     }

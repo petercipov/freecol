@@ -31,6 +31,8 @@ import net.sf.freecol.server.FreeColServer;
 import net.sf.freecol.server.ai.AIPlayer;
 import net.sf.freecol.server.model.ServerPlayer;
 
+import java.util.Objects;
+
 
 /**
  * The message sent when making first contact between players.
@@ -104,15 +106,15 @@ public class FirstContactMessage extends AttributeMessage {
         final Tile tile = getTile(game);
         final int n = getSettlementCount();
 
-        if (player == null || player != freeColClient.getMyPlayer()) {
+        if (player == null || !Objects.equals(player, freeColClient.getMyPlayer())) {
             logger.warning("firstContact with bad player: " + player);
             return;
         }
-        if (other == null || other == player || !other.isIndian()) {
+        if (other == null || Objects.equals(other, player) || !other.isIndian()) {
             logger.warning("firstContact with bad other player: " + other);
             return;
         }
-        if (tile != null && tile.getOwner() != other) {
+        if (tile != null && !Objects.equals(tile.getOwner(), other)) {
             logger.warning("firstContact with bad tile: " + tile);
             return;
         }
@@ -143,7 +145,7 @@ public class FirstContactMessage extends AttributeMessage {
         ServerPlayer otherPlayer = (ServerPlayer)getOtherPlayer(game);
         if (otherPlayer == null) {
             return serverPlayer.clientError("Invalid other player: " + otherId);
-        } else if (otherPlayer == serverPlayer) {
+        } else if (Objects.equals(otherPlayer, serverPlayer)) {
             return serverPlayer.clientError("First contact with self!?!");
         }
 

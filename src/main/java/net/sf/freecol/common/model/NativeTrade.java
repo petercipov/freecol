@@ -485,6 +485,7 @@ public class NativeTrade extends FreeColGameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isInternable() {
         return false;
     }
@@ -644,6 +645,7 @@ public class NativeTrade extends FreeColGameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

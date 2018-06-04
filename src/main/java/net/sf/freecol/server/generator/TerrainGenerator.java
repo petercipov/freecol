@@ -19,12 +19,7 @@
 
 package net.sf.freecol.server.generator;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.logging.Logger;
 
 import net.sf.freecol.common.model.Game;
@@ -345,7 +340,7 @@ public class TerrainGenerator {
                 }
             }
         }
-        lb.add("Number of individual landmasses is ", continents, "\n");
+        lb.add("Numeric of individual landmasses is ", continents, "\n");
 
         // Get landmass sizes
         int[] continentsize = new int[continents+1];
@@ -398,7 +393,7 @@ public class TerrainGenerator {
                 }
             }
         }
-        lb.add("Number of land regions being created: ", continents, "\n");
+        lb.add("Numeric of land regions being created: ", continents, "\n");
 
         // Create ServerRegions for all land regions
         ServerRegion[] landregions = new ServerRegion[continents+1];
@@ -448,11 +443,11 @@ public class TerrainGenerator {
         Tile tile = null;
         while ((tile = map.getRandomLandTile(random)) != null) {
             // Can not be high ground already
-            if (tile.getType() != hills && tile.getType() != mountains
+            if (!Objects.equals(tile.getType(), hills) && !Objects.equals(tile.getType(), mountains)
                 
                 // Not too close to a mountain range as this would
                 // defeat the purpose of adding random hills
-                && none(tile.getSurroundingTiles(1, 3), t -> t.getType() == mountains)
+                && none(tile.getSurroundingTiles(1, 3), t -> Objects.equals(t.getType(), mountains))
 
                 // Do not add hills too close to the ocean/lake, as
                 // this helps with good locations for building
@@ -487,7 +482,7 @@ public class TerrainGenerator {
         int number = Math.round((1.0f - randomHillsRatio)
             * ((float)getApproximateLandCount(game)
                 / mapOptions.getRange(MapGeneratorOptions.MOUNTAIN_NUMBER)));
-        lb.add("Number of mountain tiles is ", number, "\n",
+        lb.add("Numeric of mountain tiles is ", number, "\n",
             "Maximum length of mountain ranges is ", maximumLength, "\n");
 
         // lookup the resources from specification
@@ -519,7 +514,7 @@ public class TerrainGenerator {
                 counter++;
                 for (Tile neighbour : nextTile.getSurroundingTiles(1)) {
                     if (!neighbour.isLand()
-                        || neighbour.getType() == mountains) continue;
+                        || Objects.equals(neighbour.getType(), mountains)) continue;
                     int r = randomInt(logger, "MSiz", random, 8);
                     if (r == 0) {
                         neighbour.setType(mountains);

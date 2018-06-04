@@ -37,6 +37,7 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -621,7 +622,7 @@ public final class ColonyPanel extends PortPanel
             for (Unit unit : transform(wl.getUnits(), u ->
                     (check || !wl.produces(u.getWorkType())))) {
                 GoodsType workType = wl.getWorkFor(unit);
-                if (workType != null && workType != unit.getWorkType()) {
+                if (workType != null && !Objects.equals(workType, unit.getWorkType())) {
                     change |= igc().changeWorkType(unit, workType);
                 }
             }
@@ -804,7 +805,7 @@ public final class ColonyPanel extends PortPanel
 
         // Now recheck, and see if we want to change to the expected
         // work type.
-        if (workType != null && workType != unit.getWorkType()) {
+        if (workType != null && !Objects.equals(workType, unit.getWorkType())) {
             igc().changeWorkType(unit, workType);
         }
         return true;
@@ -2181,14 +2182,14 @@ public final class ColonyPanel extends PortPanel
                 Tile tile = this.colonyTile.getWorkTile();
                 Player player = unit.getOwner();
 
-                if (tile.getOwningSettlement() != colony) {
+                if (!Objects.equals(tile.getOwningSettlement(), colony)) {
                     // Need to acquire the tile before working it.
                     NoClaimReason claim
                         = player.canClaimForSettlementReason(tile);
                     switch (claim) {
                     case NONE: case NATIVES:
                         if (igc().claimTile(tile, colony)
-                            && tile.getOwningSettlement() == colony) {
+                            && Objects.equals(tile.getOwningSettlement(), colony)) {
                             logger.info("Colony " + colony.getName()
                                 + " claims tile " + tile
                                 + " with unit " + unit.getId());
@@ -2204,7 +2205,7 @@ public final class ColonyPanel extends PortPanel
                         return false;
                     }
                     // Check reason again, claim should be satisfied.
-                    if (tile.getOwningSettlement() != colony) {
+                    if (!Objects.equals(tile.getOwningSettlement(), colony)) {
                         throw new IllegalStateException("Claim failed");
                     }
                 }
@@ -2224,7 +2225,7 @@ public final class ColonyPanel extends PortPanel
                     && getClientOptions().getBoolean(ClientOptions.SHOW_NOT_BEST_TILE)) {
                     WorkLocation best = colony.getWorkLocationFor(unit,
                                                                   workType);
-                    if (best != null && this.colonyTile != best
+                    if (best != null && !Objects.equals(this.colonyTile, best)
                         && (this.colonyTile.getPotentialProduction(workType, unit.getType())
                             < best.getPotentialProduction(workType, unit.getType()))) {
                         StringTemplate template = StringTemplate

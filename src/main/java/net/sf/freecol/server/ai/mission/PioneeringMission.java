@@ -20,6 +20,7 @@
 package net.sf.freecol.server.ai.mission;
 
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.xml.stream.XMLStreamException;
@@ -157,8 +158,8 @@ public class PioneeringMission extends Mission {
         TileImprovementPlan old = tileImprovementPlan;
         this.tileImprovementPlan = tip;
         AIUnit aiUnit = getAIUnit();
-        if (old != tileImprovementPlan) {
-            if (old != null && old.getPioneer() == aiUnit) {
+        if (!Objects.equals(old, tileImprovementPlan)) {
+            if (old != null && Objects.equals(old.getPioneer(), aiUnit)) {
                 old.setPioneer(null);
             }
             if (tileImprovementPlan != null) {
@@ -411,7 +412,7 @@ public class PioneeringMission extends Mission {
         PioneeringMission pm = aiUnit.getMission(PioneeringMission.class);
         return (pm != null
             && pm.getTileImprovementPlan() != null
-            && pm.getTileImprovementPlan().getTarget() == tile)
+            && Objects.equals(pm.getTileImprovementPlan().getTarget(), tile))
             ? pm.getTileImprovementPlan()
             : null;
     }

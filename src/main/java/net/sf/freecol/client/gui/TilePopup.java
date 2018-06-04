@@ -24,6 +24,7 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.swing.JMenu;
@@ -114,7 +115,7 @@ public final class TilePopup extends JPopupMenu {
             }
 
             // Add move to Europe entry if the unit can do so
-            if (unitTile == tile && activeUnit.canMoveToHighSeas()) {
+            if (Objects.equals(unitTile, tile) && activeUnit.canMoveToHighSeas()) {
                 JMenuItem europeMenuItem = Utility.localizedMenuItem(StringTemplate
                     .template("goToEurope"));
                 europeMenuItem.addActionListener((ActionEvent ae) -> {
@@ -126,7 +127,7 @@ public final class TilePopup extends JPopupMenu {
             }
 
             // Add state changes if present
-            if (unitTile == tile) {
+            if (Objects.equals(unitTile, tile)) {
                 JMenuItem ji = null;
                 if (activeUnit.checkSetState(UnitState.ACTIVE)) {
                     ji = Utility.localizedMenuItem("activateUnit");
@@ -177,7 +178,7 @@ public final class TilePopup extends JPopupMenu {
 
         Settlement settlement = tile.getSettlement();
         if (settlement != null) {
-            if (settlement.getOwner() == player) {
+            if (Objects.equals(settlement.getOwner(), player)) {
                 addColony(((Colony) settlement));
             } else if (settlement instanceof IndianSettlement) {
                 addIndianSettlement((IndianSettlement) settlement);
@@ -337,7 +338,7 @@ public final class TilePopup extends JPopupMenu {
             menuItem.addActionListener((ActionEvent ae) -> {
                     if (!freeColClient.currentPlayerIsMyPlayer()) return;
                     Tile currTile = activeUnit.getTile();
-                    if (currTile == tile) return;
+                    if (Objects.equals(currTile, tile)) return;
                     final Map map = activeUnit.getGame().getMap();
                     LogBuilder lb = new LogBuilder(512);
                     PathNode path = map.findPath(activeUnit,

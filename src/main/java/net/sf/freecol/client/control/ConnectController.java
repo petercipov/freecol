@@ -188,7 +188,10 @@ public final class ConnectController extends FreeColClientHolder {
                 fcc.quit();
             }
             break;
+        case LOGOUT:
+            return true;
         }
+
         return true;
     }
 

@@ -38,6 +38,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -137,6 +138,7 @@ public final class DefaultTransferHandler extends TransferHandler {
         /**
          * {@inheritDoc}
          */
+        @Override
         public void dragGestureRecognized(DragGestureEvent dge) {
             JComponent c = (JComponent)dge.getComponent();
             DefaultTransferHandler th
@@ -164,21 +166,25 @@ public final class DefaultTransferHandler extends TransferHandler {
         /**
          * {@inheritDoc}
          */
+        @Override
         public void dragEnter(DragSourceDragEvent dsde) {}
 
         /**
          * {@inheritDoc}
          */
+        @Override
         public void dragOver(DragSourceDragEvent dsde) {}
 
         /**
          * {@inheritDoc}
          */
+        @Override
         public void dragExit(DragSourceEvent dsde) {}
 
         /**
          * {@inheritDoc}
          */
+        @Override
         public void dragDropEnd(DragSourceDropEvent dsde) {
             DragSourceContext dsc = dsde.getDragSourceContext();
             JComponent c = (JComponent)dsc.getComponent();
@@ -196,6 +202,7 @@ public final class DefaultTransferHandler extends TransferHandler {
         /**
          * {@inheritDoc}
          */
+        @Override
         public void dropActionChanged(DragSourceDragEvent dsde) {
             DragSourceContext dsc = dsde.getDragSourceContext();
             JComponent comp = (JComponent)dsc.getComponent();
@@ -224,11 +231,13 @@ public final class DefaultTransferHandler extends TransferHandler {
         /**
          * {@inheritDoc}
          */
+        @Override
         protected void registerListeners() {}
 
         /**
          * {@inheritDoc}
          */
+        @Override
         protected void unregisterListeners() {}
     }
 
@@ -290,10 +299,10 @@ public final class DefaultTransferHandler extends TransferHandler {
             List<AbstractGoods> required = unit.getGoodsDifference(role, 1);
             int count;
             if (required.size() == 1
-                && required.get(0).getType() == goods.getType()
+                && Objects.equals(required.get(0).getType(), goods.getType())
                 && (count = Math.min(role.getMaximumCount(),
                         goods.getAmount() / required.get(0).getAmount())) > 0
-                && (role != unit.getRole() || count != unit.getRoleCount())) {
+                && (!Objects.equals(role, unit.getRole()) || count != unit.getRoleCount())) {
                 freeColClient.getInGameController()
                     .equipUnitForRole(unit, role, count);
                 unitLabel.updateIcon();

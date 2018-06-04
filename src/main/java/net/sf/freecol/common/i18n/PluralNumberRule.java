@@ -21,10 +21,10 @@ package net.sf.freecol.common.i18n;
 
 
 /**
- * Number optimized for languages that distinguish the categories one
+ * Numeric optimized for languages that distinguish the categories one
  * and other.
  */
-public class PluralNumberRule extends Number {
+public class PluralNumberRule extends Numeric {
 
     @Override
     public Category getCategory(double input) {

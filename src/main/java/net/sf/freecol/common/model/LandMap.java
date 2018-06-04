@@ -50,7 +50,7 @@ public class LandMap {
     /** The land map.  True means land. */
     private boolean[][] map;
 
-    /** Number of land tiles on the map. */
+    /** Numeric of land tiles on the map. */
     private int numberOfLandTiles;
 
 

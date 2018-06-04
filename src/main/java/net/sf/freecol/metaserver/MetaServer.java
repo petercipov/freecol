@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -106,8 +107,12 @@ public final class MetaServer extends Thread {
             logger.log(Level.WARNING, "Could not close the server socket!", e);
         }
 
-        Connection c;
-        while ((c = this.connections.remove(0)) != null) c.disconnect();
+        Iterator<Map.Entry<Socket, Connection>> iterator = this.connections.entrySet().iterator();
+        while (iterator.hasNext()) {
+            iterator.next().getValue().disconnect();
+        }
+        this.connections.clear();
+
         logger.info("Metaserver shutdown.");
     }
 

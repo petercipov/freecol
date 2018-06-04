@@ -26,6 +26,8 @@ import net.sf.freecol.common.io.FreeColXMLReader;
 import net.sf.freecol.common.io.FreeColXMLWriter;
 import net.sf.freecol.common.util.Utils;
 
+import java.util.Objects;
+
 
 /**
  * The {@code Scope} class determines whether a given
@@ -332,6 +334,7 @@ public class Scope extends FreeColObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 
@@ -352,7 +355,7 @@ public class Scope extends FreeColObject {
                 return false;
             }
             if (type == null) {
-                if (otherScope.getType() != type) {
+                if (!Objects.equals(otherScope.getType(), type)) {
                     return false;
                 }
             } else if (!type.equals(otherScope.getType())) {

@@ -639,6 +639,7 @@ public class Region extends FreeColGameObject implements Nameable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

@@ -22,6 +22,7 @@ package net.sf.freecol.client.control;
 import java.awt.Color;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
@@ -118,7 +119,7 @@ public final class PreGameController extends FreeColClientHolder {
 
         getGame().removePlayer(player);
         getGUI().refreshPlayersTable();
-        if (player == getMyPlayer()) {
+        if (Objects.equals(player, getMyPlayer())) {
             freeColClient.getConnectController().logout(reason);
         }
     }

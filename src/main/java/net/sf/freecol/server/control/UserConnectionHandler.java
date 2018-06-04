@@ -60,6 +60,7 @@ public final class UserConnectionHandler extends FreeColServerHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public Message handle(Connection connection, Message message)
         throws FreeColException {
         final FreeColServer freeColServer = getFreeColServer();
@@ -82,6 +83,7 @@ public final class UserConnectionHandler extends FreeColServerHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public Message read(Connection connection)
         throws FreeColException, XMLStreamException {
         return Message.read(getGame(), connection.getFreeColXMLReader());

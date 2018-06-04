@@ -48,11 +48,11 @@ public enum Stance implements Named {
 
 
     // Helpers to enforce valid transitions
-    private void badStance() {
-        throw new IllegalStateException("Bogus stance");
+    private IllegalStateException badStance() {
+        return new IllegalStateException("Bogus stance");
     }
-    private void badTransition(Stance newStance) {
-        throw new IllegalStateException("Bad transition: " + this
+    private IllegalStateException badTransition(Stance newStance) {
+        return new IllegalStateException("Bad transition: " + this
             + " -> " + newStance);
     }
 
@@ -86,7 +86,7 @@ public enum Stance implements Named {
         case UNCONTACTED:
             break;
         default:
-            this.badStance();
+            throw this.badStance();
         }
         return this;
     }
@@ -100,15 +100,15 @@ public enum Stance implements Named {
      */
     public int getTensionModifier(Stance newStance) {
         switch (newStance) {
-        case UNCONTACTED:     badTransition(newStance);
+        case UNCONTACTED:     throw badTransition(newStance);
         case ALLIANCE:
             switch (this) {
-            case UNCONTACTED: badTransition(newStance);
+            case UNCONTACTED: throw badTransition(newStance);
             case ALLIANCE:    return 0;
             case PEACE:       return Tension.ALLIANCE_MODIFIER;
             case CEASE_FIRE:  return Tension.ALLIANCE_MODIFIER + Tension.PEACE_TREATY_MODIFIER;
             case WAR:         return Tension.ALLIANCE_MODIFIER + Tension.CEASE_FIRE_MODIFIER + Tension.PEACE_TREATY_MODIFIER;
-            default:          this.badStance();
+            default:          throw this.badStance();
             }
         case PEACE:
             switch (this) {
@@ -117,16 +117,16 @@ public enum Stance implements Named {
             case PEACE:       return 0;
             case CEASE_FIRE:  return Tension.PEACE_TREATY_MODIFIER;
             case WAR:         return Tension.CEASE_FIRE_MODIFIER + Tension.PEACE_TREATY_MODIFIER;
-            default:          this.badStance();
+            default:          throw this.badStance();
             }
         case CEASE_FIRE:
             switch (this) {
-            case UNCONTACTED: badTransition(newStance);
-            case ALLIANCE:    badTransition(newStance);
-            case PEACE:       badTransition(newStance);
+            case UNCONTACTED: throw badTransition(newStance);
+            case ALLIANCE:    throw badTransition(newStance);
+            case PEACE:       throw badTransition(newStance);
             case CEASE_FIRE:  return 0;
             case WAR:         return Tension.CEASE_FIRE_MODIFIER;
-            default:          this.badStance();
+            default:          throw this.badStance();
             }
         case WAR:
             switch (this) {
@@ -135,7 +135,7 @@ public enum Stance implements Named {
             case PEACE:       return Tension.WAR_MODIFIER;
             case CEASE_FIRE:  return Tension.RESUME_WAR_MODIFIER;
             case WAR:         return 0;
-            default:          this.badStance();
+            default:          throw this.badStance();
             }
         default:
             throw new IllegalStateException("Bogus newStance");
@@ -188,6 +188,7 @@ public enum Stance implements Named {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getNameKey() {
         return Messages.nameKey("model." + getKey());
     }

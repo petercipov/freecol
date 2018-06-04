@@ -672,6 +672,7 @@ public class GoodsContainer extends FreeColGameObject implements Ownable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

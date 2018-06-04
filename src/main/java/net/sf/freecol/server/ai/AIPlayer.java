@@ -19,10 +19,7 @@
 
 package net.sf.freecol.server.ai;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -228,7 +225,7 @@ public abstract class AIPlayer extends AIObject {
             }
             AIUnit a = getAIUnit(u);
             if (a != null) {
-                if (a.getUnit() != u) {
+                if (!Objects.equals(a.getUnit(), u)) {
                     throw new IllegalStateException("getAIUnits fail: " + u
                                                     + "/" + a);
                 }
@@ -674,5 +671,6 @@ public abstract class AIPlayer extends AIObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

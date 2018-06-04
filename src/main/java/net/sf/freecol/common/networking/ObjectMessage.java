@@ -89,6 +89,7 @@ public abstract class ObjectMessage extends AttributeMessage {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected int getChildCount() {
         return this.objects.size();
     }

@@ -29,16 +29,12 @@ import java.io.Writer;
 import java.net.InetAddress;
 import java.net.JarURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 
@@ -715,7 +711,7 @@ public final class FreeCol {
 
             if (line.hasOption("log-level")) {
                 for (String value : line.getOptionValues("log-level")) {
-                    String[] s = value.split(":");
+                    String[] s = value.split(":", -1);
                     logLevels.add((s.length == 1)
                         ? new LogLevel("", Level.parse(s[0].toUpperCase()))
                         : new LogLevel(s[0], Level.parse(s[1].toUpperCase())));
@@ -1122,7 +1118,7 @@ public final class FreeCol {
      * @param arg The new meta-server location in HOST:PORT format.
      */
     private static boolean setMetaServer(String arg) {
-        String[] s = arg.split(":");
+        String[] s = arg.split(":", -1);
         int port = -1;
         try {
             port = (s.length == 2) ? Integer.parseInt(s[1]) : -1;
@@ -1181,7 +1177,7 @@ public final class FreeCol {
             if (index > 0) localeArg = localeArg.substring(0, index);
             newLocale = Messages.getLocale(localeArg);
         }
-        if (newLocale != FreeCol.locale) {
+        if (!Objects.equals(newLocale, FreeCol.locale)) {
             FreeCol.locale = newLocale;
             return true;
         }

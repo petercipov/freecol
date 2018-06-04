@@ -148,7 +148,7 @@ public class FreeColDebugger {
         if (optionValue == null) return false;
         if (optionValue.isEmpty()) return true;
 
-        for (String s : optionValue.split(",")) {
+        for (String s : optionValue.split(",", -1)) {
             try {
                 DebugMode mode = Enum.valueOf(DebugMode.class, upCase(s));
                 enableDebugMode(mode);
@@ -242,7 +242,7 @@ public class FreeColDebugger {
                                          boolean force) {
         int turns = getDebugRunTurns();
         if (turns < 0              // Not a debug run
-            || turns > 0 && !force // Still going
+            || (turns > 0 && !force) // Still going
             ) return false;
 
         // Zero => signalEndDebugRun was called

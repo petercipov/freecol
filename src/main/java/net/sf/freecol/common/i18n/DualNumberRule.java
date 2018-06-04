@@ -21,10 +21,10 @@ package net.sf.freecol.common.i18n;
 
 
 /**
- * Number optimized for languages that distinguish the categories one,
+ * Numeric optimized for languages that distinguish the categories one,
  * two and other.
  */
-public class DualNumberRule extends Number {
+public class DualNumberRule extends Numeric {
 
     /**
      * {@inheritDoc}

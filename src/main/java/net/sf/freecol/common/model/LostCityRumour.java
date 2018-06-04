@@ -457,5 +457,6 @@ public class LostCityRumour extends TileItem {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

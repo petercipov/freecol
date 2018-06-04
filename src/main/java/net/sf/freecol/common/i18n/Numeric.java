@@ -30,11 +30,11 @@ import java.util.logging.Logger;
  * <a href="http://cldr.unicode.org/index/cldr-spec/plural-rules">
  * Common Locale Data Repository</a>.
  */
-public abstract class Number implements Selector {
+public abstract class Numeric implements Selector {
 
     public enum Category { zero, one, two, few, many, other };
 
-    private static final Logger logger = Logger.getLogger(Number.class.getName());
+    private static final Logger logger = Logger.getLogger(Numeric.class.getName());
 
     /**
      * Return the category the selector value belongs to.

@@ -215,6 +215,7 @@ public class NativeTradeItem extends GoodsTradeItem {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

@@ -19,6 +19,7 @@
 
 package net.sf.freecol.common.model;
 
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -330,12 +331,13 @@ public abstract class FreeColGameObject extends FreeColObject {
      */
     @Override
     public boolean equals(Object o) {
+        if (o == null) return false;
         if (this == o) return true;
         if (o instanceof FreeColGameObject) {
             // FreeColGameObjects are equal if the two fcgos are in
             // the same game and have the same identifier.
             FreeColGameObject fco = (FreeColGameObject)o;
-            return this.getGame() == fco.getGame()
+            return Objects.equals(this.getGame(), fco.getGame())
                 && super.equals(o);
         }
         return false;

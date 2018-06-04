@@ -26,6 +26,8 @@ import net.sf.freecol.common.io.FreeColXMLReader;
 import net.sf.freecol.common.io.FreeColXMLWriter;
 import net.sf.freecol.common.util.Utils;
 
+import java.util.Objects;
+
 
 /**
  * A trade item consisting of a unit.
@@ -73,7 +75,7 @@ public class UnitTradeItem extends TradeItem {
      */
     @Override
     public boolean isValid() {
-        return unit.getOwner() == getSource()
+        return Objects.equals(unit.getOwner(), getSource())
             && unit.getType().isAvailableTo(getDestination());
     }
 
@@ -112,10 +114,11 @@ public class UnitTradeItem extends TradeItem {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int evaluateFor(Player player) {
         final Unit unit = getUnit();
         return (!isValid()) ? INVALID_TRADE_ITEM
-            : (getSource() == player)
+            : (Objects.equals(getSource(), player))
             ? ((player.isAI() && player.getUnitCount() < 10)
                 ? TradeItem.INVALID_TRADE_ITEM
                 : -unit.evaluateFor(player))
@@ -165,6 +168,7 @@ public class UnitTradeItem extends TradeItem {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

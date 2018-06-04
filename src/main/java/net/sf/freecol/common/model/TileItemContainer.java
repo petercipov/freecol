@@ -21,6 +21,7 @@ package net.sf.freecol.common.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -245,7 +246,7 @@ public class TileItemContainer extends FreeColGameObject {
         synchronized (tileItems) {
             return (TileImprovement)find(tileItems,
                 ti -> (ti instanceof TileImprovement
-                    && ((TileImprovement)ti).getType() == type));
+                    && Objects.equals(((TileImprovement) ti).getType(), type)));
         }
     }
 
@@ -673,6 +674,7 @@ public class TileItemContainer extends FreeColGameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

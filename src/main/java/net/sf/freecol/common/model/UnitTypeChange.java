@@ -163,6 +163,7 @@ public class UnitTypeChange extends FreeColSpecObjectType {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

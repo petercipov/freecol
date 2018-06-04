@@ -19,11 +19,7 @@
 
 package net.sf.freecol.server.ai;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -119,7 +115,7 @@ public class ColonyPlan {
     private static final int LOW_PRODUCTION_THRESHOLD = 1;
 
     /**
-     * Number of turns to require production of without exhausting the
+     * Numeric of turns to require production of without exhausting the
      * input goods.
      */
     private static final int PRODUCTION_TURNOVER_TURNS = 5;
@@ -584,7 +580,7 @@ public class ColonyPlan {
      * @return A {@code BuildPlan} with this type, or null if not found.
      */
     private BuildPlan findBuildPlan(BuildableType type) {
-        return find(buildPlans, bp -> bp.type == type);
+        return find(buildPlans, bp -> Objects.equals(bp.type, type));
     }
 
     /**
@@ -704,7 +700,7 @@ public class ColonyPlan {
                     && colony.getTile().isShore()) {
                     int landFood = 0, seaFood = 0;
                     for (Tile t : transform(colony.getTile().getSurroundingTiles(1,1),
-                            t2 -> (t2.getOwningSettlement() == colony
+                            t2 -> (Objects.equals(t2.getOwningSettlement(), colony)
                                 || player.canClaimForSettlement(t2)))) {
                         for (AbstractGoods ag : t.getSortedPotential()) {
                             if (ag.isFoodType()) {
@@ -950,8 +946,8 @@ public class ColonyPlan {
         final GoodsType work = expert.getType().getExpertProduction();
         final GoodsType oldWork = expert.getWorkType();
         final Unit other = find(others, u ->
-            (u.isPerson() && u.getWorkType() == work
-                && u.getType().getExpertProduction() != work));
+            (u.isPerson() && Objects.equals(u.getWorkType(), work)
+                && !Objects.equals(u.getType().getExpertProduction(), work)));
         if (other != null) {
             Location l1 = expert.getLocation();
             Location l2 = other.getLocation();
@@ -978,7 +974,7 @@ public class ColonyPlan {
      */
     private WorkLocationPlan findPlan(GoodsType goodsType,
                                       List<WorkLocationPlan> plans) {
-        return find(plans, wlp -> wlp.getGoodsType() == goodsType);
+        return find(plans, wlp -> Objects.equals(wlp.getGoodsType(), goodsType));
     }
 
     /**
@@ -1039,12 +1035,12 @@ public class ColonyPlan {
                 bestValue = value;
                 best.clear();
                 best.add(u);
-                if (u.getType().getExpertProduction() == goodsType) {
+                if (Objects.equals(u.getType().getExpertProduction(), goodsType)) {
                     special = u;
                 }
             } else if (value == bestValue && !best.isEmpty()) {
                 best.add(u);
-                if (u.getType().getExpertProduction() == goodsType) {
+                if (Objects.equals(u.getType().getExpertProduction(), goodsType)) {
                     special = u;
                 }
             }
@@ -1072,7 +1068,7 @@ public class ColonyPlan {
         best.clear();
         bestValue = Integer.MIN_VALUE;
         for (Unit u : todo) {
-            boolean relevant = u.getWorkType() == goodsType;
+            boolean relevant = Objects.equals(u.getWorkType(), goodsType);
             int score = (relevant) ? u.getExperience() : -u.getExperience();
             if (expert != null
                 && u.getUnitChange(UnitChangeType.EXPERIENCE, expert) != null) {
@@ -1181,7 +1177,7 @@ public class ColonyPlan {
                 if (role == null) {
                     if ((role = u.getMilitaryRole()) == null) continue;
                 }
-                if (u.getType() == role.getExpertUnit()
+                if (Objects.equals(u.getType(), role.getExpertUnit())
                     && fullEquipUnit(spec(), u, role, col)) {
                     workers.remove(u);
                     lb.add(u.getId(), "(", u.getType().getSuffix(),
@@ -1315,7 +1311,7 @@ public class ColonyPlan {
                 // what is needed for a building--- e.g. prevent
                 // musket production from hogging the tools.
                 GoodsType raw = goodsType.getInputType();
-                int rawNeeded = sum(buildGoods, ag -> ag.getType() == raw,
+                int rawNeeded = sum(buildGoods, ag -> Objects.equals(ag.getType(), raw),
                                     AbstractGoods::getAmount);
                 if (raw == null
                     || col.getAdjustedNetProductionOf(raw) >= 0
@@ -1421,7 +1417,7 @@ plans:          for (WorkLocationPlan w : getFoodPlans()) {
         List<Unit> nonExperts = new ArrayList<>();
         for (Unit u : col.getUnitList()) {
             if (u.getType().getExpertProduction() != null) {
-                if (u.getType().getExpertProduction() != u.getWorkType()) {
+                if (!Objects.equals(u.getType().getExpertProduction(), u.getWorkType())) {
                     experts.add(u);
                 }
             } else {

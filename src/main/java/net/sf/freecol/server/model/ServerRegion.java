@@ -19,10 +19,7 @@
 
 package net.sf.freecol.server.model;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 import java.awt.Rectangle;
 
@@ -203,8 +200,8 @@ public class ServerRegion extends Region {
     public void addTile(Tile tile) {
         tile.setRegion(this);
         size++;
-        if (bounds.x == 0 && bounds.width == 0
-            || bounds.y == 0 && bounds.height == 0) {
+        if ((bounds.x == 0 && bounds.width == 0)
+            || (bounds.y == 0 && bounds.height == 0)) {
             bounds.setBounds(tile.getX(), tile.getY(), 0, 0);
         } else {
             bounds.add(tile.getX(), tile.getY());
@@ -507,7 +504,7 @@ public class ServerRegion extends Region {
      */
     private static int fillOcean(Map map, Tile tile, ServerRegion region,
                                  Rectangle bounds) {
-        Queue<Tile> q = new LinkedList<>();
+        Queue<Tile> q = new ArrayDeque<>();
         int n = 0;
         boolean[][] visited = new boolean[map.getWidth()][map.getHeight()];
         visited[tile.getX()][tile.getY()] = true;
@@ -523,7 +520,7 @@ public class ServerRegion extends Region {
                     && !visited[t.getX()][t.getY()]
                     && bounds.contains(t.getX(), t.getY())) {
                     visited[t.getX()][t.getY()] = true;
-                    if ((t.getRegion() == null || t.getRegion() == region)
+                    if ((t.getRegion() == null || Objects.equals(t.getRegion(), region))
                         && !t.isLand()) {
                         q.add(t);
                     }

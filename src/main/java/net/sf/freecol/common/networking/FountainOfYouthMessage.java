@@ -82,6 +82,7 @@ public class FountainOfYouthMessage extends AttributeMessage {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void clientHandler(FreeColClient freeColClient) {
         final Game game = freeColClient.getGame();
         final int n = getMigrants();

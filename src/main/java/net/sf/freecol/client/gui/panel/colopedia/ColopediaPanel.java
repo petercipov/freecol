@@ -206,7 +206,7 @@ public final class ColopediaPanel extends FreeColPanel
     public void hyperlinkUpdate(HyperlinkEvent e) {
         HyperlinkEvent.EventType type = e.getEventType();
         if (type == HyperlinkEvent.EventType.ACTIVATED) {
-            String[] path = e.getURL().getPath().split("/");
+            String[] path = e.getURL().getPath().split("/", -1);
             if (null != path[1]) {
                 switch (path[1]) {
                 case FreeColObject.ID_ATTRIBUTE_TAG:

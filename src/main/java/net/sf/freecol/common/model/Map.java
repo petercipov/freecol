@@ -19,20 +19,7 @@
 
 package net.sf.freecol.common.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -649,7 +636,7 @@ public class Map extends FreeColGameObject implements Location {
         return (l1 == null || l2 == null) ? false
             : (l1 == l2) ? true
             : (l1.getTile() == null) ? false
-            : l1.getTile() == l2.getTile();
+            : Objects.equals(l1.getTile(), l2.getTile());
     }
 
     /**
@@ -1757,7 +1744,7 @@ public class Map extends FreeColGameObject implements Location {
         // Create the start node and put it on the open list.
         final PathNode firstNode = new PathNode(start,
             ((currentUnit != null) ? currentUnit.getMovesLeft() : -1),
-            0, carrier != null && currentUnit == carrier, null, null);
+            0, carrier != null && Objects.equals(currentUnit, carrier), null, null);
         f.put(start.getId(), sh.getValue(start));
         openMap.put(start.getId(), firstNode);
         openMapQueue.offer(firstNode);
@@ -1821,7 +1808,7 @@ ok:     while (!openMap.isEmpty()) {
                 // If the new tile is the tile we just visited, skip it.
                 if (lb != null) lb.add("\n    ", moveTile);
                 if (currentNode.previous != null
-                    && currentNode.previous.getTile() == moveTile) {
+                    && Objects.equals(currentNode.previous.getTile(), moveTile)) {
                     if (lb != null) lb.add(" !prev");
                     continue;
                 }
@@ -2119,7 +2106,7 @@ ok:     while (!openMap.isEmpty()) {
         int limit) {
         final int xmax = boolmap.length, ymax = boolmap[0].length;
         boolean[][] visited = new boolean[xmax][ymax];
-        Queue<Position> q = new LinkedList<>();
+        Queue<Position> q = new ArrayDeque<>();
 
         visited[x][y] = true;
         for (Position p = new Position(x, y); p != null && --limit > 0;
@@ -2233,7 +2220,7 @@ ok:     while (!openMap.isEmpty()) {
 
         // Reset all highSeas tiles to the default ocean type.
         for (Tile t : getAllTilesSet()) {
-            if (t.getType() == highSeas) t.setType(ocean);
+            if (Objects.equals(t.getType(), highSeas)) t.setType(ocean);
         }
 
         final int width = getWidth(), height = getHeight();
@@ -2242,7 +2229,7 @@ ok:     while (!openMap.isEmpty()) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < maxDistanceToEdge && x < width
                      && isValid(x, y)
-                     && (t = getTile(x, y)).getType() == ocean; x++) {
+                     && Objects.equals((t = getTile(x, y)).getType(), ocean); x++) {
                 Tile other = getLandWithinDistance(x, y,
                     distToLandFromHighSeas);
                 if (other == null) {
@@ -2258,7 +2245,7 @@ ok:     while (!openMap.isEmpty()) {
             }
             for (int x = 0; x < maxDistanceToEdge && x < width
                      && isValid(width-1-x, y)
-                     && (t = getTile(width-1-x, y)).getType() == ocean; x++) {
+                     && Objects.equals((t = getTile(width-1-x, y)).getType(), ocean); x++) {
                 Tile other = getLandWithinDistance(width-1-x, y,
                     distToLandFromHighSeas);
                 if (other == null) {
@@ -2777,5 +2764,6 @@ ok:     while (!openMap.isEmpty()) {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

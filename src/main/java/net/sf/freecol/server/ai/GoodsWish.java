@@ -19,6 +19,7 @@
 
 package net.sf.freecol.server.ai;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.xml.stream.XMLStreamException;
@@ -171,7 +172,7 @@ public class GoodsWish extends Wish {
      *     that requested.
      */
     public <T extends AbstractGoods> boolean satisfiedBy(T goods) {
-        return goods.getType() == goodsType
+        return Objects.equals(goods.getType(), goodsType)
             && goods.getAmount() >= amountRequested;
     }
 

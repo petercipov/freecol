@@ -20,6 +20,7 @@
 package net.sf.freecol.client.gui.action;
 
 import java.awt.event.ActionEvent;
+import java.util.Objects;
 
 import net.sf.freecol.client.FreeColClient;
 import net.sf.freecol.common.i18n.Messages;
@@ -100,7 +101,7 @@ public class ChangeAction extends UnitAction {
         } else {
             boolean activeUnitFound = false;
             for (Unit u : tile.getUnitList()) {
-                if (u == unit) {
+                if (Objects.equals(u, unit)) {
                     activeUnitFound = true;
                 } else if (activeUnitFound
                     && u.getState() == Unit.UnitState.ACTIVE
@@ -110,8 +111,8 @@ public class ChangeAction extends UnitAction {
                 }
             }
             Unit active = find(tile.getUnits(),
-                               u -> (u != unit
-                                   && u.getState() == Unit.UnitState.ACTIVE
+                               u -> (!Objects.equals(u, unit)
+                                   && Objects.equals(u.getState(), Unit.UnitState.ACTIVE)
                                    && u.getMovesLeft() > 0));
             if (active != null) getGUI().changeView(active);
         }

@@ -29,6 +29,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.swing.Icon;
@@ -324,7 +325,7 @@ public final class UnitLabel extends FreeColLabel
         final Game game = freeColClient.getGame();
         final Specification spec = game.getSpecification();
         final InGameController igc = freeColClient.getInGameController();
-        String[] args = ae.getActionCommand().split("/");
+        String[] args = ae.getActionCommand().split("/", -1);
         GoodsType gt;
         switch (Enum.valueOf(UnitAction.class, upCase(args[0]))) {
             case ASSIGN:
@@ -342,7 +343,7 @@ public final class UnitLabel extends FreeColLabel
                 }
                 if (colonyTile != unit.getLocation()) igc.work(unit, colonyTile);
                 if ((gt = spec.getGoodsType(args[2])) != null
-                    && unit.getWorkType() != gt) {
+                    && !Objects.equals(unit.getWorkType(), gt)) {
                     igc.changeWorkType(unit, gt);
                 }
                 break;
@@ -352,7 +353,7 @@ public final class UnitLabel extends FreeColLabel
                     = game.getFreeColGameObject(args[1], Building.class);
                 if (building != unit.getLocation()) igc.work(unit, building);
                 if ((gt = spec.getGoodsType(args[2])) != null
-                    && unit.getWorkType() != gt) {
+                    && !Objects.equals(unit.getWorkType(), gt)) {
                     igc.changeWorkType(unit, gt);
                 }
                 break;

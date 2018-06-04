@@ -21,6 +21,7 @@ package net.sf.freecol.common.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.JList;
 import javax.swing.ListModel;
@@ -279,6 +280,7 @@ public final class BuildingType extends BuildableType
      * @param unattended Whether the production is unattended.
      * @return A list of {@code ProductionType}s.
      */
+    @Override
     public List<ProductionType> getAvailableProductionTypes(boolean unattended) {
         return getAvailableProductionTypes(unattended, null);
     }
@@ -358,6 +360,7 @@ public final class BuildingType extends BuildableType
     /**
      * {@inheritDoc}
      */
+    @Override
     public NoBuildReason canBeBuiltInColony(Colony colony,
         List<BuildableType> assumeBuilt) {
         Building colonyBuilding = colony.getBuilding(this);
@@ -372,7 +375,7 @@ public final class BuildingType extends BuildableType
         } else {
             // a building of the same family already exists
             BuildingType from = colonyBuilding.getType().getUpgradesTo();
-            if (from != this && !assumeBuilt.contains(from)) {
+            if (!Objects.equals(from, this) && !assumeBuilt.contains(from)) {
                 // the existing building's next upgrade is not the
                 // new one we want to build
                 return Colony.NoBuildReason.WRONG_UPGRADE;
@@ -389,7 +392,7 @@ public final class BuildingType extends BuildableType
         Building building = colony.getBuilding(this);
         BuildingType buildingType = (building == null) ? null
                 : building.getType();
-        if (buildingType == upgradesFrom) return 0;
+        if (Objects.equals(buildingType,  upgradesFrom)) return 0;
         for (int index = 0; index < buildQueue.getSize(); index++) {
             if (upgradesFrom.equals(buildQueue.getElementAt(index))) {
                 return index + 1;
@@ -427,7 +430,7 @@ public final class BuildingType extends BuildableType
         for (int index = 0; index < buildQueue.getSize(); index++) {
             BuildableType toBuild = buildQueue.getElementAt(index);
 
-            if (toBuild == this) continue;
+            if (Objects.equals(toBuild, this)) continue;
 
             if (!canBuild && !foundUpgradesFrom
                     && upgradesFrom.equals(toBuild)) {
@@ -617,7 +620,7 @@ public final class BuildingType extends BuildableType
         this.rebelFactor = xr.getAttribute(REBEL_FACTOR_TAG,
                 parent.rebelFactor);
 
-        if (parent != this) { // Handle "extends" for super-type fields
+        if (! Objects.equals(parent, this)) { // Handle "extends" for super-type fields
             if (!xr.hasAttribute(REQUIRED_POPULATION_TAG)) {
                 setRequiredPopulation(parent.getRequiredPopulation());
             }
@@ -660,5 +663,6 @@ public final class BuildingType extends BuildableType
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

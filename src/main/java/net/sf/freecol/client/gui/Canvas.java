@@ -40,6 +40,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -251,10 +252,10 @@ public final class Canvas extends JDesktopPane {
         CENTERED_RIGHT,
     }
 
-    /** Number of tries to find a clear spot on the canvas. */
+    /** Numeric of tries to find a clear spot on the canvas. */
     private static final int MAXTRY = 3;
 
-    /** Number of pixels that must be moved before a goto is enabled. */
+    /** Numeric of pixels that must be moved before a goto is enabled. */
     private static final int DRAG_THRESHOLD = 16;
 
     /** The cursor to show for goto operations. */
@@ -566,11 +567,11 @@ public final class Canvas extends JDesktopPane {
         PathNode oldPath = mapViewer.getGotoPath();
         Tile lastTile = (oldPath == null) ? null
             : oldPath.getLastNode().getTile();
-        if (lastTile == tile) return;
+        if (Objects.equals(lastTile, tile)) return;
 
         // Do not show a path if it will be invalid, avoiding calling
         // the expensive path finder if possible.
-        PathNode newPath = (unit.getTile() == tile
+        PathNode newPath = (Objects.equals(unit.getTile(), tile)
             || !tile.isExplored()
             || !unit.getSimpleMoveType(tile).isLegal()) ? null
             : unit.findPath(tile);
@@ -853,7 +854,7 @@ public final class Canvas extends JDesktopPane {
                 for (Component c2 : ((JInternalFrame) c1).getContentPane()
                          .getComponents()) {
                     if (c2 instanceof ColonyPanel
-                        && ((ColonyPanel)c2).getColony() == colony) {
+                        && Objects.equals( ((ColonyPanel)c2).getColony(), colony )) {
                         return (ColonyPanel)c2;
                     }
                 }
@@ -1681,7 +1682,7 @@ public final class Canvas extends JDesktopPane {
      */
     public BuildQueuePanel showBuildQueuePanel(Colony colony) {
         BuildQueuePanel panel = getExistingFreeColPanel(BuildQueuePanel.class);
-        if (panel == null || panel.getColony() != colony) {
+        if (panel == null || !Objects.equals(panel.getColony(), colony)) {
             panel = new BuildQueuePanel(freeColClient, colony);
             showSubPanel(panel, true);
         }
@@ -2537,8 +2538,6 @@ public final class Canvas extends JDesktopPane {
      * Display the trade route input panel for a given trade route.
      *
      * @param newRoute The {@code TradeRoute} to display.
-     * @param callBack The {@code Runnable} that is run when the
-     *     panel closes.
      * @return The {@code TradeRouteInputPanel}.
      */
     public TradeRouteInputPanel showTradeRouteInputPanel(TradeRoute newRoute) {

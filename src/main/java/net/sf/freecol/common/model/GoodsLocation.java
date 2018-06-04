@@ -196,7 +196,7 @@ public abstract class GoodsLocation extends UnitLocation {
     //    UnitLocation.getUnits
     //    UnitLocation.getUnitList
     //    UnitLocation.getSettlement
-    // Does not implement getRank
+    // Does not implement getRankAtLocation
 
     /**
      * {@inheritDoc}

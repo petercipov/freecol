@@ -28,7 +28,7 @@ import static net.sf.freecol.common.util.CollectionUtils.*;
 /**
  * This class handles zero or one rule for each number category.
  */
-public class DefaultNumberRule extends Number {
+public class DefaultNumberRule extends Numeric {
 
     final Map<Category, Rule> rules = new EnumMap<>(Category.class);
 

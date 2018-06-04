@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -397,7 +398,7 @@ public final class NegotiationDialog extends FreeColDialog<DiplomaticTrade> {
                 // Remove the ones already on the table
                 for (int i = 0; i < available.size(); i++) {
                     Goods g = available.get(i);
-                    if (g.getType() == goods.getType()) {
+                    if (Objects.equals(g.getType(), goods.getType())) {
                         if (g.getAmount() <= goods.getAmount()) {
                             available.remove(i);
                         } else {
@@ -499,7 +500,7 @@ public final class NegotiationDialog extends FreeColDialog<DiplomaticTrade> {
 
             available.clear();
             final Predicate<Player> incitablePred = p ->
-                    p != this.other && this.source.getStance(p).isIncitable();
+                    !Objects.equals(p, this.other) && this.source.getStance(p).isIncitable();
             available.addAll(transform(getGame().getLivePlayers(this.source),
                     incitablePred));
 
@@ -1206,7 +1207,7 @@ public final class NegotiationDialog extends FreeColDialog<DiplomaticTrade> {
     public void addColonyTradeItem(Player source, Colony colony) {
         final Player player = getMyPlayer();
 
-        Player destination = (source == otherPlayer) ? player : otherPlayer;
+        Player destination = Objects.equals(source, otherPlayer) ? player : otherPlayer;
         agreement.add(new ColonyTradeItem(getGame(), source, destination, colony));
         updateDialog();
     }
@@ -1220,7 +1221,7 @@ public final class NegotiationDialog extends FreeColDialog<DiplomaticTrade> {
     public void addGoldTradeItem(Player source, int amount) {
         final Player player = getMyPlayer();
 
-        Player destination = (source == otherPlayer) ? player : otherPlayer;
+        Player destination = Objects.equals(source, otherPlayer) ? player : otherPlayer;
         agreement.add(new GoldTradeItem(getGame(), source, destination, amount));
         updateDialog();
     }
@@ -1234,7 +1235,7 @@ public final class NegotiationDialog extends FreeColDialog<DiplomaticTrade> {
     public void addGoodsTradeItem(Player source, Goods goods) {
         final Player player = getMyPlayer();
 
-        Player destination = (source == otherPlayer) ? player : otherPlayer;
+        Player destination = Objects.equals(source, otherPlayer) ? player : otherPlayer;
         agreement.add(new GoodsTradeItem(getGame(), source, destination, goods));
         updateDialog();
     }
@@ -1248,7 +1249,7 @@ public final class NegotiationDialog extends FreeColDialog<DiplomaticTrade> {
     public void addInciteTradeItem(Player source, Player victim) {
         final Player player = getMyPlayer();
 
-        Player destination = (source == otherPlayer) ? player : otherPlayer;
+        Player destination = Objects.equals(source, otherPlayer) ? player : otherPlayer;
         agreement.add(new InciteTradeItem(getGame(), source, destination, victim));
         updateDialog();
     }
@@ -1274,7 +1275,7 @@ public final class NegotiationDialog extends FreeColDialog<DiplomaticTrade> {
     public void addUnitTradeItem(Player source, Unit unit) {
         final Player player = getMyPlayer();
 
-        Player destination = (source == otherPlayer) ? player : otherPlayer;
+        Player destination = Objects.equals(source, otherPlayer) ? player : otherPlayer;
         agreement.add(new UnitTradeItem(getGame(), source, destination, unit));
         updateDialog();
     }

@@ -23,6 +23,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
@@ -570,7 +571,7 @@ public class Europe extends UnitLocation
      */
     @Override
     public FreeColGameObject getLinkTarget(Player player) {
-        return (getOwner() == player) ? this : null;
+        return (Objects.equals(getOwner(), player)) ? this : null;
     }
 
 
@@ -775,6 +776,7 @@ public class Europe extends UnitLocation
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

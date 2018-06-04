@@ -589,6 +589,7 @@ public class Connection implements Closeable {
     /**
      * Close this connection.
      */
+    @Override
     public void close() {
         if (this.receivingThread != null) {
             this.receivingThread.askToStop("connection closing");

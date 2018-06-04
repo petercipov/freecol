@@ -26,10 +26,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.RenderingHints;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * This class generates the most common types of flags from a small
@@ -89,31 +86,30 @@ public class Flag {
      * and possible positions of the "union".
      */
     public enum Decoration {
-        NONE(),
-        CROSS(UnionPosition.CANTON),
-        GREEK_CROSS(UnionPosition.CANTON),
-        SCANDINAVIAN_CROSS(UnionPosition.CANTON),
+        NONE(UnionShape.RECTANGLE),
+        CROSS(UnionShape.RECTANGLE, UnionPosition.CANTON),
+        GREEK_CROSS(UnionShape.RECTANGLE, UnionPosition.CANTON),
+        SCANDINAVIAN_CROSS(UnionShape.RECTANGLE, UnionPosition.CANTON),
         CHEVRON(UnionShape.CHEVRON, UnionPosition.LEFT),
         PALL(UnionShape.CHEVRON, UnionPosition.LEFT),
         BEND(UnionShape.BEND, UnionPosition.TOP, UnionPosition.BOTTOM),
         BEND_SINISTER(UnionShape.BEND, UnionPosition.TOP, UnionPosition.BOTTOM),
         SALTIRE(UnionShape.CHEVRON, UnionPosition.TOP, UnionPosition.BOTTOM,
                 UnionPosition.LEFT, UnionPosition.RIGHT),
-        SALTIRE_AND_CROSS(UnionPosition.CANTON);
+        SALTIRE_AND_CROSS(UnionShape.RECTANGLE, UnionPosition.CANTON);
 
-        private UnionShape unionShape = UnionShape.RECTANGLE;
-        private Set<UnionPosition> unionPositions = EnumSet.allOf(UnionPosition.class);
+        private final UnionShape unionShape;
+        private final Set<UnionPosition> unionPositions;
 
-        Decoration(UnionPosition... positions) {
-            this.unionPositions = EnumSet.of(UnionPosition.NONE);
-            for (UnionPosition position : positions) {
-                unionPositions.add(position);
-            }
-        }
 
         Decoration(UnionShape shape, UnionPosition... positions) {
-            this(positions);
+            EnumSet<UnionPosition> set = EnumSet.of(UnionPosition.NONE);
+            for (UnionPosition position : positions) {
+                set.add(position);
+            }
+            this.unionPositions = Collections.unmodifiableSet(set);
             this.unionShape = shape;
+
         }
 
         public UnionShape getUnionShape() {

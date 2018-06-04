@@ -22,6 +22,7 @@ package net.sf.freecol.common.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
@@ -292,7 +293,7 @@ public abstract class UnitLocation extends FreeColGameObject implements Location
     // Interface Location
     // Inheriting
     //   FreeColObject.getId()
-    // Does not implement getRank()
+    // Does not implement getRankAtLocation()
 
     /**
      * {@inheritDoc}
@@ -507,7 +508,7 @@ public abstract class UnitLocation extends FreeColGameObject implements Location
         Unit unit = (locatable instanceof Unit) ? (Unit)locatable : null;
         return (unit == null)
             ? NoAddReason.WRONG_TYPE
-            : (!isEmpty() && getFirstUnit().getOwner() != unit.getOwner())
+            : (!isEmpty() && !Objects.equals(getFirstUnit().getOwner(), unit.getOwner()))
             ? NoAddReason.OCCUPIED_BY_ENEMY
             : (contains(unit))
             ? NoAddReason.ALREADY_PRESENT

@@ -404,7 +404,7 @@ public class StringTemplate extends FreeColObject {
      *
      * @param <T> The actual return type.
      * @param key The key to add.
-     * @param amount The {@code Number} value to add.
+     * @param amount The {@code Numeric} value to add.
      * @return This.
      */
     public <T extends StringTemplate> T addAmount(String key, Number amount) {
@@ -572,6 +572,7 @@ public class StringTemplate extends FreeColObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

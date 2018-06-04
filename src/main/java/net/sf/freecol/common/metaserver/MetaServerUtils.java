@@ -81,6 +81,7 @@ public class MetaServerUtils {
         /**
          * {@inheritDoc}
          */
+        @Override
         public Message handle(Connection connection, Message message)
             throws FreeColException {
             if (message == null) return null;
@@ -102,6 +103,7 @@ public class MetaServerUtils {
         /**
          * {@inheritDoc}
          */
+        @Override
         public Message read(Connection connection)
             throws FreeColException, XMLStreamException {
             return Message.read(null, connection.getFreeColXMLReader());

@@ -198,12 +198,12 @@ public interface Location extends ObjectWithId {
     }
 
     /**
-     * Static front end to getRank.
+     * Static front end to getRankAtLocation.
      *
      * @param loc A {@code Location} to check.
      * @return The integer rank of the given location.
      */
-    public static int getRank(Location loc) {
+    public static int getRankAtLocation(Location loc) {
         return (loc == null) ? Location.LOCATION_RANK_NOWHERE : loc.getRank();
     }
 

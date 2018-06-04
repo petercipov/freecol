@@ -22,7 +22,7 @@ package net.sf.freecol.common.i18n;
 import java.io.File;
 import java.io.FileInputStream;
 
-import net.sf.freecol.common.i18n.Number.Category;
+import net.sf.freecol.common.i18n.Numeric.Category;
 import net.sf.freecol.util.test.FreeColTestCase;
 
 

@@ -33,6 +33,8 @@ import net.sf.freecol.common.model.Unit.MoveType;
 import net.sf.freecol.server.FreeColServer;
 import net.sf.freecol.server.model.ServerPlayer;
 
+import java.util.Objects;
+
 
 /**
  * The message sent when a missionary establishes/denounces a mission.
@@ -124,7 +126,7 @@ public class MissionaryMessage extends AttributeMessage {
             if (missionary == null) {
                 return serverPlayer.clientError("Denouncing an empty mission at: "
                     + is.getId());
-            } else if (missionary.getOwner() == serverPlayer) {
+            } else if (Objects.equals(missionary.getOwner(), serverPlayer)) {
                 return serverPlayer.clientError("Denouncing our own missionary at: "
                     + is.getId());
             } else if (!unit.hasAbility(Ability.DENOUNCE_HERESY)) {

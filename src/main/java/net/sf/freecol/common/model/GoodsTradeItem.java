@@ -26,6 +26,8 @@ import net.sf.freecol.common.io.FreeColXMLReader;
 import net.sf.freecol.common.io.FreeColXMLWriter;
 import net.sf.freecol.common.util.Utils;
 
+import java.util.Objects;
+
 
 /**
  * A trade item consisting of some goods.
@@ -114,11 +116,12 @@ public class GoodsTradeItem extends TradeItem {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int evaluateFor(Player player) {
         final Market market = player.getMarket();
         final Goods goods = getGoods();
         return (!isValid()) ? INVALID_TRADE_ITEM
-            : (getSource() == player)
+            : (Objects.equals(getSource(), player))
             ? ((market == null) ? -2 * goods.getAmount()
                 : market.getBidPrice(goods.getType(), goods.getAmount()))
             : ((market == null) ? 2 * goods.getAmount()
@@ -169,6 +172,7 @@ public class GoodsTradeItem extends TradeItem {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

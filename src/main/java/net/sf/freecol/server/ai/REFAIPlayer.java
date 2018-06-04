@@ -19,14 +19,8 @@
 
 package net.sf.freecol.server.ai;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Random;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
@@ -542,7 +536,7 @@ public class REFAIPlayer extends EuropeanAIPlayer {
     protected Stance determineStance(Player other) {
         final Player player = getPlayer();
         // The REF is always at war with its own rebels.
-        return (other.getREFPlayer() == player)
+        return (Objects.equals(other.getREFPlayer(), player))
             ? ((other.isRebel()) ? Stance.WAR : Stance.PEACE)
             : (other.atWarWith(player)) ? Stance.WAR
             : (!player.getRebels().isEmpty()) ? Stance.PEACE // Focus!
@@ -913,7 +907,7 @@ public class REFAIPlayer extends EuropeanAIPlayer {
                     // Do not chase the same unit!
                     final Predicate<UnitSeekAndDestroyMission> unitPred = m ->
                         m != null && m.getTarget() instanceof Unit
-                            && (Unit)m.getTarget() == target;
+                            && Objects.equals(m.getTarget(), target);
                     final Function<AIUnit, UnitSeekAndDestroyMission> missionMapper = aiu ->
                         aiu.getMission(UnitSeekAndDestroyMission.class);
                     if (any(transform(getAIUnits(), aiu -> aiu != aiUnit,

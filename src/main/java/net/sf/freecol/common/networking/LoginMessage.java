@@ -20,6 +20,7 @@
 package net.sf.freecol.common.networking;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.xml.stream.XMLStreamException;
@@ -238,7 +239,7 @@ public class LoginMessage extends ObjectMessage {
                 new LoginMessage(serverPlayer, userName, getVersion(),
                                  freeColServer.getServerState(),
                                  freeColServer.getSinglePlayer(),
-                                 serverGame.getCurrentPlayer() == serverPlayer,
+                                 Objects.equals(serverGame.getCurrentPlayer(), serverPlayer),
                                  serverGame));
         }
         return ret;
@@ -307,7 +308,7 @@ public class LoginMessage extends ObjectMessage {
                 new LoginMessage(present, userName, getVersion(),
                     freeColServer.getServerState(),
                     freeColServer.getSinglePlayer(),
-                    serverGame.getCurrentPlayer() == present,
+                    Objects.equals(serverGame.getCurrentPlayer(), present),
                     serverGame));
         }
         return ret;
@@ -361,7 +362,7 @@ public class LoginMessage extends ObjectMessage {
                 new LoginMessage(present, userName, getVersion(),
                                  freeColServer.getServerState(),
                                  freeColServer.getSinglePlayer(),
-                                 serverGame.getCurrentPlayer() == present,
+                                 Objects.equals(serverGame.getCurrentPlayer(), present),
                                  serverGame));
         }
         return ret;

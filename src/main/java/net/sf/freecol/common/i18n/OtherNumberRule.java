@@ -21,10 +21,10 @@ package net.sf.freecol.common.i18n;
 
 
 /**
- * Number optimized for languages that do not distinguish any number
+ * Numeric optimized for languages that do not distinguish any number
  * categories. The category returned is always other.
  */
-public class OtherNumberRule extends Number {
+public class OtherNumberRule extends Numeric {
 
     @Override
     public Category getCategory(double input) {

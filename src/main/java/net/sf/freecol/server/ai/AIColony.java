@@ -21,12 +21,7 @@ package net.sf.freecol.server.ai;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -275,7 +270,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
         // have changed.
         BuildableType oldBuild = colony.getCurrentlyBuilding();
         BuildableType build = colonyPlan.getBestBuildableType();
-        if (build != oldBuild) {
+        if (!Objects.equals(build, oldBuild)) {
             List<BuildableType> queue = new ArrayList<>();
             if (build != null) queue.add(build);
             AIMessage.askSetBuildQueue(this, queue);
@@ -525,7 +520,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
         double score = 1.0;
         for (Tile t : tile.getSurroundingTiles(1)) {
             Player owner = t.getOwner();
-            if (owner == null || owner == player
+            if (owner == null || Objects.equals(owner, player)
                 || owner.isEuropean()
                 || !player.canClaimForSettlement(t)) continue;
             if (owner.atWarWith(player)) {
@@ -768,7 +763,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
                 // new goods batch.
                 for (AIGoods aig : getExportGoods()) {
                     Goods goods = aig.getGoods();
-                    if (goods.getType() == gt) {
+                    if (Objects.equals(goods.getType(), gt)) {
                         int amount = goods.getAmount();
                         if (amount <= exportAmount) {
                             goods.setAmount(exportAmount);
@@ -945,7 +940,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
     public void requireGoodsWish(GoodsType type, int amount, int value,
                                  LogBuilder lb) {
         GoodsWish gw = (GoodsWish)find(wishes, w -> w instanceof GoodsWish
-            && ((GoodsWish)w).getGoodsType() == type);
+            && Objects.equals(((GoodsWish)w).getGoodsType(), type));
         if (gw != null) {
             gw.update(type, amount, gw.getValue() + 1);
             lb.add(", update ", gw);
@@ -969,7 +964,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
     public void requireWorkerWish(UnitType type, boolean expertNeeded,
                                   int value, LogBuilder lb) {
         WorkerWish ww = (WorkerWish)find(wishes, w -> w instanceof WorkerWish
-            && ((WorkerWish)w).getUnitType() == type);
+            && Objects.equals(((WorkerWish)w).getUnitType(), type  ));
         if (ww != null) {
             ww.update(type, expertNeeded, ww.getValue() + 1);
             lb.add(", update ", ww);
@@ -1027,7 +1022,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
         for (Unit unit : colony.getUnitList()) {
             GoodsType goods = unit.getWorkType();
             UnitType expert = (goods == null
-                || goods == unit.getType().getExpertProduction()) ? null
+                || Objects.equals(goods, unit.getType().getExpertProduction()) ) ? null
                 : spec.getExpertForProducing(goods);
             if (expert != null) {
                 experts.incrementCount(expert, 1);
@@ -1131,7 +1126,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
             final Predicate<Unit> rolePred = u ->
                 (u.roleIsAvailable(role)
                     && (u.hasDefaultRole()
-                        || Role.isCompatibleWith(role, u.getRole())));
+                        || Role.rolesAreCompatible(role, u.getRole())));
             if (any(colony.getTile().getUnits(), rolePred)) {
                 for (AbstractGoods ag : role.getRequiredGoodsList()) {
                     required.incrementCount(ag.getType(), ag.getAmount());
@@ -1202,7 +1197,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
      */
     private TileImprovementPlan getPlanFor(Tile tile,
                                            List<TileImprovementPlan> plans) {
-        return find(plans, tip -> tip.getTarget() == tile);
+        return find(plans, tip -> Objects.equals(tip.getTarget(), tile));
     }
 
     /**
@@ -1218,7 +1213,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
                                          w -> w instanceof ColonyTile)) {
             Tile workTile = wl.getWorkTile();
             ColonyTile colonyTile = (ColonyTile)wl;
-            if (workTile.getOwningSettlement() != colony
+            if (!Objects.equals(workTile.getOwningSettlement(), colony)
                 || getPlanFor(workTile, newPlans) != null) continue;
 
             // Require food for the center tile, but otherwise insist
@@ -1327,7 +1322,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
                 } else if (aig.getGoods() == null) {
                     aig.changeTransport(null);
                     remove = true;
-                } else if (aig.getGoodsType() == goodsType) {
+                } else if (Objects.equals(aig.getGoodsType(), goodsType)) {
                     if (left > 0) {
                         aig.getGoods().setAmount(left);
                     } else {

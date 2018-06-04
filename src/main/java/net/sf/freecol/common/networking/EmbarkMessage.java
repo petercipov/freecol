@@ -32,6 +32,8 @@ import net.sf.freecol.server.FreeColServer;
 import net.sf.freecol.server.model.ServerPlayer;
 import net.sf.freecol.server.model.ServerUnit;
 
+import java.util.Objects;
+
 
 /**
  * The message sent when embarking.
@@ -136,7 +138,7 @@ public class EmbarkMessage extends AttributeMessage {
             } catch (Exception e) {
                 return serverPlayer.clientError(e.getMessage());
             }
-            if (carrier.getTile() != destinationTile) {
+            if (!Objects.equals(carrier.getTile(), destinationTile)) {
                 return serverPlayer.clientError("Carrier: " + carrierId
                     + " is not at destination tile: " + destinationTile);
             }

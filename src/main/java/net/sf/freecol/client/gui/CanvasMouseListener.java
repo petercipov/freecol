@@ -59,16 +59,19 @@ public final class CanvasMouseListener extends FreeColClientHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public void mouseEntered(MouseEvent e) { /* Ignore for now. */ }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void mouseExited(MouseEvent e) { /* Ignore for now. */ }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void mousePressed(MouseEvent e) {
         if (!e.getComponent().isEnabled()) return;
 
@@ -97,6 +100,7 @@ public final class CanvasMouseListener extends FreeColClientHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public void mouseReleased(MouseEvent e) {
         if (!e.getComponent().isEnabled()) return;
 
@@ -114,6 +118,7 @@ public final class CanvasMouseListener extends FreeColClientHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public void mouseClicked(MouseEvent e) {
         if (!e.getComponent().isEnabled()) return;
 

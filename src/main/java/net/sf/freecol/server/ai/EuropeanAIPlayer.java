@@ -19,15 +19,8 @@
 
 package net.sf.freecol.server.ai;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Random;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
@@ -991,6 +984,7 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
      * @param tile The {@code Tile} to derive the contiguity from.
      * @return The number of wagons needed.
      */
+    @Override
     public int getNeededWagons(Tile tile) {
         if (tile != null) {
             int contig = tile.getContiguity();
@@ -1176,8 +1170,8 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
         List<GoodsWish> wishes = goodsWishes.get(type);
         if (wishes != null) {
             for (GoodsWish gw : wishes) {
-                if (gw.getGoodsType() == type
-                    && gw.getDestination() == europe) {
+                if (Objects.equals(gw.getGoodsType(), type)
+                    && Objects.equals(gw.getDestination(), europe)) {
                     if (gw.getTransportable() instanceof AIGoods) {
                         AIGoods aig = (AIGoods)gw.getTransportable();
                         consumeGoodsWish(aig, gw);
@@ -1204,7 +1198,7 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
         return (demand == null) ? Collections.<WorkerWish>emptyList()
             : transform(demand,
                         w -> w instanceof WorkerWish
-                            && ((WorkerWish)w).getUnitType() == type,
+                            && Objects.equals(((WorkerWish)w).getUnitType(), type),
                         w -> (WorkerWish)w);
     }
 
@@ -1220,7 +1214,7 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
         return (demand == null) ? Collections.<GoodsWish>emptyList()
             : transform(demand,
                         w -> w instanceof GoodsWish
-                            && ((GoodsWish)w).getGoodsType() == type,
+                            && Objects.equals(((GoodsWish)w).getGoodsType(), type),
                         w -> (GoodsWish)w);
     }
 
@@ -1641,7 +1635,7 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
                                   x -> !x.isREF())) {
             NationSummary ns = getNationSummary(p);
             if (ns == null) continue;
-            if (p == player) {
+            if (Objects.equals(p, player)) {
                 navalStrength = ns.getNavalStrength();
             } else {
                 int st = ns.getNavalStrength();
@@ -1873,7 +1867,7 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
             Mission old = ((m = aiUnit.getMission()) != null && m.isValid())
                 ? m : null;
             if ((m = getSimpleMission(aiUnit)) == null) continue;
-            lb.add(", ", m, ((m == old) ? " (preserved)" : " (new)"));
+            lb.add(", ", m, ((Objects.equals(m, old)) ? " (preserved)" : " (new)"));
             reasons.put(unit, "New-Naval");
             done.add(aiUnit);
             if (m instanceof TransportMission) {
@@ -2251,7 +2245,7 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
     protected Stance determineStance(Player other) {
         final Player player = getPlayer();
         return (other.isREF())
-            ? ((player.getREFPlayer() == other) 
+            ? ((Objects.equals(player.getREFPlayer(), other))
                 // At war with our REF if rebel, otherwise at peace.
                 ? ((player.isRebel()) ? Stance.WAR : Stance.PEACE)
                 // Do not mess with other player's REF unless they conquer
@@ -2274,7 +2268,7 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
 
         // This is happening, very rarely.  Hopefully now fixed by
         // synchronizing access to AIMain.aiObjects.
-        if (getAIMain().getAIPlayer(player) != this) {
+        if (!Objects.equals(getAIMain().getAIPlayer(player), this)) {
             throw new RuntimeException("EuropeanAIPlayer integrity fail");
         }
         clearAIUnits();

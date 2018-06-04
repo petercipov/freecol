@@ -208,6 +208,7 @@ public class IntegerOption extends AbstractOption<Integer> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

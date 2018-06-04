@@ -312,7 +312,7 @@ public class Building extends WorkLocation
             if (available < required
                 && hasAbility(Ability.EXPERTS_USE_CONNECTIONS)
                 && spec.getBoolean(GameOptions.EXPERTS_HAVE_CONNECTIONS)
-                && ((minimumGoodsInput = getType().getExpertConnectionProduction()
+                && ((minimumGoodsInput = (long)getType().getExpertConnectionProduction()
                         * count(getUnits(),
                             matchKey(getExpertUnitType(), Unit::getType)))
                     > available)) {
@@ -401,7 +401,7 @@ public class Building extends WorkLocation
     //   UnitLocation.getGoodsContainer
     //   final WorkLocation.getSettlement
     //   final WorkLocation.getColony
-    //   final WorkLocation.getRank
+    //   final WorkLocation.getRankAtLocation
 
     /**
      * {@inheritDoc}
@@ -525,6 +525,7 @@ public class Building extends WorkLocation
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getLevel() {
         return getType().getLevel(); // Delegate to type
     }
@@ -709,6 +710,7 @@ public class Building extends WorkLocation
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

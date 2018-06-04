@@ -55,6 +55,7 @@ public final class ClientInputHandler extends FreeColClientHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public Message handle(@SuppressWarnings("unused") Connection connection,
                           Message message) throws FreeColException {
         message.clientHandler(getFreeColClient());
@@ -64,6 +65,7 @@ public final class ClientInputHandler extends FreeColClientHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public Message read(Connection connection)
         throws FreeColException, XMLStreamException {
         return Message.read(getGame(), connection.getFreeColXMLReader());

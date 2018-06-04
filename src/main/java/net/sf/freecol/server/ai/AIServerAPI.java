@@ -52,6 +52,7 @@ public class AIServerAPI extends ServerAPI {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Connection getConnection() {
         return (this.owner == null) ? null : this.owner.getConnection();
     }
@@ -59,6 +60,7 @@ public class AIServerAPI extends ServerAPI {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Connection connect(String name, String host, int port)
         throws IOException {
         return getConnection(); // Noop
@@ -67,6 +69,7 @@ public class AIServerAPI extends ServerAPI {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean disconnect() {
         return false; // Noop
     }
@@ -74,6 +77,7 @@ public class AIServerAPI extends ServerAPI {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Connection reconnect() throws IOException {
         return getConnection(); // Noop
     }

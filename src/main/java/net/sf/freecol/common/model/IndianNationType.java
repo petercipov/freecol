@@ -19,9 +19,7 @@
 
 package net.sf.freecol.common.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -258,7 +256,7 @@ public class IndianNationType extends NationType {
         final Specification spec = getSpecification();
         IndianNationType parent = xr.getType(spec, EXTENDS_TAG,
                                              IndianNationType.class, this);
-        if (parent != this) {
+        if (! Objects.equals(parent, this)) {
             if (parent.skills != null && !parent.skills.isEmpty()) {
                 if (skills == null) skills = new ArrayList<>();
                 skills.addAll(parent.skills);
@@ -299,5 +297,6 @@ public class IndianNationType extends NationType {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

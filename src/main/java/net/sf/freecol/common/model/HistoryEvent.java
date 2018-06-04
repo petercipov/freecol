@@ -26,6 +26,9 @@ import net.sf.freecol.common.io.FreeColXMLReader;
 import net.sf.freecol.common.io.FreeColXMLWriter;
 import net.sf.freecol.common.model.Stance;
 import net.sf.freecol.common.util.Utils;
+
+import java.util.Objects;
+
 import static net.sf.freecol.common.util.StringUtils.*;
 
 
@@ -79,6 +82,7 @@ public class HistoryEvent extends StringTemplate {
         /**
          * {@inheritDoc}
          */
+        @Override
         public String getNameKey() {
             return Messages.nameKey("model." + getKey());
         }
@@ -266,6 +270,7 @@ public class HistoryEvent extends StringTemplate {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 
@@ -279,7 +284,7 @@ public class HistoryEvent extends StringTemplate {
         if (this == o) return true;
         if (o instanceof HistoryEvent) {
             HistoryEvent h = (HistoryEvent)o;
-            return turn == h.turn && eventType == h.eventType
+            return Objects.equals(turn, h.turn) && eventType == h.eventType
                 && Utils.equals(playerId, h.playerId)
                 && score == h.score;
         }

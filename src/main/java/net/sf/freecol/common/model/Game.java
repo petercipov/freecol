@@ -21,15 +21,8 @@ package net.sf.freecol.common.model;
 
 import java.lang.ref.WeakReference;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.NoSuchElementException;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.function.Predicate;
@@ -340,26 +333,13 @@ public class Game extends FreeColGameObject {
     }
 
     /**
-     * Instantiate an uninitialized FreeColGameObject within this game.
-     *
-     * @param <T> The actual return type.
-     * @param returnClass The required {@code FreeColObject} class.
-     * @param server Create a server object if possible.
-     * @return The new uninitialized object, or null on error.
-     */
-    public <T extends FreeColObject> T newInstance(Class<T> returnClass,
-                                                   boolean server) {
-        return newInstance(this, returnClass, server);
-    }
-
-    /**
      * Instantiate an uninitialized FreeColGameObject within a game.
      *
      * @param <T> The actual return type.
      * @param returnClass The required {@code FreeColObject} class.
      * @return The new uninitialized object, or null on error.
      */
-    public <T extends FreeColObject> T newInstance(Class<T> returnClass) {
+    public <T extends FreeColObject> T newNonServerInstance(Class<T> returnClass) {
         return newInstance(this, returnClass, false); // Default to non-server
     }
     
@@ -871,7 +851,7 @@ public class Game extends FreeColGameObject {
      * @return True if the player was removed.
      */
     public boolean removePlayer(Player player) {
-        Player newCurrent = (currentPlayer != player) ? null
+        Player newCurrent = (! Objects.equals(currentPlayer, player)) ? null
             : getPlayerAfter(currentPlayer);
 
         synchronized (this.players) {
@@ -1159,7 +1139,7 @@ public class Game extends FreeColGameObject {
             oldMap = this.map;
             this.map = newMap;
         }
-        if (this.map != oldMap) {
+        if (!Objects.equals(oldMap,this.map)) {
             for (HighSeas hs : transform(getLivePlayers(), alwaysTrue(),
                                          Player::getHighSeas, toListNoNulls())) {
                 hs.removeDestination(oldMap);
@@ -1368,7 +1348,7 @@ public class Game extends FreeColGameObject {
      */
     public void checkOwners(Ownable o, Player oldOwner) {
         Player newOwner = o.getOwner();
-        if (oldOwner == newOwner) return;
+        if (Objects.equals(newOwner, oldOwner)) return;
 
         if (oldOwner != null && oldOwner.removeOwnable(o)) {
             oldOwner.invalidateCanSeeTiles();//+vis
@@ -1518,7 +1498,7 @@ public class Game extends FreeColGameObject {
         try {
             FreeColXMLReader xr = new FreeColXMLReader(new StringReader(xml));
             xr.nextTag();
-            T ret = newInstance(returnClass);
+            T ret = newNonServerInstance(returnClass);
             ret.readFromXML(xr);
             return ret;
 
@@ -1836,6 +1816,7 @@ public class Game extends FreeColGameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

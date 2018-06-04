@@ -19,6 +19,7 @@
 
 package net.sf.freecol.server.model;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -187,7 +188,7 @@ public class DiplomacySession extends TimedSession {
      */
     public ServerPlayer getOtherPlayer(ServerPlayer serverPlayer) {
         ServerPlayer other = getOwner();
-        return (other != serverPlayer) ? other : getOtherPlayer();
+        return (!Objects.equals(other, serverPlayer)) ? other : getOtherPlayer();
     }
         
     /**
@@ -216,12 +217,12 @@ public class DiplomacySession extends TimedSession {
      */
     public boolean isCompatible(FreeColGameObject fcgo1,
                                 FreeColGameObject fcgo2) {
-        return (fcgo1 == (FreeColGameObject)this.unit
-            && (fcgo2 == (FreeColGameObject)this.settlement
-                || fcgo2 == (FreeColGameObject)this.otherUnit))
-            || (fcgo2 == (FreeColGameObject)this.unit
-                && (fcgo1 == (FreeColGameObject)this.settlement
-                    || fcgo1 == (FreeColGameObject)this.otherUnit));
+        return ( Objects.equals(fcgo1, (FreeColGameObject)this.unit)
+            && ( Objects.equals(fcgo2, (FreeColGameObject)this.settlement)
+                || Objects.equals(fcgo2, (FreeColGameObject)this.otherUnit)))
+            || (Objects.equals(fcgo2, (FreeColGameObject)this.unit)
+                && (Objects.equals(fcgo1, (FreeColGameObject)this.settlement)
+                    || Objects.equals(fcgo1, (FreeColGameObject)this.otherUnit)));
     }
     
     /**
@@ -263,10 +264,10 @@ public class DiplomacySession extends TimedSession {
             && ((DiplomacySession)s).getAgreement() != null
             && (((DiplomacySession)s).getAgreement().getContext()
                 == DiplomaticTrade.TradeContext.CONTACT)
-            && ((((DiplomacySession)s).getOwner() == s1
-                    && ((DiplomacySession)s).getOtherPlayer() == s2)
-                || (((DiplomacySession)s).getOwner() == s2
-                    && ((DiplomacySession)s).getOtherPlayer() == s1));
+            && ((Objects.equals(((DiplomacySession)s).getOwner(), s1)
+                    && Objects.equals(((DiplomacySession)s).getOtherPlayer(), s2))
+                || (Objects.equals( ((DiplomacySession)s).getOwner(), s2)
+                    && Objects.equals(((DiplomacySession) s).getOtherPlayer(), s1)));
         return (DiplomacySession)findSession(pred);
     }
 

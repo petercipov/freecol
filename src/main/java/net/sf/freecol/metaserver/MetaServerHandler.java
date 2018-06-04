@@ -105,6 +105,7 @@ public final class MetaServerHandler implements MessageHandler {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Message read(Connection connection)
         throws FreeColException, XMLStreamException {
         return Message.read(null, connection.getFreeColXMLReader());

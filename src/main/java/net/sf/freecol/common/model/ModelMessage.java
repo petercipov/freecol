@@ -93,6 +93,7 @@ public class ModelMessage extends StringTemplate {
         /**
          * {@inheritDoc}
          */
+        @Override
         public String getNameKey() {
             return Messages.nameKey("model." + getKey());
         }
@@ -450,6 +451,7 @@ public class ModelMessage extends StringTemplate {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

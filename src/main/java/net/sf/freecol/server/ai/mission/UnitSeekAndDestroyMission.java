@@ -19,6 +19,7 @@
 
 package net.sf.freecol.server.ai.mission;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import javax.xml.stream.XMLStreamException;
@@ -173,7 +174,7 @@ public class UnitSeekAndDestroyMission extends Mission {
         if (tile == null || off <= 0) return Integer.MIN_VALUE;
 
         int value = 1020 - turns * 100;
-        value += 100 * (off - def);
+        value = (int) (value + 100 * (off - def));
 
         // Add a big bonus for treasure trains on the tile.
         // Do not cheat and look at the value.
@@ -307,7 +308,7 @@ public class UnitSeekAndDestroyMission extends Mission {
         final Unit unit = aiUnit.getUnit();
         return (unit.isNaval())
             ? "unit-is-naval"
-            : (settlement.getOwner() == unit.getOwner())
+            : Objects.equals(settlement.getOwner(), unit.getOwner())
             ? Mission.TARGETOWNERSHIP
             : invalidAttackReason(aiUnit, settlement.getOwner());
     }
@@ -327,7 +328,7 @@ public class UnitSeekAndDestroyMission extends Mission {
         final Tile tile = unit.getTile();
         return (tile == null)
             ? "target-not-on-map"
-            : (aiUnit.getUnit().getOwner() == unit.getOwner())
+            : Objects.equals(aiUnit.getUnit().getOwner(), unit.getOwner())
             ? Mission.TARGETOWNERSHIP
             : (tile.hasSettlement())
             ? "target-in-settlement"

@@ -20,15 +20,51 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.5.1</version>
                 <configuration>
+                    <compilerId>javac-with-errorprone</compilerId>
+                    <showWarnings>true</showWarnings>
+                    <compilerArgs>
+                        <arg>-XepAllErrorsAsWarnings</arg>
+                    </compilerArgs>
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    <!-- maven-compiler-plugin defaults to targeting Java 5 -->
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <!-- Add custom checks to the annotation processor classpath.
+                         Note that Maven doesn't guarantee the build order and could
+                         attempt to build hello before sample-plugin, and fail because it
+                         cannot find sample-plugin.
+                         One workaround is to add sample-plugin as a dependency (with
+                         scope provided so it's not transitive).
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.example</groupId>
+                            <artifactId>sample-plugin</artifactId>
+                            <version>1.0-SNAPSHOT</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    -->
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.plexus</groupId>
+                        <artifactId>plexus-compiler-javac-errorprone</artifactId>
+                        <version>2.8.4</version>
+                    </dependency>
+                    <!-- override plexus-compiler-javac-errorprone's dependency on
+                         Error Prone with the latest version -->
+                    <dependency>
+                        <groupId>com.google.errorprone</groupId>
+                        <artifactId>error_prone_core</artifactId>
+                        <version>2.3.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
                     <archive>
                         <manifest>

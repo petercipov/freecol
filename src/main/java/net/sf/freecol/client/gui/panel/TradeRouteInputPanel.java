@@ -33,6 +33,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -211,7 +212,7 @@ public final class TradeRouteInputPanel extends FreeColPanel
                             .stopListModel.get(stopIndex);
                         List<GoodsType> cargo = new ArrayList<>(stop.getCargo());
                         for (int index = 0; index < cargo.size(); index++) {
-                            if (cargo.get(index) == label.getType()) {
+                            if (Objects.equals(cargo.get(index), label.getType())) {
                                 cargo.remove(index);
                                 break;
                             }
@@ -315,7 +316,7 @@ public final class TradeRouteInputPanel extends FreeColPanel
          */
         @Override
         public Object getTransferData(DataFlavor flavor) {
-            return (flavor == STOP_FLAVOR) ? stops : null;
+            return Objects.equals(flavor, STOP_FLAVOR) ? stops : null;
         }
 
         /**
@@ -331,7 +332,7 @@ public final class TradeRouteInputPanel extends FreeColPanel
          */
         @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
-            return flavor == STOP_FLAVOR;
+            return Objects.equals(flavor, STOP_FLAVOR);
         }
     }
 
@@ -539,7 +540,7 @@ public final class TradeRouteInputPanel extends FreeColPanel
 
         final Game game = freeColClient.getGame();
         final Player player = getMyPlayer();
-        final TradeRoute tradeRoute = newRoute.copy(game);
+        final TradeRoute tradeRoute = newRoute.copy(game, TradeRoute.class);
 
         this.newRoute = newRoute;
         this.cargoHandler = new CargoHandler();

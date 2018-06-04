@@ -19,10 +19,7 @@
 
 package net.sf.freecol.common.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 import javax.xml.stream.XMLStreamException;
@@ -247,7 +244,7 @@ public class Role extends BuildableType {
     /**
      * Set the role change list.
      *
-     * @param roleChange The new list of {@code RoleChange}s.
+     * @param roleChanges The new list of {@code RoleChange}s.
      */
     protected final void setRoleChanges(List<RoleChange> roleChanges) {
         if (this.roleChanges == null) {
@@ -312,7 +309,7 @@ public class Role extends BuildableType {
      * @return True if the other role is compatible.
      */
     public boolean isCompatibleWith(Role other) {
-        return isCompatibleWith(this, other);
+        return rolesAreCompatible(this, other);
     }
 
     /**
@@ -322,15 +319,15 @@ public class Role extends BuildableType {
      * @param role2 The other {@code Role} to compare.
      * @return True if the roles are compatible.
      */
-    public static boolean isCompatibleWith(Role role1, Role role2) {
+    public static boolean rolesAreCompatible(Role role1, Role role2) {
         if (role1 == null) {
             return role2 == null;
         } else if (role2 == null) {
             return false;
         } else {
-            return role1 == role2
-                || role1.getDowngrade() == role2
-                || role2.getDowngrade() == role1;
+            return Objects.equals(role1, role2)
+                || Objects.equals(role1.getDowngrade(), role2)
+                || Objects.equals(role2.getDowngrade(), role1);
         }
     }
 
@@ -351,7 +348,7 @@ public class Role extends BuildableType {
     public static List<AbstractGoods> getGoodsDifference(Role from,
         int fromCount, Role to, int toCount) {
         List<AbstractGoods> result = new ArrayList<>();
-        if (from != to && !(from == null && to.isDefaultRole())) {
+        if (!Objects.equals(from, to) && !(from == null && to.isDefaultRole())) {
             List<AbstractGoods> fromGoods = (from == null)
                 ? new ArrayList<AbstractGoods>()
                 : from.getRequiredGoodsList(fromCount);
@@ -417,6 +414,7 @@ public class Role extends BuildableType {
     /**
      * {@inheritDoc}
      */
+    @Override
     public NoBuildReason canBeBuiltInColony(Colony colony,
                                             List<BuildableType> assumeBuilt) {
         return Colony.NoBuildReason.NONE;
@@ -555,5 +553,6 @@ public class Role extends BuildableType {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

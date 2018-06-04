@@ -132,6 +132,7 @@ public class SelectOption extends IntegerOption {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setValue(Integer value) {
         Set<Integer> keys = getItemValues().keySet();
         if (keys.isEmpty()) return; // May not have been read yet
@@ -233,6 +234,7 @@ public class SelectOption extends IntegerOption {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

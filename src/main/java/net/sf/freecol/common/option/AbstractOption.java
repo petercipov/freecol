@@ -143,6 +143,7 @@ public abstract class AbstractOption<T> extends FreeColSpecObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getGroup() {
         return this.optionGroupId;
     }
@@ -150,6 +151,7 @@ public abstract class AbstractOption<T> extends FreeColSpecObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setGroup(String group) {
         this.optionGroupId = (group == null) ? "" : group;
     }

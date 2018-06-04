@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.Collator;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -49,10 +48,8 @@ import net.sf.freecol.common.model.FreeColGameObject;
 import net.sf.freecol.common.model.Game;
 import net.sf.freecol.common.model.Location;
 import net.sf.freecol.common.model.ModelMessage;
-import net.sf.freecol.common.model.Player;
 import net.sf.freecol.common.option.BooleanOption;
 import net.sf.freecol.common.option.IntegerOption;
-import net.sf.freecol.common.option.ModListOption;
 import net.sf.freecol.common.option.OptionGroup;
 import net.sf.freecol.common.option.RangeOption;
 import net.sf.freecol.common.option.TextOption;
@@ -494,7 +491,7 @@ public class ClientOptions extends OptionGroup {
 
     /** Compare by position on the map. */
     private static final Comparator<Colony> colonyPositionComparator
-        = Comparator.comparingInt(c -> Location.getRank(c));
+        = Comparator.comparingInt(c -> Location.getRankAtLocation(c));
 
 
     private class MessageSourceComparator implements Comparator<ModelMessage> {
@@ -843,5 +840,6 @@ public class ClientOptions extends OptionGroup {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

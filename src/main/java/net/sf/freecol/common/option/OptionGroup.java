@@ -386,7 +386,8 @@ public class OptionGroup extends AbstractOption<OptionGroup>
 
     /**
      * {@inheritDoc}
-     */    
+     */
+    @Override
     public <R,T extends Option<R>> boolean hasOption(String id,
                                                      Class<T> returnClass) {
         return id != null && this.optionMap.containsKey(id)
@@ -396,6 +397,7 @@ public class OptionGroup extends AbstractOption<OptionGroup>
     /**
      * {@inheritDoc}
      */
+    @Override
     public <R,T extends Option<R>> T getOption(String id,
                                                Class<T> returnClass) {
         if (id == null) {
@@ -582,6 +584,7 @@ public class OptionGroup extends AbstractOption<OptionGroup>
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

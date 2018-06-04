@@ -362,6 +362,7 @@ public class TradeRouteStop extends FreeColGameObject implements TradeLocation {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

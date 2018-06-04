@@ -348,7 +348,7 @@ public final class QuickActionMenu extends JPopupMenu {
                     prod = wl.getPotentialProduction(type, unitType);
                     if (bestOwnedProd < prod) {
                         bestOwnedProd = prod;
-                        bestOwned = (unit.getWorkType() == type) ? null : wl;
+                        bestOwned = Objects.equals(unit.getWorkType(), type) ? null : wl;
                     }
                     break;
                 case CLAIM_REQUIRED:
@@ -365,7 +365,7 @@ public final class QuickActionMenu extends JPopupMenu {
             if (bestOwned != null && bestOwnedProd > 0) {
                 JMenuItem ji = makeProductionItem(type, bestOwned,
                     bestOwnedProd, unitLabel, false);
-                if (type == expertGoods) {
+                if (Objects.equals(type, expertGoods)) {
                     expertOwned = ji;
                 } else {
                     items.put(ji, bestOwnedProd);
@@ -375,7 +375,7 @@ public final class QuickActionMenu extends JPopupMenu {
                 && bestUnownedProd > 0) {
                 JMenuItem ji = makeProductionItem(type, bestUnowned,
                     bestUnownedProd, unitLabel, true);
-                if (type == expertGoods) {
+                if (Objects.equals(type, expertGoods)) {
                     expertUnowned = ji;
                 } else {
                     extras.put(ji, bestUnownedProd);
@@ -418,7 +418,7 @@ public final class QuickActionMenu extends JPopupMenu {
                 JMenuItem menuItem = null;
                 ImageIcon teacherIcon
                     = new ImageIcon(lib.getSmallerUnitImage(teacher));
-                if (teacher.getStudent() != unit) {
+                if (!Objects.equals(teacher.getStudent(), unit)) {
                     menuItem = Utility.localizedMenuItem("quickActionMenu.assignToTeacher",
                         teacherIcon);
                     if (teacher.getStudent() != null) {
@@ -666,7 +666,7 @@ public final class QuickActionMenu extends JPopupMenu {
             : unit.getSettlement();
         if (uloc == null) return false;
         for (Role r : transform(unit.getAvailableRoles(null),
-                                r2 -> r2 != role)) {
+                                r2 -> !Objects.equals(r2, role))) {
             JMenuItem newItem;
             if (r.isDefaultRole()) { // Always valid
                 newItem = createRoleItem(unitLabel, role, roleCount, r, 0, 0);

@@ -104,6 +104,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getType() {
         return this.type;
     }
@@ -111,6 +112,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected void setType(String type) {
         this.type = type;
     }
@@ -118,6 +120,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected boolean hasAttribute(String key) {
         return false;
     }
@@ -125,6 +128,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected String getStringAttribute(String key) {
         return null;
     }
@@ -132,6 +136,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected void setStringAttribute(String key, String value) {
         if (key == null || value == null) {
             ; // Always OK to set nothing
@@ -143,6 +148,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected Map<String,String> getStringAttributeMap() {
         return Collections.<String,String>emptyMap();
     }
@@ -150,6 +156,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected int getChildCount() {
         return 0;
     }
@@ -157,6 +164,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected List<FreeColObject> getChildren() {
         return Collections.<FreeColObject>emptyList();
     }
@@ -164,6 +172,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected void setChildren(List<? extends FreeColObject> fcos) {
         if (fcos == null || fcos.isEmpty()) {
             ; // Always OK to set nothing
@@ -175,6 +184,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected <T extends FreeColObject> void appendChild(T fco) {
         if (fco == null) {
             ; // Always OK to add nothing
@@ -186,6 +196,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected <T extends FreeColObject> void appendChildren(Collection<T> fcos) {
         if (fcos == null) {
             ; // Always OK to add nothing
@@ -197,6 +208,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean currentPlayerMessage() {
         return false;
     }
@@ -204,6 +216,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     public MessagePriority getPriority() {
         return Message.MessagePriority.NORMAL;
     }
@@ -211,6 +224,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean canMerge() {
         return false;
     }
@@ -218,6 +232,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void aiHandler(FreeColServer freeColServer, AIPlayer aiPlayer)
         throws FreeColException {
         throw new FreeColException(getType() + " aiHandler NYI");
@@ -226,6 +241,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void clientHandler(FreeColClient freeColClient)
         throws FreeColException {
         throw new FreeColException(getType() + " clientHandler NYI");
@@ -234,6 +250,7 @@ public abstract class TrivialMessage extends Message {
     /**
      * {@inheritDoc}
      */
+    @Override
     public ChangeSet serverHandler(FreeColServer freeColServer,
                                    ServerPlayer serverPlayer) {
         return serverPlayer.clientError("Invalid message type: " + getType());

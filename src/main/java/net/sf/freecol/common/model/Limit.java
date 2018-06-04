@@ -146,6 +146,7 @@ public final class Limit extends FreeColSpecObjectType {
      * @param object The object to test.
      * @return True if the limit is applicable.
      */
+    @Override
     public boolean appliesTo(FreeColObject object) {
         return leftHandSide.appliesTo(object);
     }
@@ -379,6 +380,7 @@ public final class Limit extends FreeColSpecObjectType {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

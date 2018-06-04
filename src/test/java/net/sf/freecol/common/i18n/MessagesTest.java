@@ -230,7 +230,7 @@ public class MessagesTest extends FreeColTestCase {
             Messages.loadMessages(stream);
         } catch (IOException ioe) { fail(); }
 
-        // default Number is Other
+        // default Numeric is Other
         Messages.setGrammaticalNumber(NumberRules.OTHER_NUMBER_RULE);
         for (double d : numbers) {
             assertTrue("abcother|xyz".equals(Messages.message(StringTemplate

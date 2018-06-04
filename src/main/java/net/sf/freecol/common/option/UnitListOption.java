@@ -69,5 +69,6 @@ public class UnitListOption extends ListOption<AbstractUnit> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

@@ -115,6 +115,7 @@ public class AIMain extends FreeColObject
      *
      * @return The {@code Game} this AI is operating in.
      */
+    @Override
     public Game getGame() {
         return freeColServer.getGame();
     }
@@ -654,5 +655,6 @@ public class AIMain extends FreeColObject
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

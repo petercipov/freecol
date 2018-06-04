@@ -21,6 +21,7 @@ package net.sf.freecol.common.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -211,7 +212,7 @@ public class DiplomaticTrade extends FreeColGameObject {
      * @return The other player, not the supplied known one.
      */
     public Player getOtherPlayer(Player player) {
-        return (this.sender == player) ? this.recipient : this.sender;
+        return Objects.equals(this.sender, player) ? this.recipient : this.sender;
     }
 
     /**
@@ -336,7 +337,7 @@ public class DiplomaticTrade extends FreeColGameObject {
     public List<Colony> getColoniesGivenBy(final Player player) {
         return transform(this.items,
                          ti -> ti instanceof ColonyTradeItem
-                             && ti.getSource() == player,
+                             && Objects.equals(ti.getSource(), player),
                          ti -> ti.getColony(player.getGame()));
     }
 
@@ -348,7 +349,7 @@ public class DiplomaticTrade extends FreeColGameObject {
      */
     public int getGoldGivenBy(Player player) {
         TradeItem ti = find(this.items, i -> i instanceof GoldTradeItem
-            && player == i.getSource());
+            && Objects.equals(player, i.getSource()));
         return (ti == null) ? -1 : ti.getGold();
     }
 
@@ -361,7 +362,7 @@ public class DiplomaticTrade extends FreeColGameObject {
     public List<Goods> getGoodsGivenBy(Player player) {
         return transform(this.items,
                          ti -> ti instanceof GoodsTradeItem
-                             && ti.getSource() == player,
+                             && Objects.equals(ti.getSource(), player),
                          TradeItem::getGoods);
     }
 
@@ -384,7 +385,7 @@ public class DiplomaticTrade extends FreeColGameObject {
     public List<Unit> getUnitsGivenBy(Player player) {
         return transform(this.items,
                          ti -> ti instanceof UnitTradeItem
-                             && ti.getSource() == player,
+                             && Objects.equals(ti.getSource(), player),
                          TradeItem::getUnit);
     }
 
@@ -410,6 +411,7 @@ public class DiplomaticTrade extends FreeColGameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isInternable() {
         return false;
     }
@@ -540,6 +542,7 @@ public class DiplomaticTrade extends FreeColGameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

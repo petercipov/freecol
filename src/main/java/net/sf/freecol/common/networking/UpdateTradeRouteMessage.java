@@ -97,6 +97,7 @@ public class UpdateTradeRouteMessage extends ObjectMessage {
     /**
      * {@inheritDoc}
      */
+    @Override
     public MessagePriority getPriority() {
         return MessagePriority.NORMAL;
     }

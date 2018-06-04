@@ -22,6 +22,7 @@ package net.sf.freecol.server.ai;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -175,7 +176,7 @@ public abstract class MissionAIPlayer extends AIPlayer {
             Mission dm = au.getMission(DefendSettlementMission.class);
             if (dm != null
                 && dm.getTarget() == settlement
-                && au.getUnit().getSettlement() == settlement) {
+                && Objects.equals(au.getUnit().getSettlement(), settlement)) {
                 defenders++;
             }
         }
@@ -208,7 +209,7 @@ public abstract class MissionAIPlayer extends AIPlayer {
         if (defenderPlayer == null) return false;
 
         // Can not attack our own units.
-        if (attackerPlayer == defenderPlayer) return false;
+        if (Objects.equals(attackerPlayer, defenderPlayer)) return false;
 
         // If European, do not attack if not at war.
         // If native, do not attack if not at war and at least content.

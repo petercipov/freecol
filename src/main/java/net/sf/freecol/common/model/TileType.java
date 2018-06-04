@@ -22,6 +22,7 @@ package net.sf.freecol.common.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import javax.xml.stream.XMLStreamException;
@@ -287,7 +288,12 @@ public final class TileType extends FreeColSpecObjectType
      * @return True if the {@code ResourceType} is compatible.
      */
     public boolean canHaveResourceType(ResourceType resourceType) {
-        return getResourceTypes().contains(resourceType);
+        for (RandomChoice<ResourceType> rc : getResourceTypes()) {
+            if (Objects.equals(rc.getObject(), resourceType)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -361,6 +367,7 @@ public final class TileType extends FreeColSpecObjectType
      * @param unattended Whether the production is unattended.
      * @return A list of {@code ProductionType}s.
      */
+    @Override
     public List<ProductionType> getAvailableProductionTypes(boolean unattended) {
         return getAvailableProductionTypes(unattended,
             getSpecification().getString(GameOptions.TILE_PRODUCTION));
@@ -710,5 +717,6 @@ public final class TileType extends FreeColSpecObjectType
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

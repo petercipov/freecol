@@ -42,6 +42,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
@@ -207,7 +208,7 @@ public class SwingGUI extends GUI {
     private boolean changeActiveUnit(Unit newUnit) {
         final Unit oldUnit = getActiveUnit();
         // System.err.println("CAU " + newUnit + " " + (newUnit != oldUnit));
-        if (newUnit == oldUnit) return false;
+        if (Objects.equals(newUnit, oldUnit)) return false;
         
         this.mapViewer.setActiveUnit(newUnit);
         clearGotoPath();
@@ -231,14 +232,14 @@ public class SwingGUI extends GUI {
         final Tile oldTile = getSelectedTile();
         final Tile oldFocus = getFocus();
         refocus = newTile != null
-            && newTile != oldFocus
+            && !Objects.equals(newTile, oldFocus)
             && (oldFocus == null || refocus
                 || !this.mapViewer.onScreen(newTile));
         if (refocus) setFocus(newTile);
 
         // System.err.println("CST " + newTile + " " + (newTile != oldTile) + " " + refocus);
 
-        if (newTile == oldTile) return false;
+        if (Objects.equals(newTile, oldTile)) return false;
         this.mapViewer.setSelectedTile(newTile);
         if (oldTile != null) refreshTile(oldTile);
         if (newTile != null) refreshTile(newTile);
@@ -713,7 +714,7 @@ public class SwingGUI extends GUI {
         // Account for the ALWAYS_CENTER client option.
         final boolean required = getClientOptions()
             .getBoolean(ClientOptions.ALWAYS_CENTER);
-        if ((required && tile != getFocus())
+        if ((required && !Objects.equals(tile, getFocus()))
             || !this.mapViewer.onScreen(tile)) {
             setFocusImmediately(tile);
             return true;
@@ -821,7 +822,7 @@ public class SwingGUI extends GUI {
         final Unit active = getActiveUnit();
         if (active == null) return;
 
-        if (tile != null && active.getTile() != tile) {
+        if (tile != null && !Objects.equals(active.getTile(), tile)) {
             canvas.startGoto();
             updateGotoTile(tile);
             traverseGotoPath();
@@ -1227,7 +1228,7 @@ public class SwingGUI extends GUI {
             // If there is one of the player units present, select it
             // as the active unit unless the active unit is at the tile.
             final Unit active = getActiveUnit();
-            if (active == null || active.getTile() != tile) {
+            if (active == null || !Objects.equals(active.getTile(), tile)) {
                 changeView(other);
             }
         } else {

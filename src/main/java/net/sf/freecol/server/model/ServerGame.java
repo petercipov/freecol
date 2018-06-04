@@ -20,7 +20,7 @@
 package net.sf.freecol.server.model;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -28,11 +28,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -319,7 +314,7 @@ public class ServerGame extends Game implements TurnTaker {
     public boolean isNextPlayerInNewTurn() {
         Player nextPlayer = getNextPlayer();
         return players.indexOf(currentPlayer) > players.indexOf(nextPlayer)
-            || currentPlayer == nextPlayer;
+            || Objects.equals(currentPlayer, nextPlayer);
     }
 
 
@@ -398,7 +393,7 @@ public class ServerGame extends Game implements TurnTaker {
         // are not clearly identifiable strong and weak AIs.
         if (!ready
             || weakAI == null || strongAI == null
-            || weakAI == strongAI) return null;
+            || Objects.equals(weakAI, strongAI)) return null;
 
         lb.add(" => ", weakAI.getName(), " cedes ", strongAI.getName(), ":");
         List<Tile> tiles = new ArrayList<>();
@@ -476,7 +471,7 @@ public class ServerGame extends Game implements TurnTaker {
         // Trace fail where not all units are transferred
         for (FreeColGameObject fcgo : getFreeColGameObjectList()) {
             if (fcgo instanceof Ownable
-                && ((Ownable)fcgo).getOwner() == weakest) {
+                && Objects.equals(((Ownable)fcgo).getOwner(), weakest)) {
                 throw new RuntimeException("Lurking " + weakest.getId()
                     + " fcgo: " + fcgo);
             }
@@ -514,13 +509,13 @@ public class ServerGame extends Game implements TurnTaker {
                 fail = true;
                 continue;
             }
-            if (source != srcPlayer && source != dstPlayer) {
+            if (Objects.equals(source, srcPlayer) && Objects.equals(source, dstPlayer)) {
                 logger.warning("Trade with invalid source: "
                                + ((source == null) ? "null" : source.getId()));
                 fail = true;
                 continue;
             }
-            if (dest != srcPlayer && dest != dstPlayer) {
+            if (!Objects.equals(dest, srcPlayer) && !Objects.equals(dest, dstPlayer)) {
                 logger.warning("Trade with invalid destination: "
                                + ((dest == null) ? "null" : dest.getId()));
                 fail = true;
@@ -650,7 +645,7 @@ public class ServerGame extends Game implements TurnTaker {
                         continue;
                     }
                     newLoc = carrier;
-                } else if (dest == unit.getOwner()) {
+                } else if (Objects.equals(dest, unit.getOwner())) {
                     newLoc = unit.getTile();
                 } else {
                     newLoc = settlement.getTile();
