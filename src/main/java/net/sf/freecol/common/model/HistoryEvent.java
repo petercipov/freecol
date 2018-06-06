@@ -133,6 +133,66 @@ public class HistoryEvent extends StringTemplate {
         readFromXML(xr);
     }
 
+    @Override
+    public HistoryEvent add(String key, String value) {
+        super.add(key, value);
+        return this;
+    }
+
+    @Override
+    public HistoryEvent add(String value) {
+        super.add(value);
+        return this;
+    }
+
+    @Override
+    public HistoryEvent addName(String key, String value) {
+        super.addName(key, value);
+        return this;
+    }
+
+    @Override
+    public HistoryEvent addName(String key, FreeColObject object) {
+        super.addName(key, object);
+        return this;
+    }
+
+    @Override
+    public HistoryEvent addName(String value) {
+        super.addName(value);
+        return this;
+    }
+
+    @Override
+    public HistoryEvent addNamed(String key, Named named) {
+        super.addNamed(key, named);
+        return this;
+    }
+
+    @Override
+    public HistoryEvent addNamed(Named named) {
+        super.addNamed(named);
+        return this;
+    }
+
+    @Override
+    public HistoryEvent addAmount(String key, Number amount) {
+        super.addAmount(key, amount);
+        return this;
+    }
+
+    @Override
+    public HistoryEvent addStringTemplate(String key, StringTemplate template) {
+        super.addStringTemplate(key, template);
+        return this;
+    }
+
+    @Override
+    public HistoryEvent addStringTemplate(StringTemplate template) {
+        super.addStringTemplate(template);
+        return this;
+    }
+
     /**
      * Get the turn of this history event.
      *

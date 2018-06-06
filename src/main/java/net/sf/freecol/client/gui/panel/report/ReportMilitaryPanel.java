@@ -63,6 +63,7 @@ public final class ReportMilitaryPanel extends ReportUnitPanel {
      *              UnitType.
      *         false otherwise
      */
+    @Override
     protected boolean isReportable(UnitType unitType) {
         return !unitType.isNaval()
                 && unitType.isAvailableTo(getMyPlayer())
@@ -81,6 +82,7 @@ public final class ReportMilitaryPanel extends ReportUnitPanel {
      *              or an Offensive Unit.
      *         false otherwise
      */
+    @Override
     protected boolean isReportable(Unit unit) {
         return !unit.isNaval()
                 && (unit.hasAbility(Ability.EXPERT_SOLDIER)

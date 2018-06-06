@@ -110,6 +110,7 @@ public class GoldTradeItem extends TradeItem {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int evaluateFor(Player player) {
         return (!isValid()) ? INVALID_TRADE_ITEM
             : (getSource() == player) ? -getGold()
@@ -159,6 +160,7 @@ public class GoldTradeItem extends TradeItem {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

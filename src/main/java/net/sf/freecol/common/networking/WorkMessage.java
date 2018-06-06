@@ -29,6 +29,8 @@ import net.sf.freecol.common.model.WorkLocation;
 import net.sf.freecol.server.FreeColServer;
 import net.sf.freecol.server.model.ServerPlayer;
 
+import java.util.Objects;
+
 
 /**
  * The message sent to handle changes in work location.
@@ -114,7 +116,7 @@ public class WorkMessage extends AttributeMessage {
         if (workLocation == null) {
             return serverPlayer.clientError("Not a work location: "
                 + workLocationId);
-        } else if (workLocation.getColony() != colony) {
+        } else if (!Objects.equals(workLocation.getColony(), colony)) {
             return serverPlayer.clientError("Work location is not in colony"
                 + colony.getId() + " where the unit is: " + workLocationId);
         } else if (!workLocation.canAdd(unit)) {

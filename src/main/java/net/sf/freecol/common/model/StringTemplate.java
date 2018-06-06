@@ -275,17 +275,15 @@ public class StringTemplate extends FreeColObject {
      * Add an optional key and replacement.  Helper function for the add*()
      * routines that follow.
      *
-     * @param <T> The actual return type.
      * @param key The optional key.
      * @param value The replacement {@code StringTemplate}.
      * @return This object, cast back to its original class.
      */
     @SuppressWarnings("unchecked")
-    private final <T extends StringTemplate> T complete(String key,
-                                                        StringTemplate value) {
+    private final StringTemplate complete(String key, StringTemplate value) {
         if (key != null) addKey(key);
         addReplacement(value);
-        return (T)this;
+        return this;
     }
 
     /**
@@ -293,12 +291,11 @@ public class StringTemplate extends FreeColObject {
      *
      * This is only possible if the template is of type TEMPLATE.
      *
-     * @param <T> The actual return type.
      * @param key The key to add.
      * @param value The corresponding replacement.
      * @return This.
      */
-    public <T extends StringTemplate> T add(String key, String value) {
+    public StringTemplate add(String key, String value) {
         if (this.templateType != TemplateType.TEMPLATE) {
             throw new IllegalArgumentException("Cannot add key-value pair"
                 + " to StringTemplate." + this.templateType);
@@ -311,11 +308,10 @@ public class StringTemplate extends FreeColObject {
      *
      * This is only possible if the template is of type LABEL.
      *
-     * @param <T> The actual return type.
      * @param value The replacement value.
      * @return This.
      */
-    public <T extends StringTemplate> T add(String value) {
+    public StringTemplate add(String value) {
         if (this.templateType != TemplateType.LABEL) {
             throw new IllegalArgumentException("Cannot add a single string"
                 + " to StringTemplate." + this.templateType);
@@ -328,12 +324,11 @@ public class StringTemplate extends FreeColObject {
      *
      * This is only possible if the template is of type TEMPLATE.
      *
-     * @param <T> The actual return type.
      * @param key The key to add.
      * @param value The corresponding replacement.
      * @return This.
      */
-    public <T extends StringTemplate> T addName(String key, String value) {
+    public StringTemplate addName(String key, String value) {
         if (this.templateType != TemplateType.TEMPLATE) {
             throw new IllegalArgumentException("Cannot add key-name pair"
                 + " to StringTemplate." + this.templateType);
@@ -346,12 +341,11 @@ public class StringTemplate extends FreeColObject {
      *
      * This is only possible if the StringTemplate is of type TEMPLATE.
      *
-     * @param <T> The actual return type.
      * @param key The key to add.
      * @param object The replacement {@code FreeColObject}.
      * @return This.
      */
-    public <T extends StringTemplate> T addName(String key, FreeColObject object) {
+    public StringTemplate addName(String key, FreeColObject object) {
         if (this.templateType != TemplateType.TEMPLATE) {
             throw new IllegalArgumentException("Cannot add key-object pair"
                 + " to StringTemplate." + this.templateType);
@@ -364,11 +358,10 @@ public class StringTemplate extends FreeColObject {
      *
      * This is only possible if the StringTemplate is of type LABEL.
      *
-     * @param <T> The actual return type.
      * @param value The replacement value.
      * @return This.
      */
-    public <T extends StringTemplate> T addName(String value) {
+    public StringTemplate addName(String value) {
         if (this.templateType != TemplateType.LABEL) {
             throw new IllegalArgumentException("Cannot add a single string"
                 + " to StringTemplate." + this.templateType);
@@ -379,35 +372,32 @@ public class StringTemplate extends FreeColObject {
     /**
      * Add a key and named object to this template.
      *
-     * @param <T> The actual return type.
      * @param key The key to add.
      * @param named The {@code Named} to add.
      * @return This.
      */
-    public <T extends StringTemplate> T addNamed(String key, Named named) {
+    public StringTemplate addNamed(String key, Named named) {
         return add(key, named.getNameKey());
     }
 
     /**
      * Add named object without key to this template.
      *
-     * @param <T> The actual return type.
      * @param named The {@code Named} to add.
      * @return This.
      */
-    public <T extends StringTemplate> T addNamed(Named named) {
+    public StringTemplate addNamed(Named named) {
         return add(named.getNameKey());
     }
 
     /**
      * Add a key and an integer value to replace it to this template.
      *
-     * @param <T> The actual return type.
      * @param key The key to add.
      * @param amount The {@code Numeric} value to add.
      * @return This.
      */
-    public <T extends StringTemplate> T addAmount(String key, Number amount) {
+    public StringTemplate addAmount(String key, Number amount) {
         return addName(key, amount.toString());
     }
 
@@ -416,13 +406,11 @@ public class StringTemplate extends FreeColObject {
      *
      * This is only possible if the StringTemplate is of type TEMPLATE.
      *
-     * @param <T> The actual return type.
      * @param key The key to add.
      * @param template The {@code StringTemplate} value.
      * @return This.
      */
-    public <T extends StringTemplate> T addStringTemplate(String key,
-        StringTemplate template) {
+    public StringTemplate addStringTemplate(String key, StringTemplate template) {
         if (this.templateType != TemplateType.TEMPLATE) {
             throw new IllegalArgumentException("Cannot add key-template pair"
                 + " to StringTemplate." + this.templateType);
@@ -435,11 +423,10 @@ public class StringTemplate extends FreeColObject {
      *
      * This is only possible if the StringTemplate is of type LABEL.
      *
-     * @param <T> The actual return type.
      * @param template The replacement {@code StringTemplate}.
      * @return This.
      */
-    public <T extends StringTemplate> T addStringTemplate(StringTemplate template) {
+    public StringTemplate addStringTemplate(StringTemplate template) {
         if (this.templateType != TemplateType.LABEL) {
             throw new IllegalArgumentException("Cannot add a template"
                 + " to StringTemplate." + this.templateType);
@@ -453,12 +440,11 @@ public class StringTemplate extends FreeColObject {
      * Functionally identical to add(), but used to distinguish the special
      * cases at the point they are used.
      *
-     * @param <T> The actual return type.
      * @param key The tag.
      * @param value The special tag value.
      * @return This.
      */
-    public <T extends StringTemplate> T addTagged(String key, String value) {
+    public StringTemplate addTagged(String key, String value) {
         return add(key, value);
     }
 

@@ -86,6 +86,7 @@ public final class UnitImageAnimation extends FreeColClientHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public void executeWithUnitOutForAnimation(JLabel unitLabel) {
         final GUI gui = getGUI();
 

@@ -72,5 +72,6 @@ public class ModListOption extends ListOption<FreeColModFile> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

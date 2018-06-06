@@ -79,7 +79,7 @@ public class ColonizationSaveGameReader {
 
     }
 
-    private class ColonyData {
+    private static class ColonyData {
 
         public static final int LENGTH = 202;
         public static final int COLONIST_OCCUPATION = 0x20;
@@ -173,11 +173,19 @@ public class ColonizationSaveGameReader {
             this.tile = tile;
         }
 
+        public String occupationFor(int speciality) {
+            return OCCUPATION[speciality];
+        }
+
+        public String tileFor(int speciality) {
+            return TILES[speciality];
+        }
+
         public void print() {
             String tileString = (tile >= 0)
-                ? " [tile " + TILES[tile] + "]" : "";
-            System.out.println(OCCUPATION[speciality] + " working as "
-                               + OCCUPATION[occupation] + tileString);
+                ? " [tile " + tileFor(tile) + "]" : "";
+            System.out.println(occupationFor(speciality) + " working as "
+                               + occupationFor(occupation) + tileString);
         }
 
     }

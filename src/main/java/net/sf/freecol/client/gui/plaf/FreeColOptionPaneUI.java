@@ -50,8 +50,6 @@ import net.sf.freecol.common.i18n.Messages;
  */
 public class FreeColOptionPaneUI extends BasicOptionPaneUI {
 
-    private Component initialFocusComponent = null;
-
     private int okIndex = -1, cancelIndex = -1;
 
     private JButton[] newButtons = null;

@@ -147,6 +147,7 @@ public class ModOption extends AbstractOption<FreeColModFile> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

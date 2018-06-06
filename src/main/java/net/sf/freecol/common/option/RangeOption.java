@@ -105,5 +105,6 @@ public class RangeOption extends SelectOption {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 }

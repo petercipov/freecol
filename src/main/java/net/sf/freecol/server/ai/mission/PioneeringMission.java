@@ -174,7 +174,7 @@ public class PioneeringMission extends Mission {
      */
     private void abandonTileImprovementPlan() {
         if (tileImprovementPlan != null) {
-            if (tileImprovementPlan.getPioneer() == getAIUnit()) {
+            if (Objects.equals(tileImprovementPlan.getPioneer(), getAIUnit())) {
                 tileImprovementPlan.setPioneer(null);
             }
             setTileImprovementPlan(null);

@@ -143,6 +143,72 @@ public class ModelMessage extends StringTemplate {
         this(messageType, id, null, source, display);
     }
 
+    @Override
+    public ModelMessage add(String key, String value) {
+        super.add(key, value);
+        return this;
+    }
+
+    @Override
+    public ModelMessage add(String value) {
+        super.add(value);
+        return this;
+    }
+
+    @Override
+    public ModelMessage addTagged(String key, String value) {
+        super.addTagged(key, value);
+        return this;
+    }
+
+    @Override
+    public ModelMessage addStringTemplate(String key, StringTemplate template) {
+        super.addStringTemplate(key, template);
+        return this;
+    }
+
+    @Override
+    public ModelMessage addStringTemplate(StringTemplate template) {
+        super.addStringTemplate(template);
+        return this;
+    }
+
+    @Override
+    public ModelMessage addAmount(String key, Number amount) {
+        super.addAmount(key, amount);
+        return this;
+    }
+
+    @Override
+    public ModelMessage addName(String key, String value) {
+        super.addName(key, value);
+        return this;
+    }
+
+    @Override
+    public ModelMessage addName(String key, FreeColObject object) {
+        super.addName(key, object);
+        return this;
+    }
+
+    @Override
+    public ModelMessage addName(String value) {
+        super.addName(value);
+        return this;
+    }
+
+    @Override
+    public ModelMessage addNamed(Named named) {
+        super.addNamed(named);
+        return this;
+    }
+
+    @Override
+    public ModelMessage addNamed(String key, Named named) {
+        super.addNamed(key, named);
+        return this;
+    }
+
     /**
      * Creates a new {@code ModelMessage}.
      *

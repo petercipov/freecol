@@ -910,7 +910,7 @@ public class REFAIPlayer extends EuropeanAIPlayer {
                             && Objects.equals(m.getTarget(), target);
                     final Function<AIUnit, UnitSeekAndDestroyMission> missionMapper = aiu ->
                         aiu.getMission(UnitSeekAndDestroyMission.class);
-                    if (any(transform(getAIUnits(), aiu -> aiu != aiUnit,
+                    if (any(transform(getAIUnits(), aiu -> !Objects.equals(aiu, aiUnit),
                                       missionMapper), unitPred))
                         return Integer.MIN_VALUE;
                     // The REF is more interested in colonies.

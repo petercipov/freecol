@@ -73,6 +73,7 @@ public class EmigrateUnitMessage extends AttributeMessage {
     /**
      * {@inheritDoc}
      */
+    @Override
     public MessagePriority getPriority() {
         return Message.MessagePriority.NORMAL;
     }

@@ -73,6 +73,7 @@ public class LogoutMessage extends AttributeMessage {
     /**
      * {@inheritDoc}
      */
+    @Override
     public MessagePriority getPriority() {
         return MessagePriority.NORMAL;
     }

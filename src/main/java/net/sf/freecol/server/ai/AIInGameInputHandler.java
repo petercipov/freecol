@@ -89,6 +89,7 @@ public final class AIInGameInputHandler extends FreeColServerHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public Message handle(Connection connection, Message message)
         throws FreeColException {
         message.aiHandler(getFreeColServer(), getMyAIPlayer());
@@ -98,6 +99,7 @@ public final class AIInGameInputHandler extends FreeColServerHolder
     /**
      * {@inheritDoc}
      */
+    @Override
     public Message read(Connection connection)
         throws FreeColException, XMLStreamException {
         return Message.read(getGame(), connection.getFreeColXMLReader());

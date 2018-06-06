@@ -179,8 +179,8 @@ public class OggVorbisDecoderFactory {
                     offset = 0;
                 }
                 long rd = (bufCount < n) ? bufCount : n;
-                bufCount -= rd;
-                offset += rd;
+                bufCount = (int) (bufCount - rd);;
+                offset = (int) (offset + rd);
                 wr += rd;
                 n -= rd;
             }

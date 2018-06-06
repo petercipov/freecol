@@ -26,6 +26,8 @@ import net.sf.freecol.common.io.FreeColXMLReader;
 import net.sf.freecol.common.io.FreeColXMLWriter;
 import net.sf.freecol.common.util.Utils;
 
+import java.util.Objects;
+
 
 /**
  * A trade item consisting of a colony.
@@ -58,7 +60,7 @@ public class ColonyTradeItem extends TradeItem {
               source, destination);
         colonyId = colony.getId();
         colonyName = colony.getName();
-        if (colony.getOwner() != source) {
+        if (!Objects.equals(colony.getOwner(), source)) {
             throw new IllegalArgumentException("Bad source for colony "
                 + colony.getId());
         }
@@ -126,10 +128,12 @@ public class ColonyTradeItem extends TradeItem {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int evaluateFor(Player player) {
+        final Player source = getSource();
         final Colony colony = getColony(player.getGame());
         if (colony == null
-            || (getSource() == player) != player.owns(colony))
+            || Objects.equals(source, player) != player.owns(colony))
             return INVALID_TRADE_ITEM;
         int value = colony.evaluateFor(player);
         return (player.owns(colony)) ? -value : value;
@@ -184,6 +188,7 @@ public class ColonyTradeItem extends TradeItem {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getXMLTagName() { return TAG; }
 
 

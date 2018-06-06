@@ -51,12 +51,13 @@ public final class ReportNavalPanel extends ReportUnitPanel {
         super(freeColClient, "reportNavalAction", false);
     }
 
-
+    @Override
     protected boolean isReportable(UnitType unitType) {
         return unitType.isNaval()
                 && unitType.isAvailableTo(getMyPlayer());
     }
 
+    @Override
     protected boolean isReportable(Unit unit) {
         return unit.isNaval();
     }

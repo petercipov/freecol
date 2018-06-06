@@ -30,6 +30,8 @@ import net.sf.freecol.server.FreeColServer;
 import net.sf.freecol.server.ai.AIPlayer;
 import net.sf.freecol.server.model.ServerPlayer;
 
+import java.util.Objects;
+
 
 /**
  * The message to signal the end of the game.
@@ -95,7 +97,7 @@ public class GameEndedMessage extends AttributeMessage {
             return;
         }
         FreeColDebugger.finishDebugRun(freeColClient, true);
-        if (winner != freeColClient.getMyPlayer()) return;
+        if (!Objects.equals(winner, freeColClient.getMyPlayer())) return;
         
         igc(freeColClient).gameEndedHandler(highScore);
     }

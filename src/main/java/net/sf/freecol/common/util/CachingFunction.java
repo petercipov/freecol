@@ -49,6 +49,7 @@ public class CachingFunction<T, R> implements Function<T, R> {
     /**
      * {@inheritDoc}
      */
+    @Override
     public R apply(T t) {
         R result;
         if (this.cache.containsKey(t)) {

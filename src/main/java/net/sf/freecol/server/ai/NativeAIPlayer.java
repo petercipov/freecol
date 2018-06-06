@@ -703,6 +703,7 @@ public class NativeAIPlayer extends MissionAIPlayer {
      * @return True if this player accepts the demand, false if rejected,
      *     null if no further action is required.
      */
+    @Override
     public Boolean indianDemand(Unit unit, Colony colony,
                                 GoodsType type, int amount, Boolean accept) {
         final Player player = getPlayer();
