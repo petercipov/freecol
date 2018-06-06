@@ -1,11 +1,9 @@
 # FreeCol - Colonization Strategy Game
 
-[![Build Status](https://img.shields.io/travis/FreeCol/freecol/master.svg)](https://travis-ci.org/FreeCol/freecol) <!-- [![Coverity Scan Build Status](https://img.shields.io/coverity/scan/13524.svg)](https://scan.coverity.com/projects/freecol-freecol) -->
-[![Weekly Downloads](https://img.shields.io/sourceforge/dw/freecol.svg)](https://sourceforge.net/projects/freecol/)
-[![Total Downloads](https://img.shields.io/sourceforge/dt/freecol.svg)](https://sourceforge.net/projects/freecol/)
+[![Build Status](https://img.shields.io/travis/petercipov/freecol/master.svg)](https://travis-ci.org/petercipov/freecol) 
 
-
-[![Latest Release](https://img.shields.io/github/release/FreeCol/freecol/all.svg)](https://github.com/FreeCol/freecol/releases) [![Latest Release Downloads](https://img.shields.io/github/downloads/FreeCol/freecol/total.svg)](https://github.com/FreeCol/freecol/releases)
+![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=petercipov.com%3Afreecol&metric=sqale_index)
+![Bugs](https://sonarcloud.io/api/project_badges/measure?project=petercipov.com%3Afreecol&metric=bugs)
 
 FreeCol is a turn-based strategy game based on the old game
 Colonization, and similar to Civilization. The objective of the game is
