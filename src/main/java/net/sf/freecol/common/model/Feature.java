@@ -188,8 +188,7 @@ public abstract class Feature extends FreeColSpecObject
      *     applicable to the object.
      */
     public boolean appliesTo(final FreeColSpecObjectType objectType) {
-        return (!hasScope()) ? true
-            : any(this.scopes, s -> s.appliesTo(objectType));
+        return (!hasScope()) || any(this.scopes, s -> s.appliesTo(objectType));
     }
 
     /**
@@ -238,11 +237,10 @@ public abstract class Feature extends FreeColSpecObject
      * @return True if the feature is independent.
      */
     public boolean isIndependent() {
-        if (source instanceof BuildingType
-            || source instanceof FoundingFather
-            || source instanceof NationType
-            || source instanceof SettlementType) return false;
-        return true;
+        return !(source instanceof BuildingType)
+                && !(source instanceof FoundingFather)
+                && !(source instanceof NationType)
+                && !(source instanceof SettlementType);
     }
 
 
@@ -264,7 +262,7 @@ public abstract class Feature extends FreeColSpecObject
      */
     @Override
     public final List<Scope> getScopeList() {
-        return (this.scopes == null) ? Collections.<Scope>emptyList()
+        return (this.scopes == null) ? Collections.emptyList()
             : new ArrayList<>(this.scopes);
     }
 
@@ -273,7 +271,7 @@ public abstract class Feature extends FreeColSpecObject
      */
     @Override
     public final Stream<Scope> getScopes() {
-        return (this.scopes == null) ? Stream.<Scope>empty()
+        return (this.scopes == null) ? Stream.empty()
             : getScopeList().stream();
     }
 
@@ -379,7 +377,7 @@ public abstract class Feature extends FreeColSpecObject
 
         final Specification spec = getSpecification();
 
-        String str = xr.getAttribute(SOURCE_TAG, (String)null);
+        String str = xr.getAttribute(SOURCE_TAG, null);
         if (str == null) {
             setSource(null);
         } else if (spec != null) {
@@ -458,12 +456,10 @@ public abstract class Feature extends FreeColSpecObject
             }
             List<Scope> tScopes = getScopeList();
             List<Scope> fScopes = feature.getScopeList();
-            if (tScopes.size() != fScopes.size()
-                // Not very efficient, but we do not expect many scopes
-                || any(this.scopes, s -> !feature.scopes.contains(s))
-                || any(feature.scopes, s -> !this.scopes.contains(s)))
-                return false;
-            return true;
+            return tScopes.size() == fScopes.size()
+                    // Not very efficient, but we do not expect many scopes
+                    && !any(this.scopes, s -> !feature.scopes.contains(s))
+                    && !any(feature.scopes, s -> !this.scopes.contains(s));
         }
         return false;
     }

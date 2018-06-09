@@ -38,35 +38,35 @@ public interface Option<T> extends Cloneable, ObjectWithId {
      * @return A clone of this option.
      * @exception CloneNotSupportedException if we can not clone.
      */
-    public Option<T> clone() throws CloneNotSupportedException;
+    Option<T> clone() throws CloneNotSupportedException;
 
     /**
      * Gets the option group identifier for this option.
      *
      * @return The option group identifier.
      */
-    public String getGroup();
+    String getGroup();
 
     /**
      * Set the option group for this option.
      *
      * @param group The identifier for the option group.
      */
-    public void setGroup(String group);
+    void setGroup(String group);
 
     /**
      * Gets the value of this option.
      *
      * @return The value of this {@code Option}.
      */
-    public T getValue();
+    T getValue();
 
     /**
      * Sets the value of this option.
      *
      * @param value The new value of this {@code Option}.
      */
-    public void setValue(T value);
+    void setValue(T value);
 
     /**
      * Initializes this object from an XML-representation of this object.
@@ -74,7 +74,7 @@ public interface Option<T> extends Cloneable, ObjectWithId {
      * @param xr The input stream with the XML.
      * @throws XMLStreamException if there are any problems reading the stream.
      */
-    public void readFromXML(FreeColXMLReader xr) throws XMLStreamException;
+    void readFromXML(FreeColXMLReader xr) throws XMLStreamException;
 
     /**
      * Makes an XML-representation of this object.
@@ -82,11 +82,11 @@ public interface Option<T> extends Cloneable, ObjectWithId {
      * @param xw The {@code FreeColXMLWriter} to write to.
      * @throws XMLStreamException if there are any problems writing the stream.
      */
-    public void toXML(FreeColXMLWriter xw) throws XMLStreamException;
+    void toXML(FreeColXMLWriter xw) throws XMLStreamException;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String toString();
+    String toString();
 }

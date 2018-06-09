@@ -202,7 +202,7 @@ public class Scope extends FreeColObject {
                 }
             } else {
                 FreeColSpecObjectType fcgot = object.invokeMethod("getType",
-                    FreeColSpecObjectType.class, (FreeColSpecObjectType)null);
+                    FreeColSpecObjectType.class, null);
                 if (fcgot == null || !type.equals(fcgot.getId())) {
                     return matchNegated;
                 }
@@ -310,25 +310,25 @@ public class Scope extends FreeColObject {
         // end @compat 0.11.3
             matchesNull = xr.getAttribute(MATCHES_NULL_TAG, true);
 
-        type = xr.getAttribute(TYPE_TAG, (String)null);
+        type = xr.getAttribute(TYPE_TAG, null);
 
-        abilityId = xr.getAttribute(ABILITY_ID_TAG, (String)null);
+        abilityId = xr.getAttribute(ABILITY_ID_TAG, null);
 
         abilityValue = xr.getAttribute(ABILITY_VALUE_TAG, true);
 
         // @compat 0.11.3
         if (xr.hasAttribute(OLD_METHOD_NAME_TAG)) {
-            methodName = xr.getAttribute(OLD_METHOD_NAME_TAG, (String)null);
+            methodName = xr.getAttribute(OLD_METHOD_NAME_TAG, null);
         } else
         // end @compat 0.11.3
-            methodName = xr.getAttribute(METHOD_NAME_TAG, (String)null);
+            methodName = xr.getAttribute(METHOD_NAME_TAG, null);
 
         // @compat 0.11.3
         if (xr.hasAttribute(OLD_METHOD_VALUE_TAG)) {
-            methodValue = xr.getAttribute(OLD_METHOD_VALUE_TAG, (String)null);
+            methodValue = xr.getAttribute(OLD_METHOD_VALUE_TAG, null);
         } else
         // end @compat 0.11.3
-            methodValue = xr.getAttribute(METHOD_VALUE_TAG, (String)null);
+            methodValue = xr.getAttribute(METHOD_VALUE_TAG, null);
     }
 
     /**
@@ -379,13 +379,8 @@ public class Scope extends FreeColObject {
                 return false;
             }
             if (methodValue == null) {
-                if (!Utils.equals(otherScope.getMethodValue(), methodValue)) {
-                    return false;
-                }
-            } else if (!methodValue.equals(otherScope.getMethodValue())) {
-                return false;
-            }
-            return true;
+                return Utils.equals(otherScope.getMethodValue(), methodValue);
+            } else return methodValue.equals(otherScope.getMethodValue());
         }
         return false;
     }

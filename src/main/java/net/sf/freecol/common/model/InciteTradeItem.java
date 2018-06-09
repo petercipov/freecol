@@ -161,7 +161,7 @@ public class InciteTradeItem extends TradeItem {
         super.readAttributes(xr);
 
         this.victim = xr.findFreeColGameObject(getGame(), VICTIM_TAG,
-                                               Player.class, (Player)null, true);
+                                               Player.class, null, true);
     }
 
     /**

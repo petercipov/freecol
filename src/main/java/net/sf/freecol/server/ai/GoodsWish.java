@@ -225,11 +225,11 @@ public class GoodsWish extends Wish {
         // Delegated from Wish
         transportable = (xr.hasAttribute(TRANSPORTABLE_TAG))
             ? xr.makeAIObject(aiMain, TRANSPORTABLE_TAG,
-                              AIGoods.class, (AIGoods)null, true)
+                              AIGoods.class, null, true)
             : null;
 
         goodsType = xr.getType(spec, GOODS_TYPE_TAG,
-                               GoodsType.class, (GoodsType)null);
+                               GoodsType.class, null);
 
         amountRequested = xr.getAttribute(AMOUNT_REQUESTED_TAG,
                                           GoodsContainer.CARGO_SIZE);

@@ -61,7 +61,7 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
     /** The number of turns of advanced warning of starvation. */
     public static final int FAMINE_TURNS = 3;
 
-    public static enum ColonyChangeEvent {
+    public enum ColonyChangeEvent {
         POPULATION_CHANGE,
         PRODUCTION_CHANGE,
         BONUS_CHANGE,
@@ -71,7 +71,7 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
     }
 
     /** Reasons for not building a buildable. */
-    public static enum NoBuildReason {
+    public enum NoBuildReason {
         NONE,
         NOT_BUILDING,
         NOT_BUILDABLE,
@@ -629,7 +629,7 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
      * @return The stream of work locations.
      */
     public Stream<WorkLocation> getAllWorkLocations() {
-        Stream<WorkLocation> ret = Stream.<WorkLocation>empty();
+        Stream<WorkLocation> ret = Stream.empty();
         synchronized (this.colonyTiles) {
             ret = concat(ret, map(this.colonyTiles, ct -> (WorkLocation)ct));
         }
@@ -755,7 +755,7 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
         WorkLocation wl = getWorkLocationWithAbility(ability);
         try {
             if (wl != null) return returnClass.cast(wl);
-        } catch (ClassCastException cce) {};
+        } catch (ClassCastException cce) {}
         return null;
     }
 
@@ -1085,7 +1085,7 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
             }
         }
         if (assumeBuilt == null) {
-            assumeBuilt = Collections.<BuildableType>emptyList();
+            assumeBuilt = Collections.emptyList();
         }
         return buildableType.canBeBuiltInColony(this.getColony(), assumeBuilt);
     }
@@ -1156,7 +1156,7 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
      * @return A list of required abstract goods.
      */
     public List<AbstractGoods> getFullRequiredGoods(BuildableType buildable) {
-        if (buildable == null) return Collections.<AbstractGoods>emptyList();
+        if (buildable == null) return Collections.emptyList();
 
         List<AbstractGoods> required = new ArrayList<>();
         for (AbstractGoods ag : buildable.getRequiredGoodsList()) {
@@ -2000,7 +2000,7 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
      */
     public Stream<Modifier> getProductionModifiers(GoodsType goodsType,
                                                    UnitType unitType, WorkLocation wl) {
-        if (productionBonus == 0) return Stream.<Modifier>empty();
+        if (productionBonus == 0) return Stream.empty();
         int bonus = (int)Math.floor(productionBonus * wl.getRebelFactor());
         Modifier mod = new Modifier(goodsType.getId(), bonus,
                 Modifier.ModifierType.ADDITIVE,
@@ -2092,18 +2092,16 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
      * @return True if the goods can be produced.
      */
     public boolean canProduce(GoodsType goodsType) {
-        return (getNetProductionOf(goodsType) > 0)
-                ? true // Obviously:-)
-
-                // Breeding requires the breedable number to be present
-                : (goodsType.isBreedable())
+        // Obviously:-)
+        // Breeding requires the breedable number to be present
+        return (getNetProductionOf(goodsType) > 0) || ((goodsType.isBreedable())
                 ? getGoodsCount(goodsType) >= goodsType.getBreedingNumber()
 
                 // Is there a work location that can produce the goods, with
                 // positive generic production potential and all inputs satisfied?
                 : any(getWorkLocationsForProducing(goodsType),
                 wl -> wl.getGenericPotential(goodsType) > 0
-                        && all(wl.getInputs(), ag -> canProduce(ag.getType())));
+                        && all(wl.getInputs(), ag -> canProduce(ag.getType()))));
     }
 
 
@@ -2143,7 +2141,7 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
         public int getAmount() {
             return this.amount;
         }
-    };
+    }
 
     /**
      * Collect suggestions for tiles that need exploration or
@@ -2358,8 +2356,8 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
      */
     public boolean goodsUseful(GoodsType goodsType) {
         if (getOwner().getPlayerType() == Player.PlayerType.INDEPENDENT) {
-            if ((goodsType.isLibertyType() && getSoLPercentage() >= 100)
-                    || goodsType.isImmigrationType()) return false;
+            return (!goodsType.isLibertyType() || getSoLPercentage() < 100)
+                    && !goodsType.isImmigrationType();
         }
         return true;
     }
@@ -2457,7 +2455,7 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
                                         Turn turn) {
         if (turn == null) turn = getGame().getTurn();
         return concat(super.getAbilities(id, type, turn),
-                ((owner == null) ? Stream.<Ability>empty()
+                ((owner == null) ? Stream.empty()
                         : owner.getAbilities(id, type, turn)));
     }
 
@@ -3118,13 +3116,13 @@ public class Colony extends Settlement implements Nameable, TradeLocation {
 
         if (BUILD_QUEUE_TAG.equals(tag)) {
             BuildableType bt = xr.getType(spec, ID_ATTRIBUTE_TAG,
-                    BuildableType.class, (BuildableType)null);
+                    BuildableType.class, null);
             if (bt != null) buildQueue.add(bt);
             xr.closeTag(BUILD_QUEUE_TAG);
 
         } else if (POPULATION_QUEUE_TAG.equals(xr.getLocalName())) {
             UnitType ut = xr.getType(spec, ID_ATTRIBUTE_TAG,
-                    UnitType.class, (UnitType)null);
+                    UnitType.class, null);
             if (ut != null) populationQueue.add(ut);
             xr.closeTag(POPULATION_QUEUE_TAG);
 

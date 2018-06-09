@@ -78,8 +78,7 @@ public abstract class ObjectMessage extends AttributeMessage {
      * @exception XMLStreamException if the stream is corrupt.
      */
     protected ObjectMessage(String type, FreeColXMLReader xr,
-                            String... attributes)
-        throws XMLStreamException {
+                            String... attributes) {
         super(type, xr.getAttributeMap(attributes));
 
         this.objects.clear();

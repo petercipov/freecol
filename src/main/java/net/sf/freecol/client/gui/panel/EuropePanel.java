@@ -199,7 +199,7 @@ public final class EuropePanel extends PortPanel {
 
                 igc().moveTo(unit, dest);
                 if (dest instanceof Europe) {
-                    ; // Assume this works
+                    // Assume this works
                 } else {
                     // Fail if still in Europe if told to leave
                     if (unit.isInEurope()) return null;
@@ -563,7 +563,7 @@ public final class EuropePanel extends PortPanel {
     }
 
 
-    public static enum EuropeAction {
+    public enum EuropeAction {
         EXIT,
         RECRUIT,
         PURCHASE,

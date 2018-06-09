@@ -39,13 +39,13 @@ public class DisplayTileTextAction extends SelectableAction {
     public static final String id = "displayTileTextAction.";
 
     // FIXME: make ClientOptions use enum
-    public static enum DisplayText {
+    public enum DisplayText {
         EMPTY, NAMES, OWNERS, REGIONS;
 
         public String getKey() {
             return getEnumKey(this);
         }
-    };
+    }
 
     private static final int[] accelerators = {
         KeyEvent.VK_E,

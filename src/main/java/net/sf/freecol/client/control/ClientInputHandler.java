@@ -67,7 +67,7 @@ public final class ClientInputHandler extends FreeColClientHolder
      */
     @Override
     public Message read(Connection connection)
-        throws FreeColException, XMLStreamException {
+        throws FreeColException {
         return Message.read(getGame(), connection.getFreeColXMLReader());
     }
 }

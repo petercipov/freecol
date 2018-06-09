@@ -415,7 +415,7 @@ public final class FreeCol {
      * @return A suitable {@code InputStream}, or null on error.
      * @exception IOException if the connection fails to open.
      */
-    private static InputStream getDefaultSplashStream() throws IOException {
+    private static InputStream getDefaultSplashStream() {
         return FreeCol.class.getClassLoader()
                 .getResourceAsStream(SPLASH_DEFAULT);
     }
@@ -574,10 +574,10 @@ public final class FreeCol {
             }
 
             if (line.hasOption("default-locale")) {
-                ; // Do nothing, already handled in main().
+                // Do nothing, already handled in main().
             }
             if (line.hasOption("freecol-data")) {
-                ; // Do nothing, already handled in main().
+                // Do nothing, already handled in main().
             }
 
             if (line.hasOption("advantages")) {
@@ -1448,7 +1448,7 @@ public final class FreeCol {
             try {
                 final FreeColSavegameFile fis
                     = new FreeColSavegameFile(saveGame);
-                freeColServer = new FreeColServer(fis, (Specification)null,
+                freeColServer = new FreeColServer(fis, null,
                                                   serverPort, serverName);
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Load fail", e);

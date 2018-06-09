@@ -95,7 +95,7 @@ public class FreeColSavegameFile extends FreeColDataFile {
         final FreeColXMLReader xr = this.getSavedGameFreeColXMLReader();
         xr.nextTag();
         List<String> ret = transform(attributes, alwaysTrue(),
-                                     a -> xr.getAttribute(a, (String)null));
+                                     a -> xr.getAttribute(a, null));
         xr.close();
         return ret;
     }

@@ -490,7 +490,7 @@ public class FreeColDirectories {
      * @return A list of {@code File}s.
      */
     private static List<File> collectFiles(File dir, Predicate<File> pred) {
-        return transform(fileStream(dir), pred, Function.<File>identity(),
+        return transform(fileStream(dir), pred, Function.identity(),
                          fileNameComparator);
     }
 
@@ -841,7 +841,7 @@ public class FreeColDirectories {
      */
     public static List<String> getLanguageIdList() {
         File[] files = getI18nDirectory().listFiles();
-        return (files == null) ? Collections.<String>emptyList()
+        return (files == null) ? Collections.emptyList()
             : transform(files, f -> f.canRead(), f -> getLanguageId(f));
     }
     

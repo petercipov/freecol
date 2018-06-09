@@ -43,7 +43,7 @@ public class NationOptions extends FreeColSpecObject {
     public static final String TAG = "nationOptions";
 
     /** Type of national advantages for European players. */
-    public static enum Advantages implements Named {
+    public enum Advantages implements Named {
         NONE,
         FIXED,
         SELECTABLE;
@@ -70,13 +70,13 @@ public class NationOptions extends FreeColSpecObject {
         public final String getNameKey() {
             return Messages.nameKey("model." + getKey());
         }
-    };
+    }
 
     /**
      * Nations may be available to all players, to AI players only, or
      * to no players.
      */
-    public static enum NationState implements Named {
+    public enum NationState implements Named {
         AVAILABLE,
         AI_ONLY,
         NOT_AVAILABLE;
@@ -293,9 +293,9 @@ public class NationOptions extends FreeColSpecObject {
 
         if (NATION_OPTION_TAG.equals(tag)) {
             Nation nation = xr.getType(spec, ID_ATTRIBUTE_TAG,
-                                       Nation.class, (Nation)null);
+                                       Nation.class, null);
             NationState state = xr.getAttribute(STATE_TAG, NationState.class,
-                                                (NationState)null);
+                    null);
             if (nation != null && state != null) {
                 nations.put(nation, state);
             }
@@ -307,9 +307,9 @@ public class NationOptions extends FreeColSpecObject {
                 tag = xr.getLocalName();
                 if (OLD_NATION_TAG.equals(tag)) {
                     Nation nation = xr.getType(spec, ID_ATTRIBUTE_TAG,
-                                               Nation.class, (Nation)null);
+                                               Nation.class, null);
                     NationState state = xr.getAttribute(STATE_TAG,
-                        NationState.class, (NationState)null);
+                        NationState.class, null);
                     if (nation != null && state != null) {
                         nations.put(nation, state);
                     }

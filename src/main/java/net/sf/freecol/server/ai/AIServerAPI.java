@@ -61,8 +61,7 @@ public class AIServerAPI extends ServerAPI {
      * {@inheritDoc}
      */
     @Override
-    public Connection connect(String name, String host, int port)
-        throws IOException {
+    public Connection connect(String name, String host, int port) {
         return getConnection(); // Noop
     }
 
@@ -78,7 +77,7 @@ public class AIServerAPI extends ServerAPI {
      * {@inheritDoc}
      */
     @Override
-    public Connection reconnect() throws IOException {
+    public Connection reconnect() {
         return getConnection(); // Noop
     }
 }

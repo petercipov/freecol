@@ -66,12 +66,12 @@ public class Player extends FreeColGameObject implements Nameable {
     //
 
     /** Types of players. */
-    public static enum PlayerType {
+    public enum PlayerType {
         NATIVE, COLONIAL, REBEL, INDEPENDENT, ROYAL, UNDEAD, RETIRED
     }
 
     /** Colony value categories. */
-    public static enum ColonyValueCategory {
+    public enum ColonyValueCategory {
         A_OVERRIDE, // override slot containing showstopper NoValueType values
         A_PROD,     // general production level
         A_TILE,     // strangeness with the tile
@@ -97,7 +97,7 @@ public class Player extends FreeColGameObject implements Nameable {
     }
 
     /** Special return values for showstopper getColonyValue fail. */
-    public static enum NoValueType {
+    public enum NoValueType {
         BOGUS(-1), TERRAIN(-2), RUMOUR(-3), SETTLED(-4), FOOD(-5), INLAND(-6), POLAR(-7);
      
         private static final int MAX = values().length;
@@ -917,9 +917,8 @@ public class Player extends FreeColGameObject implements Nameable {
      *     world or a nation is in rebellion against us.
      */
     public boolean isWorkForREF() {
-        return (any(getUnits(), Unit::hasTile))
-            ? true // Work to do still if there exists a unit in the new world
-            : !getRebels().isEmpty();
+        // Work to do still if there exists a unit in the new world
+        return (any(getUnits(), Unit::hasTile)) || !getRebels().isEmpty();
     }
 
     /**
@@ -1167,7 +1166,7 @@ public class Player extends FreeColGameObject implements Nameable {
         int unreduced = Math.round(current
             / applyModifiers(1f, turn, Modifier.RELIGIOUS_UNREST_BONUS));
         immigrationRequired = (int)applyModifiers(unreduced + base, turn,
-            Modifier.RELIGIOUS_UNREST_BONUS);;
+            Modifier.RELIGIOUS_UNREST_BONUS);
         logger.finest("Immigration for " + getId() + " updated " + current
             + " -> " + immigrationRequired);
     }
@@ -1178,8 +1177,7 @@ public class Player extends FreeColGameObject implements Nameable {
      * @return Whether a new colonist should emigrate.
      */
     public boolean checkEmigrate() {
-        return (isColonial()) ? getImmigrationRequired() <= immigration
-            : false;
+        return (isColonial()) && getImmigrationRequired() <= immigration;
     }
 
     /**
@@ -1726,7 +1724,7 @@ public class Player extends FreeColGameObject implements Nameable {
      */
     public boolean hasTraded(GoodsType goodsType) {
         final Market market = getMarket();
-        return (market == null) ? false : market.hasBeenTraded(goodsType);
+        return (market != null) && market.hasBeenTraded(goodsType);
     }
 
     /**
@@ -1927,7 +1925,7 @@ public class Player extends FreeColGameObject implements Nameable {
      */
     public List<Unit> getUnitList() {
         synchronized (this.units) {
-            return (this.units.isEmpty()) ? Collections.<Unit>emptyList()
+            return (this.units.isEmpty()) ? Collections.emptyList()
                 : new ArrayList<>(this.units);
         }
     }
@@ -2181,7 +2179,7 @@ public class Player extends FreeColGameObject implements Nameable {
         List<Unit> ret;
         synchronized (this.tradeRoutes) {
             ret = (!this.tradeRoutes.remove(tradeRoute))
-                ? Collections.<Unit>emptyList()
+                ? Collections.emptyList()
                 : tradeRoute.getAssignedUnits();
         }
         for (Unit u : ret) u.setTradeRoute(null);
@@ -2215,8 +2213,7 @@ public class Player extends FreeColGameObject implements Nameable {
      */
     public boolean addOwnable(Ownable o) {
         return (o instanceof Settlement) ? addSettlement((Settlement)o)
-            : (o instanceof Unit) ? addUnit((Unit)o)
-            : false;
+            : (o instanceof Unit) && addUnit((Unit) o);
     }
 
     /**
@@ -2228,8 +2225,7 @@ public class Player extends FreeColGameObject implements Nameable {
      */
     public boolean removeOwnable(Ownable o) {
         return (o instanceof Settlement) ? removeSettlement((Settlement)o)
-            : (o instanceof Unit) ? removeUnit((Unit)o)
-            : false;
+            : (o instanceof Unit) && removeUnit((Unit) o);
     }
 
 
@@ -2296,7 +2292,7 @@ public class Player extends FreeColGameObject implements Nameable {
      */
     public List<Colony> getConnectedPortList() {
         return (!isEuropean())
-            ? Collections.<Colony>emptyList()
+            ? Collections.emptyList()
             : transform(getColonies(), Colony::isConnectedPort);
     }
 
@@ -2930,7 +2926,7 @@ public class Player extends FreeColGameObject implements Nameable {
      * @return The set of banned players.
      */
     protected Set<Player> getBannedMissions() {
-        return (this.bannedMissions == null) ? Collections.<Player>emptySet()
+        return (this.bannedMissions == null) ? Collections.emptySet()
             : this.bannedMissions;
     }
         
@@ -3032,7 +3028,7 @@ public class Player extends FreeColGameObject implements Nameable {
         Stance oldStance = stance.get(player.getId());
         if (Objects.equals(newStance, oldStance)) return true;
 
-        boolean valid = true;;
+        boolean valid = true;
         if ((newStance == Stance.CEASE_FIRE && oldStance != Stance.WAR)
             || newStance == Stance.UNCONTACTED) {
             valid = false;
@@ -3212,7 +3208,7 @@ public class Player extends FreeColGameObject implements Nameable {
      * to found a settlement or just to be used by one, including the
      * double negative NONE == "no reason" case.
      */
-    public static enum NoClaimReason implements Named {
+    public enum NoClaimReason implements Named {
         NONE,            // Actually, tile can be claimed
         TERRAIN,         // Not on settleable terrain
         RUMOUR,          // Europeans can not claim tiles with LCR
@@ -3245,7 +3241,7 @@ public class Player extends FreeColGameObject implements Nameable {
         public String getNameKey() {
             return Messages.nameKey("model." + getKey());
         }        
-    };
+    }
 
     /**
      * Can a tile be owned by this player?
@@ -3861,7 +3857,7 @@ public class Player extends FreeColGameObject implements Nameable {
      * @return True if the {@code Ownable} is ours.
      */
     public boolean owns(Ownable ownable) {
-        return (ownable == null) ? false : this.equals(ownable.getOwner());
+        return (ownable != null) && this.equals(ownable.getOwner());
     }
 
     /**
@@ -4229,15 +4225,15 @@ public class Player extends FreeColGameObject implements Nameable {
         final Specification spec = getSpecification();
         final Game game = getGame();
 
-        name = xr.getAttribute(USERNAME_TAG, (String)null);
+        name = xr.getAttribute(USERNAME_TAG, null);
 
-        nationId = xr.getAttribute(NATION_ID_TAG, (String)null);
+        nationId = xr.getAttribute(NATION_ID_TAG, null);
 
         if (isUnknownEnemy()) {
             nationType = null;
         } else {
             nationType = xr.getType(spec, NATION_TYPE_TAG,
-                                    NationType.class, (NationType)null);
+                                    NationType.class, null);
         }
 
         admin = xr.getAttribute(ADMIN_TAG, false);
@@ -4265,17 +4261,17 @@ public class Player extends FreeColGameObject implements Nameable {
         tax = xr.getAttribute(TAX_TAG, 0);
 
         changePlayerType(xr.getAttribute(PLAYER_TYPE_TAG,
-                                         PlayerType.class, (PlayerType)null));
+                                         PlayerType.class, null));
 
         currentFather = xr.getType(spec, CURRENT_FATHER_TAG,
-                                   FoundingFather.class, (FoundingFather)null);
+                                   FoundingFather.class, null);
 
         immigrationRequired = xr.getAttribute(IMMIGRATION_REQUIRED_TAG, 12);
 
-        newLandName = xr.getAttribute(NEW_LAND_NAME_TAG, (String)null);
+        newLandName = xr.getAttribute(NEW_LAND_NAME_TAG, null);
 
         independentNationName = xr.getAttribute(INDEPENDENT_NATION_NAME_TAG,
-                                                (String)null);
+                null);
 
         attackedByPrivateers = xr.getAttribute(ATTACKED_BY_PRIVATEERS_TAG,
                                                false);

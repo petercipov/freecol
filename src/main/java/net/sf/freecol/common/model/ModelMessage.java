@@ -45,7 +45,7 @@ public class ModelMessage extends StringTemplate {
      * When this changes, be sure to update client-options.xml and the
      * messages file appropriately.
      */
-    public static enum MessageType implements Named {
+    public enum MessageType implements Named {
         DEFAULT(""),
         BUILDING_COMPLETED("model.option.guiShowBuildingCompleted"),
         COMBAT_RESULT(null), // No option, always display
@@ -504,9 +504,9 @@ public class ModelMessage extends StringTemplate {
     public void readAttributes(FreeColXMLReader xr) throws XMLStreamException {
         super.readAttributes(xr);
 
-        sourceId = xr.getAttribute(SOURCE_TAG, (String)null);
+        sourceId = xr.getAttribute(SOURCE_TAG, null);
 
-        displayId = xr.getAttribute(DISPLAY_TAG, (String)null);
+        displayId = xr.getAttribute(DISPLAY_TAG, null);
 
         messageType = xr.getAttribute(MESSAGE_TYPE_TAG, 
                                       MessageType.class, MessageType.DEFAULT);

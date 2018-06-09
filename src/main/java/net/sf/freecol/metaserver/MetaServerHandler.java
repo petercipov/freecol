@@ -70,8 +70,7 @@ public final class MetaServerHandler implements MessageHandler {
      * {@inheritDoc}
      */
     @Override
-    public Message handle(Connection connection, Message message)
-        throws FreeColException {
+    public Message handle(Connection connection, Message message) {
         if (message == null) return null;
         Message reply = null;
         final String tag = message.getType();
@@ -107,7 +106,7 @@ public final class MetaServerHandler implements MessageHandler {
      */
     @Override
     public Message read(Connection connection)
-        throws FreeColException, XMLStreamException {
+        throws FreeColException {
         return Message.read(null, connection.getFreeColXMLReader());
     }
 

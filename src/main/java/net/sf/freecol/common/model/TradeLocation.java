@@ -35,7 +35,7 @@ public interface TradeLocation {
      * @param goodsType The {@code GoodsType} to check.
      * @return The amount of goods present.
      */
-    public int getGoodsCount(GoodsType goodsType);
+    int getGoodsCount(GoodsType goodsType);
 
     /**
      * Gets the amount of a given goods type that can be exported from
@@ -45,7 +45,7 @@ public interface TradeLocation {
      * @param turns The number of turns before the goods is required.
      * @return The amount of goods to export.
      */
-    public int getExportAmount(GoodsType goodsType, int turns);
+    int getExportAmount(GoodsType goodsType, int turns);
 
     /**
      * Gets the amount of a given goods type that can be imported to
@@ -55,7 +55,7 @@ public interface TradeLocation {
      * @param turns The number of turns before the goods will arrive.
      * @return The amount of goods to import.
      */
-    public int getImportAmount(GoodsType goodsType, int turns);
+    int getImportAmount(GoodsType goodsType, int turns);
 
     /**
      * Function for returning the name of a TradeLocation
@@ -63,14 +63,14 @@ public interface TradeLocation {
      * @param tradeLocation The {@code TradeLocation} to return the name.
      * @return The name.
      */
-    public String getLocationName(TradeLocation tradeLocation);
+    String getLocationName(TradeLocation tradeLocation);
 
     /**
      * Return the name of this instance as a JLabel
      *
      * @return The JLabel with the result of {@link #getLocationName(TradeLocation)}
      */
-    public default JLabel getNameAsJlabel() {
+    default JLabel getNameAsJlabel() {
         return new JLabel(getLocationName(this));
     }
 
@@ -79,7 +79,7 @@ public interface TradeLocation {
      *
      * @return true, if possible, false by default
      */
-    public default Boolean canBeInput() {
+    default Boolean canBeInput() {
         return false;
     }
 }

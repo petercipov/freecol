@@ -185,7 +185,7 @@ public abstract class FreeColSpecObjectType extends FreeColSpecObject
      */
     @Override
     public final List<Scope> getScopeList() {
-        return (this.scopes == null) ? Collections.<Scope>emptyList()
+        return (this.scopes == null) ? Collections.emptyList()
             : this.scopes;
     }
 
@@ -194,7 +194,7 @@ public abstract class FreeColSpecObjectType extends FreeColSpecObject
      */
     @Override
     public final Stream<Scope> getScopes() {
-        return (this.scopes == null) ? Stream.<Scope>empty()
+        return (this.scopes == null) ? Stream.empty()
             : this.scopes.stream();
     }
 

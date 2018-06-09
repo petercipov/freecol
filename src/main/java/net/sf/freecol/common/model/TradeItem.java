@@ -278,10 +278,10 @@ public abstract class TradeItem extends FreeColGameObject {
         super.readAttributes(xr);
 
         this.source = xr.getAttribute(getGame(), SOURCE_TAG,
-                                      Player.class, (Player)null);
+                                      Player.class, null);
 
         this.destination = xr.getAttribute(getGame(), DESTINATION_TAG,
-                                           Player.class, (Player)null);
+                                           Player.class, null);
     }
 
     // getXMLTagName left to subclasses

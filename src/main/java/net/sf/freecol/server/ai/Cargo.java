@@ -59,7 +59,7 @@ public class Cargo {
     private static final int MAX_TRY = 3;
 
     /** The actions to perform at the target. */
-    public static enum CargoMode {
+    public enum CargoMode {
         LOAD,       // Go to target and load transportable
         UNLOAD,     // Go to target and unload transportable
         PICKUP,     // Go to drop node target, transportable unit to embark
@@ -645,7 +645,7 @@ public class Cargo {
         xw.writeStartElement(TAG);
 
         xw.writeAttribute(FreeColObject.ID_ATTRIBUTE_TAG,
-                          (AIObject)getTransportable());
+                getTransportable());
 
         xw.writeAttribute(CARRIER_TAG, getCarrier());
 
@@ -701,7 +701,7 @@ public class Cargo {
         this.transportable = tao;
 
         this.carrier = xr.getAttribute(game, CARRIER_TAG,
-                                       Unit.class, (Unit)null);
+                                       Unit.class, null);
 
         this.tries = xr.getAttribute(TRIES_TAG, 0);
         
@@ -722,7 +722,7 @@ public class Cargo {
         this.plan.turns = xr.getAttribute(TURNS_TAG, -1);
 
         this.plan.mode = xr.getAttribute(MODE_TAG, 
-                                         CargoMode.class, (CargoMode)null);
+                                         CargoMode.class, null);
 
         this.plan.fallback = xr.getAttribute(FALLBACK_TAG, false);
 

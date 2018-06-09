@@ -104,7 +104,7 @@ public class IndianNationType extends NationType {
      */
     public List<RandomChoice<UnitType>> getSkills() {
         return (this.skills == null)
-            ? Collections.<RandomChoice<UnitType>>emptyList()
+            ? Collections.emptyList()
             : this.skills;
     }
 
@@ -165,7 +165,7 @@ public class IndianNationType extends NationType {
      * @return A list of regions identifiers.
      */
     public List<String> getRegions() {
-        return (regions == null) ? Collections.<String>emptyList()
+        return (regions == null) ? Collections.emptyList()
             : regions;
     }
 
@@ -281,7 +281,7 @@ public class IndianNationType extends NationType {
 
         if (SKILL_TAG.equals(tag)) {
             addSkill(xr.getType(spec, ID_ATTRIBUTE_TAG,
-                                UnitType.class, (UnitType)null),
+                                UnitType.class, null),
                      xr.getAttribute(PROBABILITY_TAG, 0));
             xr.closeTag(SKILL_TAG);
 

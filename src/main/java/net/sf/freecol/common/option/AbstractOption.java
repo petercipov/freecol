@@ -182,9 +182,9 @@ public abstract class AbstractOption<T> extends FreeColSpecObject
     protected void readAttributes(FreeColXMLReader xr) throws XMLStreamException {
         super.readAttributes(xr);
 
-        String defaultValue = xr.getAttribute(DEFAULT_VALUE_TAG, (String)null);
+        String defaultValue = xr.getAttribute(DEFAULT_VALUE_TAG, null);
 
-        String value = xr.getAttribute(VALUE_TAG, (String)null);
+        String value = xr.getAttribute(VALUE_TAG, null);
         if (defaultValue == null && value == null) {
             if (!isNullValueOK()) {
                 throw new XMLStreamException("invalid option " + getId()

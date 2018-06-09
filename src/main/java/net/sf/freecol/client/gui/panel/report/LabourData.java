@@ -529,7 +529,7 @@ public class LabourData {
 
         UnitData workingAs = experts.get(currentlyWorking);
         if (workingAs == null) {
-            ; // pass
+            // pass
         } else if (Objects.equals(workingAs.getUnitType(), unit.getType())) {
             colonyData.getWorkingProfessionals().addProduction(production);
         } else {

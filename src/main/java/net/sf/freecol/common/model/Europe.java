@@ -81,7 +81,7 @@ public class Europe extends UnitLocation
      * The following constant should be used when the random choice
      * behaviour is desired.
      */
-    public static enum MigrationType {
+    public enum MigrationType {
         NORMAL,     // Unit decided to migrate
         RECRUIT,    // Player is paying
         FOUNTAIN,   // As a result of a Fountain of Youth discovery
@@ -595,7 +595,7 @@ public class Europe extends UnitLocation
             // Always able to dress a missionary.
             ((id == null || Ability.DRESS_MISSIONARY.equals(id))
                 ? Stream.of(ABILITY_DRESS_MISSIONARY)
-                : Stream.<Ability>empty()));
+                : Stream.empty()));
     }
 
     /**
@@ -704,7 +704,7 @@ public class Europe extends UnitLocation
         final Specification spec = getSpecification();
 
         owner = xr.findFreeColGameObject(getGame(), OWNER_TAG,
-                                         Player.class, (Player)null, true);
+                                         Player.class, null, true);
 
         baseRecruitPrice = xr.getAttribute(RECRUIT_PRICE_TAG,
                                            RECRUIT_PRICE_INITIAL);
@@ -742,11 +742,11 @@ public class Europe extends UnitLocation
 
         } else if (RECRUIT_TAG.equals(tag)) {
             UnitType unitType = xr.getType(spec, RECRUIT_TYPE_TAG,
-                                           UnitType.class, (UnitType)null);
+                                           UnitType.class, null);
             // @compat 0.11.x
             if (unitType == null) {
                 unitType = xr.getType(spec, RECRUIT_ID_TAG,
-                                      UnitType.class, (UnitType)null);
+                                      UnitType.class, null);
             }
             // end @compat 0.11.x
             if (unitType != null) {
@@ -761,7 +761,7 @@ public class Europe extends UnitLocation
 
         } else if (UNIT_PRICE_TAG.equals(tag)) {
             UnitType unitType = xr.getType(spec, UNIT_TYPE_TAG,
-                                           UnitType.class, (UnitType)null);
+                                           UnitType.class, null);
 
             int price = xr.getAttribute(PRICE_TAG, -1);
 

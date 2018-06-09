@@ -3382,7 +3382,7 @@ public final class InGameController extends Controller {
         for (Arrangement a : transform(arrangements,
                 a -> !Objects.equals(a.role, a.unit.getRole()) && !Objects.equals(a.role, defaultRole),
                 Function.identity(),
-                Comparator.<Arrangement>reverseOrder())) {
+                Comparator.reverseOrder())) {
             if (!colony.equipForRole(a.unit, a.role, a.roleCount)) {
                 return serverPlayer.clientError("Failed to equip "
                     + a.unit.getId() + " for role " + a.role

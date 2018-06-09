@@ -264,7 +264,7 @@ public class AbstractUnitOption extends AbstractOption<AbstractUnit> {
 
         final Specification spec = getSpecification();
         nationType = xr.getType(spec, NATION_TYPE_TAG,
-                                NationType.class, (NationType)null);
+                                NationType.class, null);
     }
     
     /**

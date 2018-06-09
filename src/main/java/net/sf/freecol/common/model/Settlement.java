@@ -199,7 +199,7 @@ public abstract class Settlement extends GoodsLocation
      * @param tile The {@code Tile} to add.
      */
     public void addTile(Tile tile) {
-        if (!ownedTiles.contains(tile)) ownedTiles.add(tile);
+        ownedTiles.add(tile);
     }
 
     /**
@@ -251,7 +251,7 @@ public abstract class Settlement extends GoodsLocation
      */
     public Set<Tile> getVisibleTileSet() {
         final Tile tile = getTile();
-        return (tile == null) ? Collections.<Tile>emptySet()
+        return (tile == null) ? Collections.emptySet()
             : new HashSet<Tile>(tile.getSurroundingTiles(0, getLineOfSight()));
     }
 
@@ -427,8 +427,7 @@ public abstract class Settlement extends GoodsLocation
      * @return True if bombarding is allowed.
      */
     public boolean canBombardEnemyShip() {
-        return (isLandLocked()) ? false
-            : hasAbility(Ability.BOMBARD_SHIPS);
+        return (!isLandLocked()) && hasAbility(Ability.BOMBARD_SHIPS);
     }
 
     /**
@@ -881,17 +880,17 @@ public abstract class Settlement extends GoodsLocation
 
         final Game game = getGame();
 
-        name = xr.getAttribute(NAME_TAG, (String)null);
+        name = xr.getAttribute(NAME_TAG, null);
 
         Player oldOwner = owner;
         owner = xr.findFreeColGameObject(game, OWNER_TAG,
-                                         Player.class, (Player)null, true);
+                                         Player.class, null, true);
         if (xr.shouldIntern()) game.checkOwners(this, oldOwner);
 
         tile = xr.findFreeColGameObject(game, TILE_TAG,
-                                        Tile.class, (Tile)null, true);
+                                        Tile.class, null, true);
 
-        String newType = xr.getAttribute(SETTLEMENT_TYPE_TAG, (String)null);
+        String newType = xr.getAttribute(SETTLEMENT_TYPE_TAG, null);
         type = owner.getNationType().getSettlementType(newType);
     }
 

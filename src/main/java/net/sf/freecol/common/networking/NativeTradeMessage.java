@@ -106,7 +106,7 @@ public class NativeTradeMessage extends ObjectMessage {
 
     private NativeTradeAction getAction() {
         return getEnumAttribute(ACTION_TAG, NativeTradeAction.class,
-                                (NativeTradeAction)null);
+                null);
     }
 
     private NativeTrade getNativeTrade() {

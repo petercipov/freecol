@@ -445,7 +445,7 @@ public class DefendSettlementMission extends Mission {
         super.readAttributes(xr);
 
         target = xr.getAttribute(getGame(), SETTLEMENT_TAG,
-                                 Settlement.class, (Settlement)null);
+                                 Settlement.class, null);
     }
 
     /**

@@ -56,8 +56,7 @@ public class VacantPlayersMessage extends AttributeMessage {
      * @param xr The {@code FreeColXMLReader} to read from.
      * @exception XMLStreamException if the stream is corrupt.
      */
-    public VacantPlayersMessage(Game game, FreeColXMLReader xr)
-        throws XMLStreamException {
+    public VacantPlayersMessage(Game game, FreeColXMLReader xr) {
         super(TAG, xr.getArrayAttributeMap());
     }
 

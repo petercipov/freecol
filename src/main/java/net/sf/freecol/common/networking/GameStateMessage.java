@@ -67,9 +67,8 @@ public class GameStateMessage extends AttributeMessage {
      * @param xr The {@code FreeColXMLReader} to read from.
      * @exception XMLStreamException if the stream is corrupt.
      */
-    public GameStateMessage(Game game, FreeColXMLReader xr)
-        throws XMLStreamException {
-        this(xr.getAttribute(STATE_TAG, ServerState.class, (ServerState)null));
+    public GameStateMessage(Game game, FreeColXMLReader xr) {
+        this(xr.getAttribute(STATE_TAG, ServerState.class, null));
     }
         
 
@@ -80,7 +79,7 @@ public class GameStateMessage extends AttributeMessage {
      */
     private ServerState getState() {
         return getEnumAttribute(STATE_TAG, ServerState.class,
-                                (ServerState)null);
+                null);
     }
 
     /**

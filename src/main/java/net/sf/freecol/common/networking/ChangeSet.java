@@ -56,7 +56,7 @@ public class ChangeSet {
     private enum SeeCheck {
         VISIBLE,
         INVISIBLE,
-        SPECIAL;
+        SPECIAL
     }
     
     /** The changes to send. */
@@ -1318,8 +1318,8 @@ public class ChangeSet {
     public ChangeSet addGlobalMessage(Game game, ServerPlayer omit,
                                       ModelMessage message) {
         for (Player p : game.getLiveEuropeanPlayerList()) {
-            if (Objects.equals(p, (Player)omit)) continue;
-            addMessage((ServerPlayer)p, message);
+            if (Objects.equals(p, omit)) continue;
+            addMessage(p, message);
         }
         return this;
     }

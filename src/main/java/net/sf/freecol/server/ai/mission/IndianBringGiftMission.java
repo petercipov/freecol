@@ -353,7 +353,7 @@ public class IndianBringGiftMission extends Mission {
         this.collected = xr.getAttribute(COLLECTED_TAG, false);
 
         this.colony = xr.getAttribute(getGame(), COLONY_TAG,
-                                      Colony.class, (Colony)null);
+                                      Colony.class, null);
     }
 
     /**

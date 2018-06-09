@@ -293,7 +293,7 @@ public class Goods extends AbstractGoods implements Locatable, Ownable {
 
         super.readAttributes(xr);
 
-        this.type = xr.getType(spec, TYPE_TAG, GoodsType.class, (GoodsType)null);
+        this.type = xr.getType(spec, TYPE_TAG, GoodsType.class, null);
         if (this.type == null) {
             throw new XMLStreamException("Null goods type.");
         } else {

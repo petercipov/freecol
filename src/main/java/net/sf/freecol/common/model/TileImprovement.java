@@ -280,8 +280,7 @@ public class TileImprovement extends TileItem implements Named {
     public boolean isConnectedTo(Direction direction) {
         int index = isRoad() ? direction.ordinal()
             : isRiver() ? Direction.longSides.indexOf(direction) : -1;
-        return (index == -1 || style == null) ? false
-            : style.getString().charAt(index) != '0';
+        return (index != -1 && style != null) && style.getString().charAt(index) != '0';
     }
 
     /**
@@ -320,7 +319,7 @@ public class TileImprovement extends TileItem implements Named {
      */
     public Map<Direction, Integer> getConnections() {
         final List<Direction> dirns = getConnectionDirections();
-        return (dirns == null) ? Collections.<Direction, Integer>emptyMap()
+        return (dirns == null) ? Collections.emptyMap()
             : transform(dirns, d -> isConnectedTo(d), Function.identity(),
                         Collectors.toMap(Function.identity(), d -> magnitude));
     }
@@ -368,8 +367,7 @@ public class TileImprovement extends TileItem implements Named {
      * @return True if the supplied unit can build this improvement.
      */
     public boolean isWorkerAllowed(Unit unit) {
-        return (unit == null || isComplete()) ? false
-            : type.isWorkerAllowed(unit);
+        return (unit != null && !isComplete()) && type.isWorkerAllowed(unit);
     }
 
     /**
@@ -508,7 +506,7 @@ public class TileImprovement extends TileItem implements Named {
      */
     public Stream<RandomChoice<Disaster>> getDisasterChoices() {
         return (this.type == null)
-            ? Stream.<RandomChoice<Disaster>>empty()
+            ? Stream.empty()
             : this.type.getDisasterChoices();
     }
 
@@ -588,7 +586,7 @@ public class TileImprovement extends TileItem implements Named {
                 && spec.getBoolean(GameOptions.ONLY_NATURAL_IMPROVEMENTS))
             && (m = getProductionModifier(goodsType)) != null)
             ? Stream.of(m)
-            : Stream.<Modifier>empty();
+            : Stream.empty();
     }
 
     /**
@@ -757,7 +755,7 @@ public class TileImprovement extends TileItem implements Named {
         tile = xr.makeFreeColObject(game, TILE_TAG, Tile.class, true);
 
         type = xr.getType(spec, TYPE_TAG, TileImprovementType.class,
-                          (TileImprovementType)null);
+                null);
 
         turnsToComplete = xr.getAttribute(TURNS_TAG, 0);
 
@@ -766,7 +764,7 @@ public class TileImprovement extends TileItem implements Named {
         virtual = xr.getAttribute(VIRTUAL_TAG, false);
 
         style = null;
-        String str = xr.getAttribute(STYLE_TAG, (String)null);
+        String str = xr.getAttribute(STYLE_TAG, null);
         List<Direction> dirns = getConnectionDirections();
         if (dirns == null) {
             if (str != null && !str.isEmpty())
@@ -774,7 +772,7 @@ public class TileImprovement extends TileItem implements Named {
                     + type + ": " + str);
         } else if (str == null) {
             if (!isComplete() || isVirtual()) {
-                ; // Null style OK for incomplete or virtual roads
+                // Null style OK for incomplete or virtual roads
             } else {
                 logger.warning("At " + tile + " unexpected null style for "
                     + type);

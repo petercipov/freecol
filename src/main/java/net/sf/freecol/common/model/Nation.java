@@ -286,7 +286,7 @@ public class Nation extends FreeColSpecObjectType {
         final Specification spec = getSpecification();
 
         type = xr.getType(spec, NATION_TYPE_TAG,
-                          NationType.class, (NationType)null);
+                          NationType.class, null);
 
         selectable = xr.getAttribute(SELECTABLE_TAG, false);
 
@@ -304,7 +304,7 @@ public class Nation extends FreeColSpecObjectType {
         // end @compat 0.11.3
             startsOnEastCoast = xr.getAttribute(STARTS_ON_EAST_COAST_TAG, true);
 
-        refNation = xr.getType(spec, REF_TAG, Nation.class, (Nation)null);
+        refNation = xr.getType(spec, REF_TAG, Nation.class, null);
 
         int rgb = xr.getAttribute(COLOR_TAG, UNDEFINED);
         if (rgb != UNDEFINED) setColor(new Color(rgb));

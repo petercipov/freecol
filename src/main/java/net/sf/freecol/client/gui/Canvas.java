@@ -243,9 +243,9 @@ public final class Canvas extends JDesktopPane {
                 }
             }.start();
         }
-    };
+    }
 
-    private static enum PopupPosition {
+    private enum PopupPosition {
         ORIGIN,
         CENTERED,
         CENTERED_LEFT,

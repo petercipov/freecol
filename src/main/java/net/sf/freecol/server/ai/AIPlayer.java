@@ -650,10 +650,10 @@ public abstract class AIPlayer extends AIObject {
         final AIMain aiMain = getAIMain();
 
         player = xr.findFreeColGameObject(aiMain.getGame(), ID_ATTRIBUTE_TAG,
-            ServerPlayer.class, (ServerPlayer)null, true);
+            ServerPlayer.class, null, true);
 
         Random rnd = Utils.restoreRandomState(xr.getAttribute(RANDOM_STATE_TAG,
-                                                              (String)null));
+                null));
         aiRandom = (rnd != null) ? rnd
             : new Random(aiMain.getRandomSeed("Seed for " + getId()));
     }

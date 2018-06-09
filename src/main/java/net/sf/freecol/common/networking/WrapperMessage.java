@@ -67,7 +67,7 @@ public abstract class WrapperMessage extends AttributeMessage {
      */
     protected WrapperMessage(String tag, Game game, FreeColXMLReader xr)
         throws XMLStreamException, FreeColException {
-        super(tag, REPLY_ID_TAG, xr.getAttribute(REPLY_ID_TAG, (String)null));
+        super(tag, REPLY_ID_TAG, xr.getAttribute(REPLY_ID_TAG, null));
 
         this.message = null;
         while (xr.moreTags()) {

@@ -96,14 +96,13 @@ public abstract class BuildableType extends FreeColSpecObjectType {
      */
     public Map<String, Boolean> getRequiredAbilities() {
         return (requiredAbilities == null)
-                ? Collections.<String, Boolean>emptyMap()
+                ? Collections.emptyMap()
                 : new HashMap<>(requiredAbilities);
     }
 
     public boolean requiresAbility(String key) {
-        return (requiredAbilities == null) ? false
-                : (!requiredAbilities.containsKey(key)) ? false
-                : requiredAbilities.get(key);
+        return (requiredAbilities != null) && ((!requiredAbilities.containsKey(key)) ? false
+                : requiredAbilities.get(key));
     }
 
     /**
@@ -170,10 +169,9 @@ public abstract class BuildableType extends FreeColSpecObjectType {
             }
             return true;
         } else { // Concise version
-            return (requiredAbilities == null) ? true
-                : all(requiredAbilities.entrySet(),
+            return (requiredAbilities == null) || all(requiredAbilities.entrySet(),
                     e -> e.getValue() == any(fco,
-                        o -> o != null && o.hasAbility(e.getKey())));
+                            o -> o != null && o.hasAbility(e.getKey())));
         }
     }
 
@@ -187,7 +185,7 @@ public abstract class BuildableType extends FreeColSpecObjectType {
      */
     public List<AbstractGoods> getRequiredGoodsList() {
         return (this.requiredGoods == null)
-                ? Collections.<AbstractGoods>emptyList()
+                ? Collections.emptyList()
                 : transform(this.requiredGoods, alwaysTrue(),
                 ag -> new AbstractGoods(ag.getType(), ag.getAmount()));
     }
@@ -199,7 +197,7 @@ public abstract class BuildableType extends FreeColSpecObjectType {
      * @return A stream of the required goods.
      */
     public Stream<AbstractGoods> getRequiredGoods() {
-        return (this.requiredGoods == null) ? Stream.<AbstractGoods>empty()
+        return (this.requiredGoods == null) ? Stream.empty()
                 : getRequiredGoodsList().stream();
     }
 
@@ -249,7 +247,7 @@ public abstract class BuildableType extends FreeColSpecObjectType {
      * @return A list of {@code Limit}s.
      */
     public List<Limit> getLimits() {
-        return (limits == null) ? Collections.<Limit>emptyList() : limits;
+        return (limits == null) ? Collections.emptyList() : limits;
     }
 
     /**
@@ -412,7 +410,7 @@ public abstract class BuildableType extends FreeColSpecObjectType {
 
         } else if (REQUIRED_GOODS_TAG.equals(tag)) {
             GoodsType type = xr.getType(spec, ID_ATTRIBUTE_TAG,
-                    GoodsType.class, (GoodsType)null);
+                    GoodsType.class, null);
             int amount = xr.getAttribute(VALUE_TAG, 0);
             addRequiredGoods(new AbstractGoods(type, amount));
             xr.closeTag(REQUIRED_GOODS_TAG);

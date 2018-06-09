@@ -107,7 +107,7 @@ public class GUI extends FreeColClientHolder {
         TERRAIN,
         MAP_TRANSFORM,
         END_TURN
-    };
+    }
 
     /**
      * Error handler class to display a message with this GUI.
@@ -1812,7 +1812,7 @@ public class GUI extends FreeColClientHolder {
      * @return A list of new nation and country names.
      */
     public List<String> confirmDeclaration() {
-        return Collections.<String>emptyList();
+        return Collections.emptyList();
     }
 
     /**

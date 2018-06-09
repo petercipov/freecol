@@ -126,7 +126,7 @@ public final class DefaultTransferHandler extends TransferHandler {
                     return tk.createCustomCursor(scaled, point,
                                                  "freeColDragIcon");
                 } catch (Exception ex) {
-                    ; // Fall through
+                    // Fall through
                 }
             }
             return null;
@@ -396,7 +396,7 @@ public final class DefaultTransferHandler extends TransferHandler {
             }
             goods.setAmount(amount);
         } else if (label.isFullChosen()) {
-            ; // Amount correct
+            // Amount correct
         } else if (goods.getAmount() > GoodsContainer.CARGO_SIZE) {
             goods.setAmount(GoodsContainer.CARGO_SIZE);
         }

@@ -56,7 +56,7 @@ public class LostCityRumour extends TileItem {
     private static int rumourNothing = -1;
 
     /** Constants describing types of Lost City Rumours. */
-    public static enum RumourType {
+    public enum RumourType {
         NO_SUCH_RUMOUR,
         BURIAL_GROUND,
         EXPEDITION_VANISHES,
@@ -355,7 +355,7 @@ public class LostCityRumour extends TileItem {
     @Override
     public Stream<Modifier> getProductionModifiers(GoodsType goodsType,
                                                    UnitType unitType) {
-        return Stream.<Modifier>empty();
+        return Stream.empty();
     }
 
     /**
@@ -447,11 +447,11 @@ public class LostCityRumour extends TileItem {
         super.readAttributes(xr);
 
         tile = xr.findFreeColGameObject(getGame(), TILE_TAG,
-                                        Tile.class, (Tile)null, true);
+                                        Tile.class, null, true);
 
-        type = xr.getAttribute(TYPE_TAG, RumourType.class, (RumourType)null);
+        type = xr.getAttribute(TYPE_TAG, RumourType.class, null);
 
-        name = xr.getAttribute(NAME_TAG, (String)null);
+        name = xr.getAttribute(NAME_TAG, null);
     }
 
     /**

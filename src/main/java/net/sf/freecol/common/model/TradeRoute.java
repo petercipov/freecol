@@ -248,7 +248,7 @@ public class TradeRoute extends FreeColGameObject
      * @return True if the stop is valid.
      */
     public static boolean isStopValid(Player player, TradeRouteStop stop) {
-        return (stop == null) ? false : stop.isValid(player);
+        return (stop != null) && stop.isValid(player);
     }
 
     /**
@@ -404,10 +404,10 @@ public class TradeRoute extends FreeColGameObject
     protected void readAttributes(FreeColXMLReader xr) throws XMLStreamException {
         super.readAttributes(xr);
 
-        this.name = xr.getAttribute(NAME_TAG, (String)null);
+        this.name = xr.getAttribute(NAME_TAG, null);
 
         this.owner = xr.findFreeColGameObject(getGame(), OWNER_TAG,
-                                              Player.class, (Player)null, true);
+                                              Player.class, null, true);
 
         this.silent = xr.getAttribute(SILENT_TAG, false);
     }

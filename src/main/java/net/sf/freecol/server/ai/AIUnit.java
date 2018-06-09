@@ -246,7 +246,7 @@ public class AIUnit extends TransportableAIObject {
      * @return True if the unit has cargo aboard.
      */
     public final boolean hasCargo() {
-        return (unit == null) ? false : unit.hasCargo();
+        return (unit != null) && unit.hasCargo();
     }
 
     /**
@@ -800,7 +800,7 @@ if (direction == null && !result) net.sf.freecol.FreeCol.trace(logger, "LTFAIL")
         final AIMain aiMain = getAIMain();
 
         unit = xr.findFreeColGameObject(aiMain.getGame(), ID_ATTRIBUTE_TAG,
-                                        Unit.class, (Unit)null, true);
+                                        Unit.class, null, true);
         if (!unit.isInitialized()) {
             xr.nextTag(); // Move off the opening <AIUnit> tag
             throw new XMLStreamException("AIUnit for uninitialized Unit: "

@@ -71,7 +71,7 @@ public abstract class Message {
 
     // Convenient way to specify the relative priorities of the messages
     // types in one place.
-    public static enum MessagePriority {
+    public enum MessagePriority {
         ATTRIBUTE(-1), // N/A
         ANIMATION(0),  // Do animations first
         REMOVE(100),   // Do removes last
@@ -441,7 +441,7 @@ public abstract class Message {
      */
     protected <T extends FreeColObject> T getChild(int index,
                                                    Class<T> returnClass) {
-        if (index >= getChildCount()) return (T)null;
+        if (index >= getChildCount()) return null;
         FreeColObject fco = getChildren().get(index);
         try {
             return returnClass.cast(fco);

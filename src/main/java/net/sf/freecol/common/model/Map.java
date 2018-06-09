@@ -60,7 +60,7 @@ public class Map extends FreeColGameObject implements Location {
      * Possible actions by the unit travelling along a path in consideration
      * of the next tile.
      */
-    private static enum MoveStep { FAIL, BYLAND, BYWATER, EMBARK, DISEMBARK };
+    private enum MoveStep { FAIL, BYLAND, BYWATER, EMBARK, DISEMBARK }
 
     /**
      * The number of tiles from the upper edge that are considered
@@ -72,9 +72,9 @@ public class Map extends FreeColGameObject implements Location {
      * The layers included in the map. The RIVERS layer includes all
      * natural tile improvements that are not resources.
      */
-    public static enum Layer {
-        NONE, LAND, TERRAIN, REGIONS, RIVERS, RESOURCES, RUMOURS, NATIVES, ALL;
-    };
+    public enum Layer {
+        NONE, LAND, TERRAIN, REGIONS, RIVERS, RESOURCES, RUMOURS, NATIVES, ALL
+    }
 
     /** A position on the Map. */
     public static final class Position {
@@ -633,10 +633,7 @@ public class Map extends FreeColGameObject implements Location {
      * @return True if the locations are the same or at the same tile.
      */
     public static final boolean isSameLocation(Location l1, Location l2) {
-        return (l1 == null || l2 == null) ? false
-            : (l1 == l2) ? true
-            : (l1.getTile() == null) ? false
-            : Objects.equals(l1.getTile(), l2.getTile());
+        return (l1 != null && l2 != null) && ((l1 == l2) || ((l1.getTile() != null) && Objects.equals(l1.getTile(), l2.getTile())));
     }
 
     /**
@@ -648,10 +645,7 @@ public class Map extends FreeColGameObject implements Location {
      * @return True if the locations are the same or in the same land/sea-mass.
      */
     public static final boolean isSameContiguity(Location l1, Location l2) {
-        return (l1 == null || l2 == null) ? false
-            : (l1 == l2) ? true
-            : (l1.getTile() == null || l2.getTile() == null) ? false
-            : l1.getTile().isConnectedTo(l2.getTile());
+        return (l1 != null && l2 != null) && ((l1 == l2) || ((l1.getTile() != null && l2.getTile() != null) && l1.getTile().isConnectedTo(l2.getTile())));
     }            
 
     /**
@@ -843,7 +837,7 @@ public class Map extends FreeColGameObject implements Location {
         final int width = getWidth();
         final int height = getHeight();
         if (w <= 0 || h <= 0 || x > width || y > height)
-            return Collections.<Tile>emptyList();
+            return Collections.emptyList();
         if (x+w > width) w = width - x;
         if (y+h > height) h = height - y;
         List<Tile> ret = new ArrayList<>();
@@ -1336,7 +1330,7 @@ public class Map extends FreeColGameObject implements Location {
                 : findPath(unit, realStart, closest, carrier, costDecider, lb);
             if (path != null) {
                 PathNode last = path.getLastNode();
-                last.next = new PathNode((Tile)realEnd, 0,
+                last.next = new PathNode(realEnd, 0,
                     last.getTurns()+1, last.isOnCarrier(), last, null);
             }
 
@@ -1483,7 +1477,7 @@ public class Map extends FreeColGameObject implements Location {
                 // This is suboptimal.  We do not know where to enter from
                 // Europe, so start with the standard entry location...
             } else if ((p = searchMap(unit,
-                        (Tile)offMapUnit.getFullEntryLocation(),
+                    offMapUnit.getFullEntryLocation(),
                         goalDecider, costDecider, maxTurns, carrier,
                         null, lb)) == null) {
                 path = null;
@@ -1679,7 +1673,7 @@ public class Map extends FreeColGameObject implements Location {
                 .append(']');
             return sb.toString();
         }
-    };
+    }
 
     /**
      * Searches for a path to a goal determined by the given
@@ -2518,7 +2512,7 @@ ok:     while (!openMap.isEmpty()) {
      */
     @Override
     public Stream<Unit> getUnits() {
-        return Stream.<Unit>empty();
+        return Stream.empty();
     }
 
     /**
@@ -2526,7 +2520,7 @@ ok:     while (!openMap.isEmpty()) {
      */
     @Override
     public List<Unit> getUnitList() {
-        return Collections.<Unit>emptyList();
+        return Collections.emptyList();
     }
 
     /**

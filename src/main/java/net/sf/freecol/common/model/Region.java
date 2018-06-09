@@ -55,7 +55,7 @@ public class Region extends FreeColGameObject implements Nameable {
     public static final String PACIFIC_KEY = "model.region.pacific";
 
     /** The type of region. */
-    public static enum RegionType implements Named {
+    public enum RegionType implements Named {
         OCEAN(false),
         COAST(false),
         LAKE(false),
@@ -260,7 +260,7 @@ public class Region extends FreeColGameObject implements Nameable {
      * @return The child regions.
      */
     public final List<Region> getChildren() {
-        return (this.children == null) ? Collections.<Region>emptyList()
+        return (this.children == null) ? Collections.emptyList()
             : this.children;
     }
 
@@ -581,17 +581,17 @@ public class Region extends FreeColGameObject implements Nameable {
     public void readAttributes(FreeColXMLReader xr) throws XMLStreamException {
         super.readAttributes(xr);
 
-        name = xr.getAttribute(NAME_TAG, (String)null);
+        name = xr.getAttribute(NAME_TAG, null);
 
         // @compat 0.11.3
         if (xr.hasAttribute(NAME_KEY_TAG)) {
-            key = xr.getAttribute(NAME_KEY_TAG, (String)null);
+            key = xr.getAttribute(NAME_KEY_TAG, null);
             key = fixRegionKey(key);
         } else
         // @end compat 0.11.3
-            key = xr.getAttribute(KEY_TAG, (String)null);
+            key = xr.getAttribute(KEY_TAG, null);
 
-        type = xr.getAttribute(TYPE_TAG, RegionType.class, (RegionType)null);
+        type = xr.getAttribute(TYPE_TAG, RegionType.class, null);
 
         claimable = xr.getAttribute(CLAIMABLE_TAG, false);
 
@@ -603,7 +603,7 @@ public class Region extends FreeColGameObject implements Nameable {
         discoveredIn = (turn == UNDEFINED) ? null : new Turn(turn);
 
         discoveredBy = xr.findFreeColGameObject(getGame(), DISCOVERED_BY_TAG,
-            Player.class, (Player)null, false);
+            Player.class, null, false);
 
         parent = xr.makeFreeColObject(getGame(), PARENT_TAG, Region.class, false);
     }

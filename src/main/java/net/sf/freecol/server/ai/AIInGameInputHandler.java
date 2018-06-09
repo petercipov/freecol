@@ -101,7 +101,7 @@ public final class AIInGameInputHandler extends FreeColServerHolder
      */
     @Override
     public Message read(Connection connection)
-        throws FreeColException, XMLStreamException {
+        throws FreeColException {
         return Message.read(getGame(), connection.getFreeColXMLReader());
     }
 }

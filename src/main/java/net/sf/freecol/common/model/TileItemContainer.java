@@ -261,7 +261,7 @@ public class TileItemContainer extends FreeColGameObject {
         synchronized (tileItems) {
             return transform(tileItems,
                              ti -> ti instanceof TileImprovement
-                                && (!completedOnly || ((TileImprovement)ti).isComplete()),
+                                && (!completedOnly || ti.isComplete()),
                              ti -> (TileImprovement)ti);
         }
     }
@@ -442,7 +442,7 @@ public class TileItemContainer extends FreeColGameObject {
         int moveCost = basicMoveCost;
         for (TileItem item : transform(getTileItems(), ti ->
                 (ti instanceof TileImprovement
-                    && ((TileImprovement)ti).isComplete()))) {
+                    && ti.isComplete()))) {
             Direction direction = targetTile.getDirection(fromTile);
             if (direction == null) return INFINITY;
             moveCost = Math.min(moveCost, 
@@ -630,7 +630,7 @@ public class TileItemContainer extends FreeColGameObject {
         super.readAttributes(xr);
 
         tile = xr.findFreeColGameObject(getGame(), TILE_TAG,
-                                        Tile.class, (Tile)null, true);
+                                        Tile.class, null, true);
     }
 
     /**

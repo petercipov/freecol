@@ -52,7 +52,7 @@ public final class Monarch extends FreeColGameObject implements Named {
     public static final String TAG = "monarch";
 
     /** Constants describing monarch actions. */
-    public static enum MonarchAction {
+    public enum MonarchAction {
         NO_ACTION,
         RAISE_TAX_ACT,
         RAISE_TAX_WAR,
@@ -353,7 +353,7 @@ public final class Monarch extends FreeColGameObject implements Named {
     public List<Player> collectPotentialEnemies() {
         // Benjamin Franklin puts an end to the monarch's interference
         return (player.hasAbility(Ability.IGNORE_EUROPEAN_WARS))
-            ? Collections.<Player>emptyList()
+            ? Collections.emptyList()
             : transform(getGame().getLiveEuropeanPlayers(player),
                         p -> p.isPotentialEnemy(player));
     }
@@ -898,7 +898,7 @@ public final class Monarch extends FreeColGameObject implements Named {
         super.readAttributes(xr);
 
         player = xr.findFreeColGameObject(getGame(), PLAYER_TAG,
-                                          Player.class, (Player)null, true);
+                                          Player.class, null, true);
 
         this.supportSea = xr.getAttribute(SUPPORT_SEA_TAG, false);
 

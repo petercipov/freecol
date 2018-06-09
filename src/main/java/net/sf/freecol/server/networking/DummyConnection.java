@@ -102,7 +102,7 @@ public final class DummyConnection extends Connection {
      */
     @Override
     protected Message askMessage(Message message)
-        throws FreeColException, IOException {
+        throws FreeColException {
         DummyConnection other = getOtherConnection();
         if (other == null) return null;
         if (message == null) return null;

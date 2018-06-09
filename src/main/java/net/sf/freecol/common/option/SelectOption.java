@@ -202,8 +202,8 @@ public class SelectOption extends IntegerOption {
     protected void readChildren(FreeColXMLReader xr) throws XMLStreamException {
         // We can not set the value until we have read the select options
         // so as to be able to check its validity.
-        String value = xr.getAttribute(VALUE_TAG, (String)null);
-        String defaultValue = xr.getAttribute(DEFAULT_VALUE_TAG, (String)null);
+        String value = xr.getAttribute(VALUE_TAG, null);
+        String defaultValue = xr.getAttribute(DEFAULT_VALUE_TAG, null);
 
         // Clear containers.
         clearItemValues();
@@ -223,7 +223,7 @@ public class SelectOption extends IntegerOption {
 
         if (getXMLItemElementTagName().equals(tag)) {
             addItemValue(xr.getAttribute(VALUE_TAG, INFINITY),
-                         xr.getAttribute(LABEL_TAG, (String)null));
+                         xr.getAttribute(LABEL_TAG, null));
             xr.closeTag(tag);
 
         } else {

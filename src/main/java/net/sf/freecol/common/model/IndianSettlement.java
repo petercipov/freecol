@@ -50,12 +50,12 @@ public class IndianSettlement extends Settlement implements TradeLocation {
     public static final String TAG = "indianSettlement";
 
     /** The level of contact between a player and this settlement. */
-    public static enum ContactLevel {
+    public enum ContactLevel {
         UNCONTACTED,     // Nothing known other than location?
         CONTACTED,       // Name, wanted-goods now visible
         VISITED,         // Skill now known
         SCOUTED          // Scouting bonus consumed
-    };
+    }
 
 
     /** The production fudge factor. */
@@ -1408,7 +1408,7 @@ public class IndianSettlement extends Settlement implements TradeLocation {
         // that they produce from their entire area at reduced
         // efficiency.
         if (tiles > getUnitCount()) {
-            potential = (int) (potential * ((float) getUnitCount() / tiles));;
+            potential = (int) (potential * ((float) getUnitCount() / tiles));
         }
 
         // Raw production is too generous, apply a fudge factor to reduce it
@@ -1697,14 +1697,14 @@ public class IndianSettlement extends Settlement implements TradeLocation {
         convertProgress = xr.getAttribute(CONVERT_PROGRESS_TAG, 0);
 
         learnableSkill = xr.getType(spec, LEARNABLE_SKILL_TAG,
-                                    UnitType.class, (UnitType)null);
+                                    UnitType.class, null);
 
         mostHated = xr.findFreeColGameObject(getGame(), MOST_HATED_TAG,
-                                             Player.class, (Player)null, false);
+                                             Player.class, null, false);
 
         for (int i = 0; i < WANTED_GOODS_COUNT; i++) {
             setWantedGoods(i, xr.getType(spec, WANTED_GOODS_TAG + i,
-                                         GoodsType.class, (GoodsType)null));
+                                         GoodsType.class, null));
         }
     }
 
@@ -1732,7 +1732,7 @@ public class IndianSettlement extends Settlement implements TradeLocation {
 
         if (ALARM_TAG.equals(tag)) {
             Player player = xr.findFreeColGameObject(game, PLAYER_TAG,
-                Player.class, (Player)null, true);
+                Player.class, null, true);
             setAlarm(player, new Tension(xr.getAttribute(VALUE_TAG, 0)));
             xr.closeTag(ALARM_TAG);
 
@@ -1740,7 +1740,7 @@ public class IndianSettlement extends Settlement implements TradeLocation {
             ContactLevel cl = xr.getAttribute(LEVEL_TAG,
                 ContactLevel.class, ContactLevel.UNCONTACTED);
             Player player = xr.findFreeColGameObject(game, PLAYER_TAG,
-                Player.class, (Player)null, true);
+                Player.class, null, true);
             setContactLevel(player, cl);
             xr.closeTag(CONTACT_LEVEL_TAG);
 

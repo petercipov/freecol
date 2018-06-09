@@ -105,7 +105,7 @@ public class ColonyPlan {
                                  type.getSuffix(), weight, support,
                                  difficulty, getValue());
         }
-    };
+    }
 
     /** Comparator to sort buildable by descending value. */
     private static final Comparator<BuildPlan> buildPlanComparator
@@ -121,7 +121,7 @@ public class ColonyPlan {
     private static final int PRODUCTION_TURNOVER_TURNS = 5;
 
     /** The profile of the colony (a sort of general flavour). */
-    private static enum ProfileType {
+    private enum ProfileType {
         OUTPOST,
         SMALL,
         MEDIUM,
@@ -141,7 +141,8 @@ public class ColonyPlan {
                 : (size <= 8) ? ProfileType.LARGE
                 : ProfileType.CAPITAL;
         }
-    };
+    }
+
     private ProfileType profileType;
 
     /** Private copy of the AIMain. */
@@ -512,9 +513,7 @@ public class ColonyPlan {
                 if (rawLuxuryGoodsTypes.contains(secondaryRawMaterial)) {
                     rawLuxuryGoodsTypes.remove(secondaryRawMaterial);
                     luxuryGoodsTypes.remove(secondaryRawMaterial.getOutputType());
-                } else if (otherRawGoodsTypes.contains(secondaryRawMaterial)) {
-                    otherRawGoodsTypes.remove(secondaryRawMaterial);
-                }
+                } else otherRawGoodsTypes.remove(secondaryRawMaterial);
             }
             if (value > primaryValue) {
                 secondaryRawMaterial = primaryRawMaterial;
@@ -779,7 +778,7 @@ public class ColonyPlan {
         for (UnitType unitType : transform(spec().getUnitTypeList(),
                                            ut -> colony.canBuild(ut))) {
             if (unitType.hasAbility(Ability.NAVAL_UNIT)) {
-                ; // FIXME: decide to build a ship
+                // FIXME: decide to build a ship
             } else if (unitType.isDefensive()) {
                 if (colony.isBadlyDefended()) {
                     prioritize(unitType, DEFENCE_WEIGHT,

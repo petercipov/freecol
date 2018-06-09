@@ -159,7 +159,7 @@ public abstract class ServerAPI {
     private boolean send(Message message) {
         if (message == null) return true;
         final Connection c = check("send", message.getType());
-        return (c == null) ? false : c.send(message);
+        return (c != null) && c.send(message);
     }
 
     /**
@@ -179,7 +179,7 @@ public abstract class ServerAPI {
     private boolean ask(Message message) {
         if (message == null) return true;
         final Connection c = check("ask", message.getType());
-        return (c == null) ? false : c.request(message);
+        return (c != null) && c.request(message);
     }
 
 
@@ -799,7 +799,7 @@ public abstract class ServerAPI {
                                    Colony scratch) {
         RearrangeColonyMessage message
             = new RearrangeColonyMessage(colony, workers, scratch);
-        return (message.isEmpty()) ? true : ask(message);
+        return (message.isEmpty()) || ask(message);
     }
 
     /**

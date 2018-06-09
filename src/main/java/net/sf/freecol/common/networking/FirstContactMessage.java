@@ -137,7 +137,7 @@ public class FirstContactMessage extends AttributeMessage {
         if (first == null) {
             return serverPlayer.clientError("Invalid player: " + playerId);
         } else if (serverPlayer.getId().equals(playerId)) {
-            ; // OK
+            // OK
         } else {
             return serverPlayer.clientError("Not our player: " + playerId);
         }
@@ -175,7 +175,7 @@ public class FirstContactMessage extends AttributeMessage {
     }
             
     public boolean getResult() {
-        return getBooleanAttribute(RESULT_TAG, (Boolean)null);
+        return getBooleanAttribute(RESULT_TAG, null);
     }
 
     public FirstContactMessage setResult(boolean result) {

@@ -196,11 +196,11 @@ public class WorkerWish extends Wish {
         // Delegated from Wish
         transportable = (xr.hasAttribute(TRANSPORTABLE_TAG))
             ? xr.makeAIObject(aiMain, TRANSPORTABLE_TAG,
-                              AIUnit.class, (AIUnit)null, true)
+                              AIUnit.class, null, true)
             : null;
 
         unitType = xr.getType(spec, UNIT_TYPE_TAG,
-                              UnitType.class, (UnitType)null);
+                              UnitType.class, null);
         
         expertNeeded = xr.getAttribute(EXPERT_NEEDED_TAG, false);
     }

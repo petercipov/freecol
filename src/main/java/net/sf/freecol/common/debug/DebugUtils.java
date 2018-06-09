@@ -147,7 +147,7 @@ public class DebugUtils {
             if (reason == Colony.NoBuildReason.NONE) {
                 Building sBuilding = sColony.getBuilding(sBuildingType);
                 List<Unit> present = (sBuilding == null)
-                    ? Collections.<Unit>emptyList()
+                    ? Collections.emptyList()
                     : sBuilding.getUnitList();
                 if (sBuildingType.isDefenceType()) {
                     sColony.getTile().cacheUnseen();//+til
@@ -655,7 +655,7 @@ public class DebugUtils {
         Settlement cSettlement = cTile.getSettlement();
         if (sSettlement == null) {
             if (cSettlement == null) {
-                ;// OK
+                // OK
             } else {
                 lb.add("Settlement still present in client: ", cSettlement);
             }
@@ -663,7 +663,7 @@ public class DebugUtils {
             if (cSettlement == null) {
                 lb.add("Settlement not present in client: ", sSettlement);
             } else if (sSettlement.getId().equals(cSettlement.getId())) {
-                ;// OK
+                // OK
             } else {
                 lb.add("Settlements differ.\n  Server: ",
                     sSettlement.toString(), "\n  Client: ", 

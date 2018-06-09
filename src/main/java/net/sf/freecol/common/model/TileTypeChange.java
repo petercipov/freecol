@@ -160,9 +160,9 @@ public class TileTypeChange extends FreeColSpecObjectType {
         // No id, so no super.readAttributes().
         final Specification spec = getSpecification();
     
-        from = xr.getType(spec, FROM_TAG, TileType.class, (TileType)null);
+        from = xr.getType(spec, FROM_TAG, TileType.class, null);
 
-        to = xr.getType(spec, TO_TAG, TileType.class, (TileType)null);
+        to = xr.getType(spec, TO_TAG, TileType.class, null);
     }
 
     /**
@@ -182,7 +182,7 @@ public class TileTypeChange extends FreeColSpecObjectType {
 
             if (PRODUCTION_TAG.equals(tag)) {
                 GoodsType type = xr.getType(spec, GOODS_TYPE_TAG,
-                                            GoodsType.class, (GoodsType)null);
+                                            GoodsType.class, null);
 
                 int amount = xr.getAttribute(VALUE_TAG, 0);
 

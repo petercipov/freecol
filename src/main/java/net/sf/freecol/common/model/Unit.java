@@ -101,7 +101,7 @@ public class Unit extends GoodsLocation
         !u.isNaval() && u.getState() == UnitState.SENTRY;
     
     /** A state a Unit can have. */
-    public static enum UnitState {
+    public enum UnitState {
         ACTIVE,
         FORTIFIED,
         SENTRY,
@@ -291,7 +291,7 @@ public class Unit extends GoodsLocation
     }
 
     /** What type of unit label do we want? */
-    public static enum UnitLabelType {
+    public enum UnitLabelType {
         PLAIN,      // Just the basics
         NATIONAL,   // Add the nation
         FULL        // Add the equipment and extras
@@ -525,7 +525,7 @@ public class Unit extends GoodsLocation
      * @return True if this is a naval {@code Unit}.
      */
     public boolean isNaval() {
-        return (this.type == null) ? false : this.type.isNaval();
+        return (this.type != null) && this.type.isNaval();
     }
 
     /**
@@ -534,8 +534,7 @@ public class Unit extends GoodsLocation
      * @return True if the owner should be hidden from clients.
      */
     public boolean isOwnerHidden() {
-        return (this.type == null) ? false
-            : this.type.hasAbility(Ability.PIRACY);
+        return (this.type != null) && this.type.hasAbility(Ability.PIRACY);
     }
 
     /**
@@ -601,8 +600,7 @@ public class Unit extends GoodsLocation
      * @return True if this unit is a person.
      */
     public boolean isPerson() {
-        return (this.type == null) ? false
-            : this.type.hasAbility(Ability.PERSON);
+        return (this.type != null) && this.type.hasAbility(Ability.PERSON);
     }
 
     /**
@@ -1052,7 +1050,6 @@ public class Unit extends GoodsLocation
      */
     public Tile getFullEntryLocation() {
         return (this.entryLocation != null) ? this.entryLocation.getTile()
-            : (owner.getEntryTile() == null) ? null
             : owner.getEntryTile();
     }
 
@@ -1692,7 +1689,7 @@ public class Unit extends GoodsLocation
         IndianSettlement is;
         return ((colony = getColony()) != null) ? colony
             : ((is = getIndianSettlement()) != null) ? is
-            : (isInEurope()) ? (TradeLocation)getOwner().getEurope()
+            : (isInEurope()) ? getOwner().getEurope()
             : null;
     }
 
@@ -1937,7 +1934,7 @@ public class Unit extends GoodsLocation
      *
      * @see Unit#getMoveType(Direction)
      */
-    public static enum MoveType {
+    public enum MoveType {
         MOVE(null, true),
         MOVE_HIGH_SEAS(null, true),
         EXPLORE_LOST_CITY_RUMOUR(null, true),
@@ -2443,14 +2440,12 @@ public class Unit extends GoodsLocation
         final Predicate<Tile> highSeasMovePred = t ->
             t.isDirectlyHighSeasConnected() // Quick filter before full check
                 && getMoveType(t) == MoveType.MOVE_HIGH_SEAS;
-        return (isAtSea()) ? true
-            : (isInEurope()) ? getType().canMoveToHighSeas()
-            : (hasTile()) ? (getType().canMoveToHighSeas()
+        return (isAtSea()) || ((isInEurope()) ? getType().canMoveToHighSeas()
+                : (hasTile()) && (getType().canMoveToHighSeas()
                 && getOwner().canMoveToEurope()
                 && (getTile().isDirectlyHighSeasConnected()
-                    || any(getTile().getSurroundingTiles(1, 1),
-                           highSeasMovePred)))
-            : false;
+                || any(getTile().getSurroundingTiles(1, 1),
+                highSeasMovePred))));
     }
 
     /**
@@ -2615,7 +2610,7 @@ public class Unit extends GoodsLocation
         Location ret = getTile();
         if (isOnCarrier()) {
             if (ret != null) {
-                ; // OK
+                // OK
             } else if (carrier.getDestination() == null) {
                 ret = null;
             } else if (carrier.getDestination() instanceof Map) {
@@ -2627,7 +2622,7 @@ public class Unit extends GoodsLocation
             }
         } else if (isNaval()) {
             if (ret != null) {
-                ; // OK
+                // OK
             } else if (getDestination() == null
                 || getDestination() instanceof Map) {
                 ret = getFullEntryLocation();
@@ -3183,7 +3178,7 @@ public class Unit extends GoodsLocation
                                             this.type, turn),
                 ((hasTile() && getTile().isExplored())
                     ? getTile().getType().getModifiers(Modifier.LINE_OF_SIGHT_BONUS, this.type, turn)
-                    : Stream.<Modifier>empty())));
+                    : Stream.empty())));
     }
 
     /**
@@ -3193,7 +3188,7 @@ public class Unit extends GoodsLocation
      */
     public Set<Tile> getVisibleTileSet() {
         final Tile tile = getTile();
-        return (tile == null) ? Collections.<Tile>emptySet()
+        return (tile == null) ? Collections.emptySet()
             : new HashSet<Tile>(tile.getSurroundingTiles(0, getLineOfSight()));
     }
 
@@ -3208,7 +3203,7 @@ public class Unit extends GoodsLocation
      */
     private List<Goods> getGoodsInternal(boolean compact) {
         GoodsContainer gc = getGoodsContainer();
-        if (gc == null) return Collections.<Goods>emptyList();
+        if (gc == null) return Collections.emptyList();
         List<Goods> goods = (compact) ? gc.getCompactGoodsList()
             : gc.getGoodsList();
         for (Goods g : goods) g.setLocation(this);
@@ -3871,7 +3866,7 @@ public class Unit extends GoodsLocation
 
         // Move out of the old location.
         if (this.location == null) {
-            ; // do nothing
+            // do nothing
         } else if (!this.location.remove(this)) {//-vis
             // "Should not happen" (should always be able to remove)
             throw new RuntimeException("Failed to remove " + this
@@ -4243,7 +4238,7 @@ public class Unit extends GoodsLocation
             Europe europe = owner.getEurope();
             if (europe != null) return europe.getAbilities(id, getType(), turn);
         }
-        return Stream.<Ability>empty();
+        return Stream.empty();
     }
 
     /**
@@ -4473,16 +4468,16 @@ public class Unit extends GoodsLocation
         final WorkLocation oldWorkLocation = getWorkLocation();
         final GoodsType oldWorkType = getWorkType();
         
-        name = xr.getAttribute(NAME_TAG, (String)null);
+        name = xr.getAttribute(NAME_TAG, null);
 
         Player oldOwner = owner;
         owner = xr.findFreeColGameObject(game, OWNER_TAG,
-                                         Player.class, (Player)null, true);
+                                         Player.class, null, true);
         if (xr.shouldIntern()) game.checkOwners(this, oldOwner);
 
         UnitType oldUnitType = this.type;
         this.type = xr.getType(spec, UNIT_TYPE_TAG,
-                               UnitType.class, (UnitType)null);
+                               UnitType.class, null);
 
         state = xr.getAttribute(STATE_TAG, UnitState.class, UnitState.ACTIVE);
 
@@ -4501,9 +4496,9 @@ public class Unit extends GoodsLocation
 
         attrition = xr.getAttribute(ATTRITION_TAG, 0);
 
-        nationality = xr.getAttribute(NATIONALITY_TAG, (String)null);
+        nationality = xr.getAttribute(NATIONALITY_TAG, null);
 
-        ethnicity = xr.getAttribute(ETHNICITY_TAG, (String)null);
+        ethnicity = xr.getAttribute(ETHNICITY_TAG, null);
 
         turnsOfTraining = xr.getAttribute(TURNS_OF_TRAINING_TAG, 0);
 
@@ -4521,13 +4516,13 @@ public class Unit extends GoodsLocation
         destination = xr.getLocationAttribute(game, DESTINATION_TAG, true);
 
         tradeRoute = xr.findFreeColGameObject(game, TRADE_ROUTE_TAG,
-            TradeRoute.class, (TradeRoute)null, false);
+            TradeRoute.class, null, false);
 
         currentStop = (tradeRoute == null) ? -1
             : xr.getAttribute(CURRENT_STOP_TAG, 0);
 
         experienceType = xr.getType(spec, EXPERIENCE_TYPE_TAG,
-                                    GoodsType.class, (GoodsType)null);
+                                    GoodsType.class, null);
         if (experienceType == null && workType != null) {
             experienceType = workType;
         }

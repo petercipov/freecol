@@ -39,7 +39,7 @@ public abstract class Resource {
         /**
          * Preload the resource.
          */
-        public void preload();
+        void preload();
 
     }
 
@@ -52,7 +52,7 @@ public abstract class Resource {
         /**
          * Clean the caches inside the resource.
          */
-        public void clean();
+        void clean();
 
     }
 

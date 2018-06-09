@@ -77,9 +77,7 @@ public class LandMap {
 
         for (int y = 0; y < this.height; y++) {
             for (int x = 0; x < this.width; x++) {
-                this.map[x][y] = (map.isValid(x, y))
-                    ? map.getTile(x, y).isLand()
-                    : false;
+                this.map[x][y] = (map.isValid(x, y)) && map.getTile(x, y).isLand();
                 if (this.map[x][y]) this.numberOfLandTiles++;
             }
         }
@@ -147,7 +145,7 @@ public class LandMap {
      * @return True if there is land present.
      */
     public boolean isLand(int x, int y) {
-        return (isValid(x, y)) ? this.map[x][y] : false;
+        return (isValid(x, y)) && this.map[x][y];
     }
 
     /**

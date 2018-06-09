@@ -332,9 +332,8 @@ public final class ConnectController extends FreeColClientHolder {
         Messages.loadActiveModMessageBundle(mods, FreeCol.getLocale());
 
         FreeColServer fcs = fcc.startServer(false, true, spec, -1);
-        return (fcs == null) ? false
-            : requestLogin(FreeCol.getName(),
-                           fcs.getHost(), fcs.getPort());
+        return (fcs != null) && requestLogin(FreeCol.getName(),
+                fcs.getHost(), fcs.getPort());
     }
 
     /**

@@ -460,7 +460,7 @@ public class ColonyTile extends WorkLocation {
     @Override
     public Stream<Modifier> getProductionModifiers(GoodsType goodsType,
                                                    UnitType unitType) {
-        if (!canProduce(goodsType, unitType)) return Stream.<Modifier>empty();
+        if (!canProduce(goodsType, unitType)) return Stream.empty();
 
         final Tile workTile = getWorkTile();
         final TileType type = workTile.getType();
@@ -483,7 +483,7 @@ public class ColonyTile extends WorkLocation {
                      ((owner == null) ? null
                          : owner.getModifiers(id, type, turn)))
             // Otherwise impossible
-            : Stream.<Modifier>empty();
+            : Stream.empty();
     }
 
     /**
@@ -493,7 +493,7 @@ public class ColonyTile extends WorkLocation {
     public List<ProductionType> getAvailableProductionTypes(boolean unattended) {
         return (workTile == null || workTile.getType() == null
             || unattended != isColonyCenterTile())
-            ? Collections.<ProductionType>emptyList()
+            ? Collections.emptyList()
             : workTile.getType().getAvailableProductionTypes(unattended);
     }
 

@@ -235,7 +235,7 @@ public abstract class OptionsDialog extends FreeColDialog<OptionGroup> {
      */
     protected boolean loadDefaultOptions() {
         File f = FreeColDirectories.getOptionsFile(getDefaultFileName());
-        return (f.exists()) ? load(f) : false;
+        return (f.exists()) && load(f);
     }
 
     /**
@@ -258,7 +258,7 @@ public abstract class OptionsDialog extends FreeColDialog<OptionGroup> {
     public OptionGroup getResponse() {
         OptionGroup value = super.getResponse();
         if (value == null) {
-            ; // Cancelled, do nothing
+            // Cancelled, do nothing
         } else {
             getOptionUI().updateOption();
         }

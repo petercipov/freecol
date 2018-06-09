@@ -355,9 +355,8 @@ public final class TileImprovementType extends FreeColSpecObjectType {
      * @return True if the required {@code TileType} can be changed to.
      */
     public boolean changeContainsTarget(TileType tileType) {
-        return (tileTypeChanges == null) ? false
-            : any(tileTypeChanges.values(),
-                  matchKey(tileType, TileTypeChange::getTo));
+        return (tileTypeChanges != null) && any(tileTypeChanges.values(),
+                matchKey(tileType, TileTypeChange::getTo));
     }
 
     /**
@@ -434,7 +433,7 @@ public final class TileImprovementType extends FreeColSpecObjectType {
      */
     public Stream<RandomChoice<Disaster>> getDisasterChoices() {
         return (disasters == null)
-            ? Stream.<RandomChoice<Disaster>>empty()
+            ? Stream.empty()
             : disasters.stream();
     }
 
@@ -587,10 +586,10 @@ public final class TileImprovementType extends FreeColSpecObjectType {
         addWorkTurns = xr.getAttribute(ADD_WORK_TURNS_TAG, 0);
 
         requiredImprovementType = xr.getType(spec, REQUIRED_IMPROVEMENT_TAG,
-            TileImprovementType.class, (TileImprovementType)null);
+            TileImprovementType.class, null);
 
         requiredRole = xr.getType(spec, REQUIRED_ROLE_TAG,
-            Role.class, (Role)null);
+            Role.class, null);
         // @compat 0.11.x
         if (xr.hasAttribute(OLD_EXPENDED_EQUIPMENT_TYPE_TAG)) {
             requiredRole = spec.getRole("model.role.pioneer");
@@ -644,7 +643,7 @@ public final class TileImprovementType extends FreeColSpecObjectType {
 
         } else if (DISASTER_TAG.equals(tag)) {
             Disaster disaster = xr.getType(spec, ID_ATTRIBUTE_TAG,
-                                           Disaster.class, (Disaster)null);
+                                           Disaster.class, null);
             int probability = xr.getAttribute(PROBABILITY_TAG, 100);
             addDisaster(disaster, probability);
             xr.closeTag(DISASTER_TAG);

@@ -35,28 +35,28 @@ public interface Scoped {
      *
      * @return A list of {@code Scope}s.
      */
-    public List<Scope> getScopeList();
+    List<Scope> getScopeList();
 
     /**
      * Get the scopes applicable to this effect as a stream.
      *
      * @return A stream of {@code Scope}s.
      */
-    public Stream<Scope> getScopes();
+    Stream<Scope> getScopes();
     
     /**
      * Set the scopes for this object.
      *
      * @param scopes A list of new {@code Scope}s.
      */
-    public void setScopes(List<Scope> scopes);
+    void setScopes(List<Scope> scopes);
 
     /**
      * Add a scope.
      *
      * @param scope The {@code Scope} to add.
      */
-    public void addScope(Scope scope);
+    void addScope(Scope scope);
 
     /**
      * Does at least one of this effect's scopes apply to an object.
@@ -66,7 +66,6 @@ public interface Scoped {
      */
     default boolean appliesTo(FreeColObject object) {
         List<Scope> scopes = getScopeList();
-        return (scopes == null || scopes.isEmpty()) ? true
-            : any(scopes, s -> s.appliesTo(object));
+        return (scopes == null || scopes.isEmpty()) || any(scopes, s -> s.appliesTo(object));
     }
 }

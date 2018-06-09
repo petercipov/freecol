@@ -44,7 +44,7 @@ public class Modifier extends Feature {
      * source, then FCO order.
      */
     public static final Comparator<Modifier> ascendingModifierIndexComparator
-        = Comparator.<Modifier>comparingInt(Modifier::getModifierIndex)
+        = Comparator.comparingInt(Modifier::getModifierIndex)
             .thenComparingInt(m -> m.getType().ordinal())
             .thenComparing(FreeColObject.fcoComparator)
             .thenComparing(Modifier::getSource, FreeColObject.fcoComparator);
@@ -160,7 +160,7 @@ public class Modifier extends Feature {
     public static final int ROLE_COMBAT_INDEX = 30;
     public static final int GENERAL_COMBAT_INDEX = 50;
 
-    public static enum ModifierType {
+    public enum ModifierType {
         ADDITIVE,
         MULTIPLICATIVE,
         PERCENTAGE
@@ -576,7 +576,7 @@ public class Modifier extends Feature {
         super.readAttributes(xr);
 
         modifierType = xr.getAttribute(TYPE_TAG, ModifierType.class,
-                                       (ModifierType)null);
+                null);
 
         value = xr.getAttribute(VALUE_TAG, UNKNOWN);
 
@@ -584,13 +584,13 @@ public class Modifier extends Feature {
         if (xr.hasAttribute(OLD_INCREMENT_TYPE_TAG)) {
             incrementType = xr.getAttribute(OLD_INCREMENT_TYPE_TAG,
                                             ModifierType.class,
-                                            (ModifierType)null);
+                    null);
             increment = xr.getAttribute(INCREMENT_TAG, UNKNOWN);
         // end @compat 0.11.3
         } else if (xr.hasAttribute(INCREMENT_TYPE_TAG)) {
             incrementType = xr.getAttribute(INCREMENT_TYPE_TAG,
                                             ModifierType.class,
-                                            (ModifierType)null);
+                    null);
 
             increment = xr.getAttribute(INCREMENT_TAG, UNKNOWN);
         } else {

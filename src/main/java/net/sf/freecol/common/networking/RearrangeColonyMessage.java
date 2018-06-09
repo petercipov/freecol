@@ -180,8 +180,7 @@ public class RearrangeColonyMessage extends AttributeMessage {
      * @param xr The {@code FreeColXMLReader} to read from.
      * @exception XMLStreamException if the stream is corrupt.
      */
-    public RearrangeColonyMessage(Game game, FreeColXMLReader xr)
-        throws XMLStreamException {
+    public RearrangeColonyMessage(Game game, FreeColXMLReader xr) {
         super(TAG, getAttributeMap(xr));
     }
 
@@ -193,19 +192,19 @@ public class RearrangeColonyMessage extends AttributeMessage {
      */
     private static Map<String, String> getAttributeMap(FreeColXMLReader xr) {
         Map<String, String> ret = new HashMap<>();
-        ret.put(COLONY_TAG, xr.getAttribute(COLONY_TAG, (String)null));
+        ret.put(COLONY_TAG, xr.getAttribute(COLONY_TAG, null));
         int n = xr.getAttribute(FreeColObject.ARRAY_SIZE_TAG, 0);
         for (int i = 0; i < n; i++) {
             ret.put(Arrangement.unitKey(i),
-                xr.getAttribute(Arrangement.unitKey(i), (String)null));
+                xr.getAttribute(Arrangement.unitKey(i), null));
             ret.put(Arrangement.locKey(i),
-                xr.getAttribute(Arrangement.locKey(i), (String)null));
+                xr.getAttribute(Arrangement.locKey(i), null));
             ret.put(Arrangement.workKey(i),
-                xr.getAttribute(Arrangement.workKey(i), (String)null));
+                xr.getAttribute(Arrangement.workKey(i), null));
             ret.put(Arrangement.roleKey(i),
-                xr.getAttribute(Arrangement.roleKey(i), (String)null));
+                xr.getAttribute(Arrangement.roleKey(i), null));
             ret.put(Arrangement.roleCountKey(i),
-                xr.getAttribute(Arrangement.roleCountKey(i), (String)null));
+                xr.getAttribute(Arrangement.roleCountKey(i), null));
         }
         return ret;
     }
@@ -218,13 +217,13 @@ public class RearrangeColonyMessage extends AttributeMessage {
     private void setArrangementAttributes(List<Arrangement> arrangements) {
         int i = 0;
         for (Arrangement a : arrangements) {
-            setStringAttribute(a.unitKey(i), a.unit.getId());
-            setStringAttribute(a.locKey(i), a.loc.getId());
+            setStringAttribute(Arrangement.unitKey(i), a.unit.getId());
+            setStringAttribute(Arrangement.locKey(i), a.loc.getId());
             if (a.work != null) {
-                setStringAttribute(a.workKey(i), a.work.getId());
+                setStringAttribute(Arrangement.workKey(i), a.work.getId());
             }
-            setStringAttribute(a.roleKey(i), a.role.toString());
-            setStringAttribute(a.roleCountKey(i), String.valueOf(a.roleCount));
+            setStringAttribute(Arrangement.roleKey(i), a.role.toString());
+            setStringAttribute(Arrangement.roleCountKey(i), String.valueOf(a.roleCount));
             i++;
         }
         setIntegerAttribute(FreeColObject.ARRAY_SIZE_TAG, i);

@@ -1195,7 +1195,7 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
      */
     public List<WorkerWish> getWorkerWishesAt(Location loc, UnitType type) {
         List<Wish> demand = transportDemand.get(Location.upLoc(loc));
-        return (demand == null) ? Collections.<WorkerWish>emptyList()
+        return (demand == null) ? Collections.emptyList()
             : transform(demand,
                         w -> w instanceof WorkerWish
                             && Objects.equals(((WorkerWish)w).getUnitType(), type),
@@ -1211,7 +1211,7 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
      */
     public List<GoodsWish> getGoodsWishesAt(Location loc, GoodsType type) {
         List<Wish> demand = transportDemand.get(Location.upLoc(loc));
-        return (demand == null) ? Collections.<GoodsWish>emptyList()
+        return (demand == null) ? Collections.emptyList()
             : transform(demand,
                         w -> w instanceof GoodsWish
                             && Objects.equals(((GoodsWish)w).getGoodsType(), type),
@@ -1247,7 +1247,7 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
                 }
             }
         }
-        return (carried != null) ? carried : (other != null) ? other : null;
+        return (carried != null) ? carried : other;
     }
 
     /**
@@ -1541,7 +1541,7 @@ public class EuropeanAIPlayer extends MissionAIPlayer {
             Stance newStance = determineStance(p);
             if (newStance != serverPlayer.getStance(p)) {
                 if (newStance == Stance.WAR && peaceHolds(p)) {
-                    ; // Peace treaty holds for now
+                    // Peace treaty holds for now
                 } else {
                     getAIMain().getFreeColServer().getInGameController()
                         .changeStance(serverPlayer, newStance,

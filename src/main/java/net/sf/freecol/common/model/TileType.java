@@ -42,7 +42,7 @@ public final class TileType extends FreeColSpecObjectType
 
     public static final String TAG = "tile-type";
 
-    public static enum RangeType { HUMIDITY, TEMPERATURE, ALTITUDE };
+    public enum RangeType { HUMIDITY, TEMPERATURE, ALTITUDE }
 
     /**
      * Use these tile types only for "land maps", i.e. maps that only
@@ -326,7 +326,7 @@ public final class TileType extends FreeColSpecObjectType
      */
     public Stream<RandomChoice<Disaster>> getDisasterChoices() {
         return (this.disasters == null)
-            ? Stream.<RandomChoice<Disaster>>empty()
+            ? Stream.empty()
             : disasters.stream();
     }
 
@@ -646,7 +646,7 @@ public final class TileType extends FreeColSpecObjectType
 
         if (DISASTER_TAG.equals(tag)) {
             Disaster d = xr.getType(spec, ID_ATTRIBUTE_TAG,
-                                    Disaster.class, (Disaster)null);
+                                    Disaster.class, null);
             if (d != null) {
                 addDisaster(d, xr.getAttribute(PROBABILITY_TAG, 100));
             }
@@ -691,7 +691,7 @@ public final class TileType extends FreeColSpecObjectType
 
         } else if (RESOURCE_TAG.equals(tag)) {
             addResourceType(xr.getType(spec, TYPE_TAG, ResourceType.class,
-                                       (ResourceType)null),
+                    null),
                             xr.getAttribute(PROBABILITY_TAG, 100));
             xr.closeTag(RESOURCE_TAG);
 
@@ -701,7 +701,7 @@ public final class TileType extends FreeColSpecObjectType
         } else if (PRIMARY_PRODUCTION_TAG.equals(tag)
             || SECONDARY_PRODUCTION_TAG.equals(tag)) {
             GoodsType type = xr.getType(spec, GOODS_TYPE_TAG,
-                                        GoodsType.class, (GoodsType)null);
+                                        GoodsType.class, null);
             int amount = xr.getAttribute(VALUE_TAG, 0);
             ProductionType pt = new ProductionType(null, type, amount);
             pt.setUnattended(true);

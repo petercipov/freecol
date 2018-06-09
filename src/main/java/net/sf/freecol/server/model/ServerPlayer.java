@@ -116,12 +116,12 @@ public class ServerPlayer extends Player implements TurnTaker {
     public static final int ALARM_TILE_IN_USE = 2;
 
     // checkForDeath result type
-    public static enum DeadCheck {
+    public enum DeadCheck {
         IS_DEAD,
         IS_DEFEATED,
         IS_AUTORECRUIT,
         IS_ALIVE
-    };
+    }
 
     // Penalty for destroying a settlement (Col1)
     public static final int SCORE_SETTLEMENT_DESTROYED = -5;
@@ -303,9 +303,7 @@ public class ServerPlayer extends Player implements TurnTaker {
      * @return True if the message was sent.
      */
     public boolean send(ChangeSet cs) {
-        return (isConnected())
-            ? this.connection.request(cs.build(this))
-            : false;
+        return (isConnected()) && this.connection.request(cs.build(this));
     }
 
     /**
@@ -956,7 +954,7 @@ public class ServerPlayer extends Player implements TurnTaker {
     public Set<Tile> exploreForUnit(Unit unit) {
         return (getGame() == null || getGame().getMap() == null || unit == null
             || !(unit.getLocation() instanceof Tile)) 
-            ? Collections.<Tile>emptySet()
+            ? Collections.emptySet()
             : exploreTiles(unit.getVisibleTileSet());
     }
 
@@ -989,12 +987,7 @@ public class ServerPlayer extends Player implements TurnTaker {
      */
     public boolean canSeeUnit(Unit unit) {
         Tile tile;
-        return (this.owns(unit)) ? true
-            : ((tile = unit.getTile()) == null) ? false
-            : (!this.canSee(tile)) ? false
-            : (tile.hasSettlement()) ? false
-            : (unit.isOnCarrier()) ? false
-            : true;
+        return (this.owns(unit)) || (((tile = unit.getTile()) != null) && ((this.canSee(tile)) && ((!tile.hasSettlement()) && !unit.isOnCarrier())));
     }
 
     /**
@@ -1018,7 +1011,7 @@ public class ServerPlayer extends Player implements TurnTaker {
      * @return A set of newly explored or currently invisible {@code Tile}s.
      */
     public Set<Tile> collectNewTiles(Collection<Tile> collection) {
-        return (collection == null) ? Collections.<Tile>emptySet()
+        return (collection == null) ? Collections.emptySet()
             : collectNewTiles(collection.stream());
     }
 
@@ -2610,7 +2603,7 @@ outer:  for (Effect effect : effects) {
                     "attackedByPrivateers", Boolean.TRUE.toString());
             }
         } else if (defender.hasAbility(Ability.PIRACY)) {
-            ; // do nothing
+            // do nothing
         } else if (burnedNativeCapital) {
             defenderPlayer.getTension(this).setValue(Tension.SURRENDERED);
             // FIXME: just the tension
@@ -4297,7 +4290,7 @@ outer:  for (Effect effect : effects) {
             UnitType mainType = unit.getType();
             UnitTypeChange uc;
             if ((uc = unit.getUnitChange(change, null, newOwner)) == null) {
-                ; // mainType is unchanged
+                // mainType is unchanged
             } else if (uc.isAvailableTo(newOwner)) {
                 mainType = uc.to;
             } else { // Can not have this unit.
@@ -4310,7 +4303,7 @@ outer:  for (Effect effect : effects) {
 
             for (Unit u : unit.getUnitList()) {
                 if ((uc = u.getUnitChange(change, null, newOwner)) == null) {
-                    ; // no change for this passenger
+                    // no change for this passenger
                 } else if (uc.isAvailableTo(newOwner)) {
                     if (!Objects.equals(uc.to, u.getType()) && !u.changeType(uc.to)) {
                         logger.warning("Type change failure: " + u
@@ -4530,7 +4523,7 @@ outer:  for (Effect effect : effects) {
                     unit.dispose();//-vis: safe, never sighted
                 }
                 Set<Tile> tiles = exploreForUnit(naval.get(0));
-                if (!tiles.contains(entry)) tiles.add(entry);
+                tiles.add(entry);
                 invalidateCanSeeTiles();//+vis(this)
                 cs.add(See.perhaps(), tiles);
                 cs.addMessage(this,

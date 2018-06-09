@@ -935,9 +935,9 @@ public class BuildQueuePanel extends FreeColPanel implements ItemListener {
     }
 
     private void setBuyLabel(BuildableType buildable) {
-        final String text = Messages.message((StringTemplate)((buildable == null)
+        final String text = Messages.message((buildable == null)
             ? StringTemplate.template("buildQueuePanel.buyBuilding").addStringTemplate("%buildable%", StringTemplate.key("nothing"))
-            : StringTemplate.template("buildQueuePanel.buyBuilding").addNamed("%buildable%", buildable)));
+            : StringTemplate.template("buildQueuePanel.buyBuilding").addNamed("%buildable%", buildable));
         this.buyBuildable.setText(text);
     }
 

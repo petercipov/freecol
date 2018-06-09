@@ -119,7 +119,7 @@ public class LoginMessage extends ObjectMessage {
 
     private ServerState getState() {
         return getEnumAttribute(STATE_TAG, ServerState.class,
-                                (ServerState)null);
+                null);
     }
 
     private boolean getSinglePlayer() {

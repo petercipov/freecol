@@ -216,7 +216,7 @@ public class SettlementType extends FreeColSpecObjectType {
      */
     public List<PlunderType> getPlunderTypes() {
         return (this.plunderTypes == null)
-            ? Collections.<PlunderType>emptyList()
+            ? Collections.emptyList()
             : this.plunderTypes;
     }
 

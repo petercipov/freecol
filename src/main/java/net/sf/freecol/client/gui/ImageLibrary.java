@@ -159,7 +159,7 @@ public final class ImageLibrary {
                 : (u.isPerson()) ? PathType.FOOT
                 : PathType.WAGON;
         }
-    };
+    }
 
 
     /**

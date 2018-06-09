@@ -351,7 +351,7 @@ public class NameCache {
      */
     public static List<String> getCitiesOfCibola() {
         synchronized (cibolaLock) {
-            return (cibolaKeys == null) ? Collections.<String>emptyList()
+            return (cibolaKeys == null) ? Collections.emptyList()
                 : cibolaKeys;
         }
     }

@@ -94,7 +94,7 @@ public class UpdateMessage extends ObjectMessage {
      */
     public UpdateMessage(Game game, FreeColXMLReader xr)
         throws XMLStreamException {
-        this((ServerPlayer)null);
+        this(null);
 
         FreeColXMLReader.ReadScope rs
             = xr.replaceScope(FreeColXMLReader.ReadScope.NOINTERN);

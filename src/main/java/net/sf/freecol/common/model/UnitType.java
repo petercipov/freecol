@@ -628,7 +628,7 @@ public final class UnitType extends BuildableType implements Consumer {
      */
     @Override
     public List<AbstractGoods> getConsumedGoods() {
-        return (consumption == null) ? Collections.<AbstractGoods>emptyList()
+        return (consumption == null) ? Collections.emptyList()
                 : transform(consumption.keySet(),
                 gt -> consumption.getCount(gt) != 0,
                 gt -> new AbstractGoods(gt, consumption.getCount(gt)));
@@ -963,7 +963,7 @@ public final class UnitType extends BuildableType implements Consumer {
 
         if (CONSUMES_TAG.equals(tag)) {
             addConsumption(xr.getType(spec, ID_ATTRIBUTE_TAG,
-                    GoodsType.class, (GoodsType)null),
+                    GoodsType.class, null),
                     xr.getAttribute(VALUE_TAG, UNDEFINED));
             xr.closeTag(CONSUMES_TAG);
 

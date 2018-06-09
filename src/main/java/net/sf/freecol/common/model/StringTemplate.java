@@ -57,7 +57,7 @@ public class StringTemplate extends FreeColObject {
      * value of the key, or LABEL, a separator string that will be
      * used to join the replacement values.
      */
-    public static enum TemplateType { NAME, KEY, TEMPLATE, LABEL }
+    public enum TemplateType { NAME, KEY, TEMPLATE, LABEL }
 
     /** The TemplateType of this StringTemplate. Defaults to KEY. */
     private TemplateType templateType = TemplateType.KEY;
@@ -209,7 +209,7 @@ public class StringTemplate extends FreeColObject {
      * @return A list of keys.
      */
     public final List<String> getKeys() {
-        return (this.keys == null) ? Collections.<String>emptyList()
+        return (this.keys == null) ? Collections.emptyList()
             : this.keys;
     }
 
@@ -230,7 +230,7 @@ public class StringTemplate extends FreeColObject {
      */
     public final List<StringTemplate> getReplacements() {
         return (this.replacements == null)
-            ? Collections.<StringTemplate>emptyList()
+            ? Collections.emptyList()
             : this.replacements;
     }
 
@@ -300,7 +300,7 @@ public class StringTemplate extends FreeColObject {
             throw new IllegalArgumentException("Cannot add key-value pair"
                 + " to StringTemplate." + this.templateType);
         }
-        return complete(key, this.key(value));
+        return complete(key, key(value));
     }
 
     /**
@@ -316,7 +316,7 @@ public class StringTemplate extends FreeColObject {
             throw new IllegalArgumentException("Cannot add a single string"
                 + " to StringTemplate." + this.templateType);
         }
-        return complete(null, this.key(value));
+        return complete(null, key(value));
     }
 
     /**
@@ -333,7 +333,7 @@ public class StringTemplate extends FreeColObject {
             throw new IllegalArgumentException("Cannot add key-name pair"
                 + " to StringTemplate." + this.templateType);
         }
-        return complete(key, this.name(value));
+        return complete(key, name(value));
     }
 
     /**
@@ -350,7 +350,7 @@ public class StringTemplate extends FreeColObject {
             throw new IllegalArgumentException("Cannot add key-object pair"
                 + " to StringTemplate." + this.templateType);
         }
-        return complete(key, this.key(Messages.nameKey(object.getId())));
+        return complete(key, key(Messages.nameKey(object.getId())));
     }
 
     /**
@@ -366,7 +366,7 @@ public class StringTemplate extends FreeColObject {
             throw new IllegalArgumentException("Cannot add a single string"
                 + " to StringTemplate." + this.templateType);
         }
-        return complete(null, this.name(value));
+        return complete(null, name(value));
     }
 
     /**
@@ -521,7 +521,7 @@ public class StringTemplate extends FreeColObject {
         templateType = xr.getAttribute(TEMPLATE_TYPE_TAG,
             TemplateType.class, TemplateType.TEMPLATE);
 
-        defaultId = xr.getAttribute(DEFAULT_ID_TAG, (String)null);
+        defaultId = xr.getAttribute(DEFAULT_ID_TAG, null);
     }
 
     /**
@@ -544,7 +544,7 @@ public class StringTemplate extends FreeColObject {
         final String tag = xr.getLocalName();
 
         if (KEY_TAG.equals(tag)) {
-            addKey(xr.getAttribute(VALUE_TAG, (String)null));
+            addKey(xr.getAttribute(VALUE_TAG, null));
             xr.closeTag(KEY_TAG);
 
         } else if (StringTemplate.TAG.equals(tag)) {

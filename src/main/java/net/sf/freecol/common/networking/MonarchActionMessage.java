@@ -97,7 +97,7 @@ public class MonarchActionMessage extends ObjectMessage {
      */
     private MonarchAction getAction() {
         return getEnumAttribute(ACTION_TAG, MonarchAction.class,
-                                (MonarchAction)null);
+                null);
     }
 
     /**
@@ -133,7 +133,7 @@ public class MonarchActionMessage extends ObjectMessage {
      * @return The result.
      */
     private Boolean getResult() {
-        return getBooleanAttribute(RESULT_TAG, (Boolean)null);
+        return getBooleanAttribute(RESULT_TAG, null);
     }
 
     /**

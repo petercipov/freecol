@@ -47,7 +47,7 @@ public class UnitTypeOption extends AbstractOption<UnitType> {
     /**
      * FIXME: replace with Predicates.
      */
-    public static enum TypeSelector {
+    public enum TypeSelector {
         UNITS, IMMIGRANTS, LAND_UNITS, NAVAL_UNITS
     }
 
@@ -265,7 +265,7 @@ public class UnitTypeOption extends AbstractOption<UnitType> {
         super.readAttributes(xr); // value is read here
 
         selector = xr.getAttribute(GENERATE_TAG,
-                                   TypeSelector.class, (TypeSelector)null);
+                                   TypeSelector.class, null);
 
         addNone = xr.getAttribute(ADD_NONE_TAG, false);
     }
@@ -291,7 +291,7 @@ public class UnitTypeOption extends AbstractOption<UnitType> {
 
         if (CHOICE_TAG.equals(tag)) {
             choices.add(xr.getType(spec, VALUE_TAG,
-                                   UnitType.class, (UnitType)null));
+                                   UnitType.class, null));
             xr.closeTag(CHOICE_TAG);
 
         } else {

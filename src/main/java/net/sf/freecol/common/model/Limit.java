@@ -39,7 +39,7 @@ public final class Limit extends FreeColSpecObjectType {
     public static final String TAG = "limit";
 
     /** The basic operation used in evaluating this limit. */
-    public static enum Operator {
+    public enum Operator {
         EQ, LT, GT, LE, GE
     }
 
@@ -348,7 +348,7 @@ public final class Limit extends FreeColSpecObjectType {
         super.readAttributes(xr);
 
         operator = xr.getAttribute(OPERATOR_TAG,
-                                   Operator.class, (Operator)null);
+                                   Operator.class, null);
     }
 
     /**

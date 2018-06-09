@@ -472,11 +472,9 @@ public class Building extends WorkLocation
             // the goods are required for the current building job.
             if (this.getLevel() > 1 || unit != null) {
                 return true;
-            } else if (colony.getTotalProductionOf(goodsType) == 0
+            } else return colony.getTotalProductionOf(goodsType) == 0
                     && (bt = colony.getCurrentlyBuilding()) != null
-                    && any(bt.getRequiredGoods(), AbstractGoods.matches(goodsType))) {
-                return true;
-            }
+                    && any(bt.getRequiredGoods(), AbstractGoods.matches(goodsType));
         }
         return false;
     }
@@ -586,7 +584,7 @@ public class Building extends WorkLocation
      */
     @Override
     public List<ProductionType> getAvailableProductionTypes(boolean unattended) {
-        return (buildingType == null) ? Collections.<ProductionType>emptyList()
+        return (buildingType == null) ? Collections.emptyList()
             : getType().getAvailableProductionTypes(unattended);
     }
 
@@ -704,7 +702,7 @@ public class Building extends WorkLocation
         final Specification spec = getSpecification();
 
         buildingType = xr.getType(spec, BUILDING_TYPE_TAG,
-                                  BuildingType.class, (BuildingType)null);
+                                  BuildingType.class, null);
     }
 
     /**

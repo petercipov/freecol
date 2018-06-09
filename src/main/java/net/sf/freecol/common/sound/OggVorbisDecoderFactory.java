@@ -182,7 +182,7 @@ public class OggVorbisDecoderFactory {
                     offset = 0;
                 }
                 long rd = (bufCount < n) ? bufCount : n;
-                bufCount = (int) (bufCount - rd);;
+                bufCount = (int) (bufCount - rd);
                 offset = (int) (offset + rd);
                 wr += rd;
                 n -= rd;
@@ -366,7 +366,7 @@ public class OggVorbisDecoderFactory {
             }
             return range;
         }
-    };
+    }
 
     /**
      * The AudioInputStream extension to handle decoding Ogg/Vorbis Audio
@@ -384,7 +384,7 @@ public class OggVorbisDecoderFactory {
          * @param os The {@code OggStream} to read from.
          * @exception IOException if unable to open the stream.
          */
-        public OggVorbisAudioInputStream(OggStream os) throws IOException {
+        public OggVorbisAudioInputStream(OggStream os) {
             super(os, os.getFormat(), AudioSystem.NOT_SPECIFIED);
             this.os = os;
         }
@@ -447,7 +447,7 @@ public class OggVorbisDecoderFactory {
         public void reset() {
             os.reset();
         }
-    };
+    }
 
 
     /**

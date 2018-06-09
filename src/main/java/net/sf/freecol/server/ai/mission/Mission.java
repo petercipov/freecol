@@ -532,7 +532,7 @@ public abstract class Mission extends AIObject {
         if (start == null) {
             if (!deferOK) return null;
             Settlement settlement = unit.getOwner().getClosestPortForEurope();
-            return (settlement == null) ? null : settlement;
+            return settlement;
         }
         return unit.getGame().getMap().searchCircle(start, gd, radius);
     }

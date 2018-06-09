@@ -221,9 +221,8 @@ public class TradeRouteStop extends FreeColGameObject implements TradeLocation {
         final Predicate<Goods> unloadPred = g ->
             !any(stopGoods, AbstractGoods.matches(g.getType()))
                 && getImportAmount(g.getType(), turns) > 0;
-        if (any(unit.getCompactGoodsList(), unloadPred)) return true;
+        return any(unit.getCompactGoodsList(), unloadPred);
 
-        return false; // Otherwise no work here.
     }
 
 
@@ -350,7 +349,7 @@ public class TradeRouteStop extends FreeColGameObject implements TradeLocation {
 
         if (CARGO_TAG.equals(tag)) {
             cargo.add(xr.getType(spec, ID_ATTRIBUTE_TAG,
-                                 GoodsType.class, (GoodsType)null));
+                                 GoodsType.class, null));
 
             xr.closeTag(CARGO_TAG);
 

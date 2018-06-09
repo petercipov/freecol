@@ -333,7 +333,7 @@ public final class PreGameController extends FreeColClientHolder {
             if (fco instanceof Game) {
                 if (game.preGameUpdate((Game)fco)) {
                     final FreeColClient fcc = getFreeColClient();
-                    fcc.addSpecificationActions(((Game)fco).getSpecification());
+                    fcc.addSpecificationActions(fco.getSpecification());
                 } else {
                     logger.warning("Pre-game copy-in failed: " + fco.getId());
                 }

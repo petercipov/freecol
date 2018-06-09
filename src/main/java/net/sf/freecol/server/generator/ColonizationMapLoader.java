@@ -120,7 +120,7 @@ public class ColonizationMapLoader implements MapLoader {
     };
     private static byte[] layer1;
 
-    public ColonizationMapLoader(File file) throws FileNotFoundException, IOException {
+    public ColonizationMapLoader(File file) {
 
         try {
             RandomAccessFile reader = new RandomAccessFile(file, "r");

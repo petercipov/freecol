@@ -55,7 +55,7 @@ public class CloseMessage extends AttributeMessage {
      * @exception FreeColException if the internal message can not be read.
      */
     public CloseMessage(Game game, FreeColXMLReader xr)
-        throws FreeColException, XMLStreamException {
+        throws XMLStreamException {
         super(TAG, xr, PANEL_TAG);
     }
     

@@ -63,42 +63,6 @@ public class DiplomacyMessage extends ObjectMessage {
     }
 
     /**
-     * Create a new {@code DiplomacyMessage}.
-     *
-     * @param unit The {@code Unit} that is negotiating.
-     * @param otherUnit The other {@code Unit} to negotiate with.
-     * @param agreement The {@code DiplomaticTrade} to make.
-     */
-    public DiplomacyMessage(Unit unit, Unit otherUnit,
-                            DiplomaticTrade agreement) {
-        this((FreeColGameObject)unit, (FreeColGameObject)otherUnit, agreement);
-    }
-
-    /**
-     * Create a new {@code DiplomacyMessage}.
-     *
-     * @param unit The {@code Unit} that is negotiating.
-     * @param colony The {@code Colony} to negotiate with.
-     * @param agreement The {@code DiplomaticTrade} to make.
-     */
-    public DiplomacyMessage(Unit unit, Colony colony,
-                            DiplomaticTrade agreement) {
-        this((FreeColGameObject)unit, (FreeColGameObject)colony, agreement);
-    }
-
-    /**
-     * Create a new {@code DiplomacyMessage}.
-     *
-     * @param colony The {@code Colony} that is negotiating.
-     * @param unit The {@code Unit} that to negotiate with.
-     * @param agreement The {@code DiplomaticTrade} to make.
-     */
-    public DiplomacyMessage(Colony colony, Unit unit,
-                            DiplomaticTrade agreement) {
-        this((FreeColGameObject)colony, (FreeColGameObject)unit, agreement);
-    }
-
-    /**
      * Create a new {@code DiplomacyMessage} from a stream.
      *
      * @param game The {@code Game} this message belongs to.

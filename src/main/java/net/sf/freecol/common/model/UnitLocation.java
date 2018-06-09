@@ -47,7 +47,7 @@ public abstract class UnitLocation extends FreeColGameObject implements Location
 
     private static final Logger logger = Logger.getLogger(UnitLocation.class.getName());
 
-    public static enum NoAddReason {
+    public enum NoAddReason {
         /**
          * No reason why Locatable can not be added.
          */
@@ -412,7 +412,7 @@ public abstract class UnitLocation extends FreeColGameObject implements Location
     @Override
     public List<Unit> getUnitList() {
         synchronized (this.units) {
-            return (this.units.isEmpty()) ? Collections.<Unit>emptyList()
+            return (this.units.isEmpty()) ? Collections.emptyList()
                 : new ArrayList<>(this.units);
         }
     }

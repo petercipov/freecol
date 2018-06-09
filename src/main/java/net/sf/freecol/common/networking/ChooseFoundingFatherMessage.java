@@ -49,8 +49,8 @@ public class ChooseFoundingFatherMessage extends AttributeMessage {
 
     public static final String TAG = "chooseFoundingFather";
     private static final String FOUNDING_FATHER_TAG = "foundingFather";
-    private static final List<String> fatherKeys = Collections.<String>
-        unmodifiableList(transform(FoundingFatherType.values(),
+    private static final List<String> fatherKeys = Collections.
+            unmodifiableList(transform(FoundingFatherType.values(),
                                    alwaysTrue(), FoundingFatherType::getKey));
 
 
@@ -105,10 +105,10 @@ public class ChooseFoundingFatherMessage extends AttributeMessage {
     private static Map<String, String> getAttributeMap(FreeColXMLReader xr) {
         Map<String, String> ret = new HashMap<>();
         for (String key : fatherKeys) {
-            String val = xr.getAttribute(key, (String)null);
+            String val = xr.getAttribute(key, null);
             ret.put(key, val);
         }
-        String ffk = xr.getAttribute(FOUNDING_FATHER_TAG, (String)null);
+        String ffk = xr.getAttribute(FOUNDING_FATHER_TAG, null);
         if (ffk != null) ret.put(FOUNDING_FATHER_TAG, ffk);
         return ret;
     }

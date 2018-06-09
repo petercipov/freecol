@@ -790,7 +790,7 @@ public class PioneeringMission extends Mission {
 
         tileImprovementPlan = (xr.hasAttribute(TileImprovementPlan.TAG))
             ? xr.makeAIObject(aiMain, TileImprovementPlan.TAG,
-                TileImprovementPlan.class, (TileImprovementPlan)null, true)
+                TileImprovementPlan.class, null, true)
             : null;
     }
 

@@ -76,8 +76,8 @@ public class IndianDemandMission extends Mission {
         selectPredicates.add(gt -> gt.isBuildingMaterial());
         selectPredicates.add(gt -> gt.isTradeGoods());
         selectPredicates.add(gt -> gt.isRefined());
-    };
-    
+    }
+
     /** The colony to demand from. */
     private Colony colony;
 
@@ -478,7 +478,7 @@ public class IndianDemandMission extends Mission {
         super.readAttributes(xr);
 
         this.colony = xr.getAttribute(getGame(), COLONY_TAG,
-                                      Colony.class, (Colony)null);
+                                      Colony.class, null);
 
         this.demanded = xr.getAttribute(DEMANDED_TAG, false);
 

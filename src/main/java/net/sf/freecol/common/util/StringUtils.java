@@ -123,7 +123,7 @@ public class StringUtils {
                 sb.append(base.substring(from));
                 break;
             }
-            sb.append(base.substring(from, idx));
+            sb.append(base, from, idx);
             from = idx+1;
             if (from >= len) break;
             char ch = base.charAt(from);

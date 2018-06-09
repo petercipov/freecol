@@ -83,7 +83,7 @@ public class RemoveMessage extends AttributeMessage {
      */
     private static Map<String, String> getAttributeMap(FreeColXMLReader xr) {
         Map<String, String> ret = xr.getArrayAttributeMap();
-        ret.put(DIVERT_TAG, xr.getAttribute(DIVERT_TAG, (String)null));
+        ret.put(DIVERT_TAG, xr.getAttribute(DIVERT_TAG, null));
         return ret;
     }
 

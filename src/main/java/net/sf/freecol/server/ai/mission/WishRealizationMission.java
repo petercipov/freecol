@@ -257,8 +257,8 @@ public class WishRealizationMission extends Mission {
 
         final AIMain aiMain = getAIMain();
 
-        final String wid = xr.getAttribute(WISH_TAG, (String)null);
-        wish = xr.getAttribute(aiMain, WISH_TAG, Wish.class, (Wish)null);
+        final String wid = xr.getAttribute(WISH_TAG, null);
+        wish = xr.getAttribute(aiMain, WISH_TAG, Wish.class, null);
         if (wish == null) {
             if (wid.startsWith(GoodsWish.TAG)) {
                 wish = new GoodsWish(aiMain, wid);

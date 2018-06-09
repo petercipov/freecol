@@ -41,8 +41,8 @@ public interface BaseProduction {
      *     the work, if null the unattended production is considered.
      * @return The amount of goods produced.
      */
-    public default int getBaseProduction(ProductionType productionType,
-                                         GoodsType goodsType, UnitType unitType) {
+    default int getBaseProduction(ProductionType productionType,
+                                  GoodsType goodsType, UnitType unitType) {
         if (goodsType == null) return 0;
         if (productionType == null) {
             productionType = ProductionType.getBestProductionType(goodsType,
@@ -61,5 +61,5 @@ public interface BaseProduction {
      * @param unattended Whether the production is unattended.
      * @return A list of {@code ProductionType}s.
      */
-    public abstract List<ProductionType> getAvailableProductionTypes(boolean unattended);
+    List<ProductionType> getAvailableProductionTypes(boolean unattended);
 }

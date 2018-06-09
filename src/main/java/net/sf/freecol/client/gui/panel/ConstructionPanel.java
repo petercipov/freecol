@@ -150,7 +150,7 @@ public class ConstructionPanel extends MigPanel
      */
     public void update(BuildableType buildable) {
         removeAll();
-        final ImageLibrary lib = ((SwingGUI)freeColClient.getGUI())
+        final ImageLibrary lib = freeColClient.getGUI()
             .getTileImageLibrary();
         final Font font = FontLibrary.createFont(FontLibrary.FontType.NORMAL,
             FontLibrary.FontSize.SMALLER, lib.getScaleFactor());

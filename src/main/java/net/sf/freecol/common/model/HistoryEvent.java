@@ -39,7 +39,7 @@ public class HistoryEvent extends StringTemplate {
 
     public static final String TAG = "historyEvent";
 
-    public static enum HistoryEventType implements Named {
+    public enum HistoryEventType implements Named {
         DISCOVER_NEW_WORLD,
         DISCOVER_REGION,
         MEET_NATION,
@@ -321,8 +321,8 @@ public class HistoryEvent extends StringTemplate {
         turn = new Turn(xr.getAttribute(TURN_TAG, 0));
 
         eventType = xr.getAttribute(EVENT_TYPE_TAG,
-                                    HistoryEventType.class, (HistoryEventType)null);
-        playerId = xr.getAttribute(PLAYER_ID_TAG, (String)null);
+                                    HistoryEventType.class, null);
+        playerId = xr.getAttribute(PLAYER_ID_TAG, null);
 
         score = xr.getAttribute(SCORE_TAG, 0);
     }

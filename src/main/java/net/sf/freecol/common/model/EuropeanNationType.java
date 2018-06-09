@@ -281,7 +281,7 @@ public class EuropeanNationType extends NationType {
         if (UNIT_TAG.equals(tag)) {
             String id = xr.readId();
 
-            String type = xr.getAttribute(TYPE_TAG, (String)null);
+            String type = xr.getAttribute(TYPE_TAG, null);
 
             String roleId = xr.getAttribute(ROLE_TAG,
                                             Specification.DEFAULT_ROLE_ID);

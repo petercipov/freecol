@@ -42,7 +42,7 @@ public class FoundingFather extends FreeColSpecObjectType {
 
     public static final String TAG = "founding-father";
 
-    public static enum FoundingFatherType {
+    public enum FoundingFatherType {
         TRADE,
         EXPLORATION,
         MILITARY,
@@ -142,7 +142,7 @@ public class FoundingFather extends FreeColSpecObjectType {
      * @return A list of {@code Event}s.
      */
     public final List<Event> getEvents() {
-        return (events == null) ? Collections.<Event>emptyList()
+        return (events == null) ? Collections.emptyList()
             : events;
     }
 
@@ -173,7 +173,7 @@ public class FoundingFather extends FreeColSpecObjectType {
      * @return A list of {@code AbstractUnit}s.
      */
     public final List<AbstractUnit> getUnitList() {
-        return (units == null) ? Collections.<AbstractUnit>emptyList()
+        return (units == null) ? Collections.emptyList()
             : units;
     }
 
@@ -207,8 +207,7 @@ public class FoundingFather extends FreeColSpecObjectType {
      * @return True if the father is available.
      */
     public boolean isAvailableTo(Player player) {
-        return (!player.isEuropean()) ? false
-            : appliesTo((FreeColObject)player);
+        return (player.isEuropean()) && appliesTo(player);
     }
 
 

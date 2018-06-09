@@ -82,7 +82,7 @@ public class FreeColModFile extends FreeColDataFile implements ObjectWithId {
         try {
             return getInputStream(SPECIFICATION_FILE);
         } catch (FileNotFoundException fnfe) {
-            ; // Normal for graphic-only mods.
+            // Normal for graphic-only mods.
         }
         return null;
     }
@@ -118,11 +118,11 @@ public class FreeColModFile extends FreeColDataFile implements ObjectWithId {
     protected void readModDescriptor() throws IOException {
         try (
             FreeColXMLReader xr
-                = new FreeColXMLReader(getModDescriptorInputStream());
+                = new FreeColXMLReader(getModDescriptorInputStream())
         ) {
             xr.nextTag();
             id = xr.readId();
-            parent = xr.getAttribute("parent", (String)null);
+            parent = xr.getAttribute("parent", null);
         } catch (XMLStreamException xse) {
             throw new IOException(xse);
         }

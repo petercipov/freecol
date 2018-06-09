@@ -123,7 +123,7 @@ public final class InGameController extends FreeColClientHolder {
      * Selecting next unit depends on mode--- either from the active list,
      * from the going-to list, or flush going-to and end the turn.
      */
-    private static enum MoveMode {
+    private enum MoveMode {
         NEXT_ACTIVE_UNIT,
         EXECUTE_GOTO_ORDERS,
         END_TURN;
@@ -256,7 +256,7 @@ public final class InGameController extends FreeColClientHolder {
     private void updateGUI(Tile tile, boolean updateUnit) {
         Unit active;
         if (displayModelMessages(false, false)) {
-            ; // If messages are displayed they probably refer to the
+            // If messages are displayed they probably refer to the
               // current unit, so do not update it.
         } else if (updateUnit || (active = getGUI().getActiveUnit()) == null
             || !active.couldMove()) {
@@ -1632,7 +1632,7 @@ public final class InGameController extends FreeColClientHolder {
                 colonyPanel(tile.getColony(), unit);
                 ret = false;
             } else {
-                ; // Automatic movement can continue after successful move.
+                // Automatic movement can continue after successful move.
             }
         }
         return ret && !discover;
@@ -1670,8 +1670,7 @@ public final class InGameController extends FreeColClientHolder {
             agreement = getGUI().showNegotiationDialog(unit, colony,
                 agreement, agreement.getSendMessage(player, colony));
             return (agreement == null
-                || agreement.getStatus() == TradeStatus.REJECT_TRADE) ? true
-                : moveDiplomacy(unit, direction, agreement);
+                    || agreement.getStatus() == TradeStatus.REJECT_TRADE) || moveDiplomacy(unit, direction, agreement);
         case SCOUT_COLONY_SPY:
             return moveSpy(unit, direction);
         default:
@@ -2791,7 +2790,7 @@ public final class InGameController extends FreeColClientHolder {
         final Tile tile = unit.getTile();
         final Europe europe = unit.getOwner().getEurope();
         if (europe == null || unit.isInEurope()) {
-            ;// No need to check for transport.
+            // No need to check for transport.
         } else {
             int fee = unit.getTransportFee();
             StringTemplate template;
@@ -3476,7 +3475,7 @@ public final class InGameController extends FreeColClientHolder {
         final Player player = getMyPlayer();
         
         if (gold < 0) {
-            ; // protocol fail
+            // protocol fail
         } else if (!player.checkGold(gold)) {
             invokeLater(() ->
                 getGUI().showInformationMessage(is, StringTemplate
@@ -4263,7 +4262,7 @@ public final class InGameController extends FreeColClientHolder {
             player.addModelMessage(new ModelMessage(MessageType.WARNING,
                                                     "twoTurnsPerYear", player)
                 .addStringTemplate("%year%", currTurn.getLabel())
-                .addAmount("%amount%", currTurn.getSeasonNumber()));
+                .addAmount("%amount%", Turn.getSeasonNumber()));
         }
         player.clearNationCache();
         return true;
@@ -4832,7 +4831,7 @@ public final class InGameController extends FreeColClientHolder {
         FreeColDebugger.finishDebugRun(fcc, true);
         if (fcc.getSinglePlayer()) {
             if (player.getPlayerType() == Player.PlayerType.RETIRED) {
-                    ; // Do nothing, retire routine will quit
+                // Do nothing, retire routine will quit
             } else if (player.getPlayerType() != Player.PlayerType.UNDEAD) {
                 if (getGUI().confirm("defeatedSinglePlayer.text",
                                      "defeatedSinglePlayer.yes", "quit")) {

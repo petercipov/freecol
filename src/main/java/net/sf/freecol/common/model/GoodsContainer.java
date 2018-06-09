@@ -655,7 +655,7 @@ public class GoodsContainer extends FreeColGameObject implements Ownable {
 
             if (Goods.TAG.equals(tag)) {
                 GoodsType goodsType = xr.getType(spec, TYPE_TAG,
-                    GoodsType.class, (GoodsType)null);
+                    GoodsType.class, null);
 
                 int amount = xr.getAttribute(AMOUNT_TAG, 0);
 

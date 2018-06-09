@@ -82,8 +82,7 @@ public class MetaServerUtils {
          * {@inheritDoc}
          */
         @Override
-        public Message handle(Connection connection, Message message)
-            throws FreeColException {
+        public Message handle(Connection connection, Message message) {
             if (message == null) return null;
             final String tag = message.getType();
             switch (tag) {
@@ -105,7 +104,7 @@ public class MetaServerUtils {
          */
         @Override
         public Message read(Connection connection)
-            throws FreeColException, XMLStreamException {
+            throws FreeColException {
             return Message.read(null, connection.getFreeColXMLReader());
         }
     }
@@ -118,13 +117,13 @@ public class MetaServerUtils {
         null, -1, -1, -1, false, null, -1);
 
     /** Type of message to send. */
-    private static enum MetaMessageType {
+    private enum MetaMessageType {
         REGISTER,
         REMOVE,
         SERVERLIST,
         UPDATE,
-    };
-    
+    }
+
     private static Map<Timer, ServerInfo> updaters
         = Collections.synchronizedMap(new HashMap<>());
 

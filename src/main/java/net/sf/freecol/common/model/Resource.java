@@ -165,7 +165,7 @@ public class Resource extends TileItem {
      */
     public int useQuantity(int usedQuantity) {
         if (quantity == UNLIMITED) {
-            ; // No change
+            // No change
         } else if (quantity >= usedQuantity) {
             quantity -= usedQuantity;
         } else {
@@ -237,7 +237,7 @@ public class Resource extends TileItem {
     @Override
     public Stream<Modifier> getProductionModifiers(GoodsType goodsType,
                                                    UnitType unitType) {
-        return (goodsType == null) ? Stream.<Modifier>empty()
+        return (goodsType == null) ? Stream.empty()
             : getType().getModifiers(goodsType.getId(), unitType);
     }
 
@@ -328,10 +328,10 @@ public class Resource extends TileItem {
         super.readAttributes(xr);
 
         tile = xr.findFreeColGameObject(getGame(), TILE_TAG,
-                                        Tile.class, (Tile)null, true);
+                                        Tile.class, null, true);
 
         type = xr.getType(spec, TYPE_TAG,
-                          ResourceType.class, (ResourceType)null);
+                          ResourceType.class, null);
 
         quantity = xr.getAttribute(QUANTITY_TAG, 0);
     }

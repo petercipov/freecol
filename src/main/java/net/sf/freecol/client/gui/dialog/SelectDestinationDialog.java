@@ -171,7 +171,7 @@ public final class SelectDestinationDialog extends FreeColDialog<Location>
 
             } else if (loc instanceof Settlement
                 && owner.owns((Settlement)loc)) {
-                ; // Do nothing
+                // Do nothing
 
             } else if (loc instanceof Settlement
                 && ((Settlement)loc).getOwner().atWarWith(owner)) {
@@ -382,12 +382,12 @@ public final class SelectDestinationDialog extends FreeColDialog<Location>
             });
         this.comparatorBox.addItemListener((ItemEvent event) -> {
                 updateDestinationComparator();
-                SelectDestinationDialog.this.destinations.sort(SelectDestinationDialog.this.destinationComparator);
+                SelectDestinationDialog.this.destinations.sort(destinationComparator);
                 updateDestinationList();
             });
         this.comparatorBox.setSelectedIndex(
-            (this.destinationComparator instanceof NameComparator) ? 1
-            : (this.destinationComparator instanceof DistanceComparator) ? 2
+            (destinationComparator instanceof NameComparator) ? 1
+            : (destinationComparator instanceof DistanceComparator) ? 2
             : 0);
 
         MigPanel panel = new MigPanel(new MigLayout("wrap 1, fill",
@@ -433,8 +433,8 @@ public final class SelectDestinationDialog extends FreeColDialog<Location>
             (unit.isNaval()) ? s.isConnectedPort()
                 : Map.isSameContiguity(unit.getLocation(), s.getTile());
        
-        if (this.destinationComparator == null) {
-            this.destinationComparator = new DestinationComparator(player);
+        if (destinationComparator == null) {
+            destinationComparator = new DestinationComparator(player);
         }
         List<Destination> td = new ArrayList<>();
         
@@ -484,7 +484,7 @@ public final class SelectDestinationDialog extends FreeColDialog<Location>
         // Drop inaccessible destinations and sort as specified.
         this.destinations.addAll(transform(td, d -> d.turns < Unit.MANY_TURNS,
                                            Function.identity(),
-                                           this.destinationComparator));
+                                           destinationComparator));
     }
 
     /**
@@ -534,13 +534,13 @@ public final class SelectDestinationDialog extends FreeColDialog<Location>
         final Player player = getMyPlayer();
         switch (this.comparatorBox.getSelectedIndex()) {
         case 1:
-            this.destinationComparator = new NameComparator(player);
+            destinationComparator = new NameComparator(player);
             break;
         case 2:
-            this.destinationComparator = new DistanceComparator(player);
+            destinationComparator = new DistanceComparator(player);
             break;
         case 0: default:
-            this.destinationComparator = new DestinationComparator(player);
+            destinationComparator = new DestinationComparator(player);
             break;
         }
     }

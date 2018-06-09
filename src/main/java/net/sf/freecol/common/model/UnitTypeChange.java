@@ -137,9 +137,9 @@ public class UnitTypeChange extends FreeColSpecObjectType {
         
         super.readAttributes(xr);
     
-        this.from = xr.getType(spec, FROM_TAG, UnitType.class, (UnitType)null);
+        this.from = xr.getType(spec, FROM_TAG, UnitType.class, null);
 
-        this.to = xr.getType(spec, TO_TAG, UnitType.class, (UnitType)null);
+        this.to = xr.getType(spec, TO_TAG, UnitType.class, null);
 
         this.probability = xr.getAttribute(PROBABILITY_TAG, 0);
 

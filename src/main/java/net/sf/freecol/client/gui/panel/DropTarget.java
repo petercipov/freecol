@@ -35,7 +35,7 @@ public interface DropTarget {
      * @param unit an {@code Unit} value
      * @return a {@code boolean} value
      */
-    public boolean accepts(Unit unit);
+    boolean accepts(Unit unit);
 
     /**
      * Returns {@code true} if the given Goods could be dropped on
@@ -44,7 +44,7 @@ public interface DropTarget {
      * @param goods a {@code Goods} value
      * @return a {@code boolean} value
      */
-    public boolean accepts(Goods goods);
+    boolean accepts(Goods goods);
 
     /**
      * Adds a component to this container and makes sure that the unit or
@@ -59,7 +59,7 @@ public interface DropTarget {
      *     currently selected carrier.
      * @return The component argument on success, null on failure.
      */
-    public Component add(Component comp, boolean editState);
+    Component add(Component comp, boolean editState);
 
     /**
      * Get a suggested amount of goods to add, used when partial
@@ -68,5 +68,5 @@ public interface DropTarget {
      * @param goodsType The {@code GoodsType} proposed to add.
      * @return A good amount of goods to add.
      */
-    public int suggested(GoodsType goodsType);
+    int suggested(GoodsType goodsType);
 }

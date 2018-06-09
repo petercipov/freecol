@@ -247,7 +247,7 @@ public final class FeatureContainer {
     public Stream<Modifier> getModifiers(String id,
                                          FreeColSpecObjectType fcgot,
                                          Turn turn) {
-        if (!modifiersPresent()) return Stream.<Modifier>empty();
+        if (!modifiersPresent()) return Stream.empty();
         Set<Modifier> mset = new HashSet<>();
         synchronized (modifiersLock) {
             if (id == null) {
@@ -258,7 +258,7 @@ public final class FeatureContainer {
             }
         }
         removeInPlace(mset, m -> !m.appliesTo(fcgot, turn));
-        return (mset.isEmpty()) ? Stream.<Modifier>empty() : mset.stream();
+        return (mset.isEmpty()) ? Stream.empty() : mset.stream();
     }
 
     /**

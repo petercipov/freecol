@@ -788,7 +788,7 @@ public class Messages {
         int highWaterMark = 0;
         StringBuilder result = new StringBuilder();
         while ((openChoice = input.indexOf("{{", highWaterMark)) >= 0) {
-            result.append(input.substring(highWaterMark, openChoice));
+            result.append(input, highWaterMark, openChoice);
             closeChoice = findMatchingBracket(input, openChoice + 2);
             if (closeChoice < 0) {
                 // no closing brackets found

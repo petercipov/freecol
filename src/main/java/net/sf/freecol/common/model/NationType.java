@@ -37,7 +37,7 @@ import static net.sf.freecol.common.util.StringUtils.*;
  */
 public abstract class NationType extends FreeColSpecObjectType {
 
-    public static enum SettlementNumber {
+    public enum SettlementNumber {
         LOW, AVERAGE, HIGH;
 
         /**
@@ -50,7 +50,7 @@ public abstract class NationType extends FreeColSpecObjectType {
         }
     }
 
-    public static enum AggressionLevel {
+    public enum AggressionLevel {
         LOW, AVERAGE, HIGH;
 
         /**
@@ -92,7 +92,7 @@ public abstract class NationType extends FreeColSpecObjectType {
      */
     public final List<SettlementType> getSettlementTypes() {
         return (settlementTypes == null)
-            ? Collections.<SettlementType>emptyList()
+            ? Collections.emptyList()
             : settlementTypes;
     }
 

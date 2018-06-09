@@ -68,7 +68,7 @@ public final class ClientOptionsDialog extends OptionsDialog {
     public OptionGroup getResponse() {
         OptionGroup value = super.getResponse();
         if (value == null) {
-            ; // Cancelled
+            // Cancelled
         } else if (Objects.equals(value, resetCookie)) {
             load(FreeColDirectories.getBaseClientOptionsFile());
             getOptionUI().updateOption();

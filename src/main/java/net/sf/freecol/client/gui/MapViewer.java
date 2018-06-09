@@ -87,7 +87,7 @@ public final class MapViewer extends FreeColClientHolder {
 
     private static final Logger logger = Logger.getLogger(MapViewer.class.getName());
 
-    private static enum BorderType { COUNTRY, REGION }
+    private enum BorderType { COUNTRY, REGION }
 
     /** How the map can be scaled. */
     private static final float MAP_SCALE_MIN = 0.25f;

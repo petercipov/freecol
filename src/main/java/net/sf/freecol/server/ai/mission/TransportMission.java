@@ -69,7 +69,7 @@ public class TransportMission extends Mission {
 
     private static final String tag = "AI transport";
     
-    private static enum CargoResult {
+    private enum CargoResult {
         TCONTINUE,  // Cargo should continue
         TDONE,      // Cargo completed successfully
         TFAIL,      // Cargo failed badly
@@ -1175,8 +1175,7 @@ public class TransportMission extends Mission {
             }
         }
         return (bestDirect != null) ? bestDirect
-            : (bestFallback != null) ? bestFallback
-            : null;
+            : bestFallback;
     }
 
     /**
@@ -1256,7 +1255,7 @@ public class TransportMission extends Mission {
      */
     public boolean removeTransportable(TransportableAIObject t) {
         Cargo cargo = tFind(t);
-        return (cargo == null) ? false : tRemove(cargo);
+        return (cargo != null) && tRemove(cargo);
     }
 
     /**
@@ -1286,7 +1285,7 @@ public class TransportMission extends Mission {
     public boolean queueTransportable(TransportableAIObject t,
                                       boolean requireMatch, LogBuilder lb) {
         Cargo cargo = makeCargo(t, lb);
-        return (cargo == null) ? false : queueCargo(cargo, requireMatch, lb);
+        return (cargo != null) && queueCargo(cargo, requireMatch, lb);
     }
 
     /**

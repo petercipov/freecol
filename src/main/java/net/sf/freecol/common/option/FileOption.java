@@ -166,7 +166,7 @@ public class FileOption extends AbstractOption<File> {
     protected void readAttributes(FreeColXMLReader xr) throws XMLStreamException {
         super.readAttributes(xr);
 
-        type = xr.getAttribute(TYPE_TAG, (String)null);
+        type = xr.getAttribute(TYPE_TAG, null);
 
         // @compat 0.11.6
         // Type attribute added

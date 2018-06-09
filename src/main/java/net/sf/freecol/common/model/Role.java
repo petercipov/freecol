@@ -56,7 +56,7 @@ public class Role extends BuildableType {
         public Role getCapture(Specification spec) {
             return spec.getRole(capture);
         }
-    };
+    }
 
     /**
      * A comparator to order roles by descending total military
@@ -500,16 +500,16 @@ public class Role extends BuildableType {
         final Specification spec = getSpecification();
 
         downgrade = xr.getType(spec, DOWNGRADE_TAG,
-                               Role.class, (Role)null);
+                               Role.class, null);
 
         // @compat 0.11.3
         if (xr.hasAttribute(OLD_EXPERT_UNIT_TAG)) {
             expertUnit = xr.getType(spec, OLD_EXPERT_UNIT_TAG,
-                                    UnitType.class, (UnitType)null);
+                                    UnitType.class, null);
         } else
         // end @compat 0.11.3
             expertUnit = xr.getType(spec, EXPERT_UNIT_TAG,
-                                    UnitType.class, (UnitType)null);
+                                    UnitType.class, null);
 
         // @compat 0.11.3
         if (xr.hasAttribute(OLD_MAXIMUM_COUNT_TAG)) {
@@ -540,8 +540,8 @@ public class Role extends BuildableType {
         final String tag = xr.getLocalName();
 
         if (ROLE_CHANGE_TAG.equals(tag)) {
-            String from = xr.getAttribute(FROM_TAG, (String)null);
-            String capture = xr.getAttribute(CAPTURE_TAG, (String)null);
+            String from = xr.getAttribute(FROM_TAG, null);
+            String capture = xr.getAttribute(CAPTURE_TAG, null);
             addRoleChange(from, capture);
             xr.closeTag(ROLE_CHANGE_TAG);
 

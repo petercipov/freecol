@@ -51,7 +51,7 @@ public abstract class WorkLocation extends UnitLocation
     private static final Logger logger = Logger.getLogger(WorkLocation.class.getName());
 
     public static final List<AbstractGoods> EMPTY_LIST
-        = Collections.<AbstractGoods>emptyList();
+        = Collections.emptyList();
 
     /** Container class to suggest a better use of a unit. */
     public static class Suggestion {
@@ -104,7 +104,7 @@ public abstract class WorkLocation extends UnitLocation
         public int getAmount() {
             return this.amount;
         }
-    };
+    }
 
     /** The colony that contains this work location. */
     protected Colony colony;
@@ -406,7 +406,7 @@ public abstract class WorkLocation extends UnitLocation
      * @return A stream of {@code AbstractGoods} consumed.
      */
     public Stream<AbstractGoods> getInputs() {
-        return (productionType == null) ? Stream.<AbstractGoods>empty()
+        return (productionType == null) ? Stream.empty()
             : productionType.getInputs();
     }
 
@@ -416,7 +416,7 @@ public abstract class WorkLocation extends UnitLocation
      * @return A stream of {@code AbstractGoods} produced.
      */
     public Stream<AbstractGoods> getOutputs() {
-        return (productionType == null) ? Stream.<AbstractGoods>empty()
+        return (productionType == null) ? Stream.empty()
             : productionType.getOutputs();
     }
 
@@ -997,7 +997,7 @@ public abstract class WorkLocation extends UnitLocation
         super.readAttributes(xr);
 
         this.colony = xr.findFreeColGameObject(getGame(), COLONY_TAG,
-            Colony.class, (Colony)null, true);
+            Colony.class, null, true);
     }
 
     /**

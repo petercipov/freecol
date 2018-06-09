@@ -211,7 +211,7 @@ public class WorkInsideColonyMission extends Mission {
         super.readAttributes(xr);
 
         colony = xr.getAttribute(getGame(), COLONY_TAG,
-                                 Colony.class, (Colony)null);
+                                 Colony.class, null);
     }
 
     /**

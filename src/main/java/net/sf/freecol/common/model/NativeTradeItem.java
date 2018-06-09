@@ -229,7 +229,7 @@ public class NativeTradeItem extends GoodsTradeItem {
         if (other instanceof NativeTradeItem) {
             return this.price == ((NativeTradeItem)other).price
                 && this.haggleCount == ((NativeTradeItem)other).haggleCount
-                && super.equals((NativeTradeItem)other);
+                && super.equals(other);
         }
         return false;
     }

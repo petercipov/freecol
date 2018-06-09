@@ -67,7 +67,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
 
     private static final Logger logger = Logger.getLogger(FreeColXMLReader.class.getName());
 
-    public static enum ReadScope {
+    public enum ReadScope {
         SERVER,     // Loading the game in the server
         NORMAL,     // Normal interning read
         NOINTERN,   // Do not intern any object that are read
@@ -282,7 +282,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
      */
     public String readId() {
         
-        String id = getAttribute(FreeColObject.ID_ATTRIBUTE_TAG, (String)null);
+        String id = getAttribute(FreeColObject.ID_ATTRIBUTE_TAG, null);
 
         if (id == null) return null;
 
@@ -610,7 +610,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
         // @compat 0.11.x
             (FreeColObject.ID_ATTRIBUTE_TAG.equals(attributeName)) ? readId() :
         // end @compat 0.11.x
-            getAttribute(attributeName, (String)null);
+            getAttribute(attributeName, null);
 
         if (attrib == null) return defaultValue;
         return lookup(game, attrib, returnClass);
@@ -632,7 +632,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
         // @compat 0.11.x
             (FreeColObject.ID_ATTRIBUTE_TAG.equals(attributeName)) ? readId() :
         // end @compat 0.11.x
-            getAttribute(attributeName, (String)null);
+            getAttribute(attributeName, null);
 
         return (attrib == null) ? defaultValue
             : aiMain.getAIObject(attrib, returnClass);
@@ -658,13 +658,13 @@ public class FreeColXMLReader extends StreamReaderDelegate
         // @compat 0.11.x
             (FreeColObject.ID_ATTRIBUTE_TAG.equals(attributeName)) ? readId() :
         // end @compat 0.11.x
-            getAttribute(attributeName, (String)null);
+            getAttribute(attributeName, null);
         if (attrib == null) return null;
 
         FreeColObject fco = lookup(game, attrib);
         if (fco == null && make) {
             Class<? extends FreeColGameObject> c
-                = game.getLocationClass(attrib);
+                = Game.getLocationClass(attrib);
             if (c != null) {
                 fco = makeFreeColObject(game, attributeName, c,
                                         getReadScope()==ReadScope.SERVER);
@@ -683,7 +683,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
      */
     public Map<String, String> getAttributeMap(String... attributes) {
         Map<String, String> ret = new HashMap<>();
-        for (String a : attributes) ret.put(a, getAttribute(a, (String)null));
+        for (String a : attributes) ret.put(a, getAttribute(a, null));
         return ret;
     }
             
@@ -700,7 +700,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
             for (int i = 0; i < n; i++) {
                 String key = FreeColObject.arrayKey(i);
                 if (!hasAttribute(key)) break;
-                ret.put(key, getAttribute(key, (String)null));
+                ret.put(key, getAttribute(key, null));
             }
         }
         return ret;
@@ -741,11 +741,11 @@ public class FreeColXMLReader extends StreamReaderDelegate
         expectTag(tag);
 
         final int length = getAttribute(FreeColObject.ARRAY_SIZE_TAG, -1);
-        if (length < 0) return Collections.<T>emptyList();
+        if (length < 0) return Collections.emptyList();
 
         List<T> list = new ArrayList<>(length);
         for (int x = 0; x < length; x++) {
-            T value = getType(spec, FreeColObject.arrayKey(x), type, (T)null); 
+            T value = getType(spec, FreeColObject.arrayKey(x), type, null);
             if (value == null) logger.warning("Null list value(" + x + ")");
             list.add(value);
         }
@@ -775,7 +775,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
         String attributeName, Class<T> returnClass, T defaultValue,
         boolean required) throws XMLStreamException {
 
-        T ret = getAttribute(game, attributeName, returnClass, (T)null);
+        T ret = getAttribute(game, attributeName, returnClass, null);
         if (ret == null) {
             if (required) {
                 throw new XMLStreamException("Missing " + attributeName
@@ -811,7 +811,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
             // @compat 0.11.x
             (FreeColObject.ID_ATTRIBUTE_TAG.equals(attributeName)) ? readId() :
             // end @compat 0.11.x
-            getAttribute(attributeName, (String)null);
+            getAttribute(attributeName, null);
         T ret = null;
         if (id == null) {
             if (required) {
@@ -949,7 +949,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
         String attributeName, Class<T> returnClass, T defaultValue,
         boolean required) throws XMLStreamException {
 
-        T ret = getAttribute(aiMain, attributeName, returnClass, (T)null);
+        T ret = getAttribute(aiMain, attributeName, returnClass, null);
         if (ret == null) {
             if (required) {
                 throw new XMLStreamException("Missing " + attributeName
@@ -985,7 +985,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
             // @compat 0.11.x
             (FreeColObject.ID_ATTRIBUTE_TAG.equals(attributeName)) ? readId() :
             // end @compat 0.11.x
-            getAttribute(attributeName, (String)null);
+            getAttribute(attributeName, null);
 
         T ret = null;
         if (id == null) {
@@ -1055,7 +1055,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
         // @compat 0.11.x
             (FreeColObject.ID_ATTRIBUTE_TAG.equals(attributeName)) ? readId() :
         // end @compat 0.11.x
-            getAttribute(attributeName, (String)null);
+            getAttribute(attributeName, null);
 
         return (attrib == null) ? defaultValue
             : spec.getType(attrib, returnClass);
@@ -1104,7 +1104,7 @@ public class FreeColXMLReader extends StreamReaderDelegate
             if (getEventType() == XMLEvent.START_ELEMENT
                 && (id = readId()) != null
                 && map.containsKey(id)) {
-                map.put(id, getAttribute(attr, (String)null));
+                map.put(id, getAttribute(attr, null));
                 ret++;
             }
         }

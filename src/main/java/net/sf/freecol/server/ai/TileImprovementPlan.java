@@ -67,11 +67,8 @@ public class TileImprovementPlan extends ValuedAIObject {
      *
      * @param aiMain The main AI-object.
      * @param id The object identifier.
-     * @throws XMLStreamException if a problem was encountered
-     *     during parsing.
      */
-    public TileImprovementPlan(AIMain aiMain, String id)
-        throws XMLStreamException {
+    public TileImprovementPlan(AIMain aiMain, String id) {
         super(aiMain, id);
 
         type = null;
@@ -330,15 +327,15 @@ public class TileImprovementPlan extends ValuedAIObject {
         final Specification spec = getSpecification();
         
         type = xr.getType(spec, TYPE_TAG, 
-                          TileImprovementType.class, (TileImprovementType)null);
+                          TileImprovementType.class, null);
 
         pioneer = (xr.hasAttribute(PIONEER_TAG))
             ? xr.makeAIObject(aiMain, PIONEER_TAG,
-                              AIUnit.class, (AIUnit)null, true)
+                              AIUnit.class, null, true)
             : null;
 
         target = xr.getAttribute(getGame(), TARGET_TAG,
-                                 Tile.class, (Tile)null);
+                                 Tile.class, null);
     }
 
     /**

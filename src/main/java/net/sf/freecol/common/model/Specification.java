@@ -138,7 +138,7 @@ public final class Specification implements OptionContainer {
         public String toString() {
             return getId();
         }
-    };
+    }
 
     public static final Source AMBUSH_BONUS_SOURCE
         = new Source("model.source.ambushBonus");
@@ -407,7 +407,7 @@ public final class Specification implements OptionContainer {
      */
     private void load(InputStream in) {
         try (
-            FreeColXMLReader xr = new FreeColXMLReader(in);
+            FreeColXMLReader xr = new FreeColXMLReader(in)
         ) {
             xr.nextTag();
             load(xr);
@@ -850,7 +850,7 @@ public final class Specification implements OptionContainer {
     }
 
     private interface ChildReader {
-        public void readChildren(FreeColXMLReader xr) throws XMLStreamException;
+        void readChildren(FreeColXMLReader xr) throws XMLStreamException;
     }
 
     private class ModifierReader implements ChildReader {
@@ -902,7 +902,7 @@ public final class Specification implements OptionContainer {
                     // attributes when just changing the children.
                     if (object.getId() != null
                         && xr.getAttribute(FreeColSpecObjectType.PRESERVE_TAG,
-                                           (String)null) != null) {
+                            null) != null) {
                         object.readChildren(xr);
                     } else {
                         object.readFromXML(xr);
@@ -1008,7 +1008,7 @@ public final class Specification implements OptionContainer {
      */
     public Stream<Ability> getAbilities(String id) {
         List<Ability> result = allAbilities.get(id);
-        return (result == null) ? Stream.<Ability>empty() : result.stream();
+        return (result == null) ? Stream.empty() : result.stream();
     }
 
     /**
@@ -1032,7 +1032,7 @@ public final class Specification implements OptionContainer {
      */
     public Stream<Modifier> getModifiers(String id) {
         List<Modifier> result = allModifiers.get(id);
-        return (result == null) ? Stream.<Modifier>empty() : result.stream();
+        return (result == null) ? Stream.empty() : result.stream();
     }
 
 
@@ -1294,7 +1294,7 @@ public final class Specification implements OptionContainer {
      */
     public List<UnitTypeChange> getUnitChanges(String id, UnitType fromType) {
         UnitChangeType uct = getUnitChangeType(id);
-        return (uct == null) ? Collections.<UnitTypeChange>emptyList()
+        return (uct == null) ? Collections.emptyList()
             : uct.getUnitChanges(fromType);
     }
 
@@ -1643,7 +1643,7 @@ public final class Specification implements OptionContainer {
      */
     public List<Role> getMilitaryRolesList() {
         if (this.militaryRoles == null) {
-            this.militaryRoles = Collections.<Role>unmodifiableList(
+            this.militaryRoles = Collections.unmodifiableList(
                 transform(this.roles, Role::isOffensive, Function.identity(),
                           Role.militaryComparator));
         }
@@ -1731,7 +1731,7 @@ public final class Specification implements OptionContainer {
      */
     public List<OptionGroup> getDifficultyLevels() {
         OptionGroup group = allOptionGroups.get(DIFFICULTY_LEVELS);
-        Stream<Option> stream = (group == null) ? Stream.<Option>empty()
+        Stream<Option> stream = (group == null) ? Stream.empty()
             : group.getOptions().stream();
         return transform(stream, (Option o) -> o instanceof OptionGroup,
                          o -> (OptionGroup)o);
@@ -2052,7 +2052,7 @@ public final class Specification implements OptionContainer {
 
         File rolf = FreeColDirectories.getCompatibilityFile(ROLES_COMPAT_FILE_NAME);
         try (
-            FileInputStream fis = new FileInputStream(rolf);
+            FileInputStream fis = new FileInputStream(rolf)
         ) {
             load(fis);
         } catch (Exception e) {
@@ -2078,8 +2078,8 @@ public final class Specification implements OptionContainer {
             matchKeyEquals(UnitChangeType.ENTER_COLONY, UnitChangeType::getId));
         File uctf = FreeColDirectories.getCompatibilityFile(UNIT_CHANGE_TYPES_COMPAT_FILE_NAME);
         try (
-             FileInputStream fis = new FileInputStream(uctf);
-             ) {
+             FileInputStream fis = new FileInputStream(uctf)
+        ) {
             load(fis);
         } catch (Exception e) {
             logger.log(Level.WARNING, "Failed to load unit changes.", e);
@@ -2165,7 +2165,7 @@ public final class Specification implements OptionContainer {
                     if (roleId == null) {
                         au.setRoleId(DEFAULT_ROLE_ID);
                     } else if (au.getRoleId().startsWith("model.role.")) {
-                        ; // OK
+                        // OK
                     } else if ("DEFAULT".equals(au.getRoleId())) {
                         au.setRoleId(DEFAULT_ROLE_ID);
                     } else if ("DRAGOON".equals(au.getRoleId())) {
@@ -2199,7 +2199,7 @@ public final class Specification implements OptionContainer {
             = getFoundingFather("model.foundingFather.simonBolivar");
         boolean bolivarAdd = false;
         if (!bolivar.getEvents().isEmpty()) {
-            bolivar.setEvents(Collections.<Event>emptyList());
+            bolivar.setEvents(Collections.emptyList());
             bolivarAdd = true;
         } else if (bolivar.hasModifier(Modifier.LIBERTY)) {
             bolivar.removeModifiers(Modifier.LIBERTY);
@@ -2597,7 +2597,7 @@ public final class Specification implements OptionContainer {
                 if (op != null) {
                     level.remove(op.getId());
                     if (op instanceof AbstractOption) {
-                        ((AbstractOption)op).setGroup(og.getId());
+                        op.setGroup(og.getId());
                     }
                     og.add(op);
                     lb.add("\n  ~", level.getId(), "/", id, " -> ",
@@ -2737,7 +2737,7 @@ public final class Specification implements OptionContainer {
             if (op != null) {
                 level.remove(op.getId());
                 if (op instanceof AbstractOption) {
-                    ((AbstractOption)op).setGroup(og.getId());
+                    op.setGroup(og.getId());
                 }
                 og.add(op);
                 lb.add("\n  ~", level.getId(), "/", id, " -> ",
@@ -3033,17 +3033,17 @@ public final class Specification implements OptionContainer {
 
         if (difficultyLevel == null) {
             difficultyLevel = xr.getAttribute(DIFFICULTY_LEVEL_TAG,
-                                              (String)null);
+                    null);
             // @compat 0.11.3
             if (difficultyLevel == null) {
                 difficultyLevel = xr.getAttribute(OLD_DIFFICULTY_LEVEL_TAG,
-                                                  (String)null);
+                        null);
             }
             // end @compat 0.11.3
         }
 
         if (version == null) {
-            version = xr.getAttribute(VERSION_TAG, (String)null);
+            version = xr.getAttribute(VERSION_TAG, null);
         }
 
         logger.fine("Reading specification " + newId
@@ -3051,7 +3051,7 @@ public final class Specification implements OptionContainer {
             + " version=" + version);
 
         String parentId = xr.getAttribute(FreeColSpecObjectType.EXTENDS_TAG,
-                                          (String)null);
+                null);
         if (parentId != null) {
             try {
                 FreeColTcFile parent = FreeColTcFile.getFreeColTcFile(parentId);

@@ -578,11 +578,11 @@ public final class BuildingType extends BuildableType
         // @compat 0.11.3
         if (xr.hasAttribute(OLD_UPGRADES_FROM_TAG)) {
             upgradesFrom = xr.getType(spec, OLD_UPGRADES_FROM_TAG,
-                    BuildingType.class, (BuildingType)null);
+                    BuildingType.class, null);
         } else
         // end @compat 0.11.3
             upgradesFrom = xr.getType(spec, UPGRADES_FROM_TAG,
-                                      BuildingType.class, (BuildingType)null);
+                                      BuildingType.class, null);
         if (upgradesFrom == null) {
             level = 1;
         } else {

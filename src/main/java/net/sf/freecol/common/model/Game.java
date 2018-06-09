@@ -54,7 +54,7 @@ public class Game extends FreeColGameObject {
     public static final String TAG = "game";
 
     /** Reasons for logging out. */
-    public static enum LogoutReason {
+    public enum LogoutReason {
         DEFEATED,   // Game over, player lost
         LOGIN,      // Logging in again FIXME: this should go away
         LOGOUT,     // Player quits but game continues
@@ -62,14 +62,14 @@ public class Game extends FreeColGameObject {
         NEW_GAME,   // Part reset back to the NewPanel
         QUIT,       // Player quits and whole game is over
         RECONNECT,  // Implement reconnect
-    };
-    
+    }
+
     /** State for the FCGO iterator, out here because it has to be static. */
-    private static enum FcgoState {
+    private enum FcgoState {
         INVALID,
         VALID,
         CONSUMED,
-    };
+    }
 
     /** Map of all classes with corresponding server classes. */
     private static final java.util.Map<Class<? extends FreeColObject>,
@@ -94,7 +94,7 @@ public class Game extends FreeColGameObject {
                           net.sf.freecol.server.model.ServerPlayer.class);
         serverClasses.put(net.sf.freecol.common.model.Unit.class,
                           net.sf.freecol.server.model.ServerUnit.class);
-    };
+    }
 
     /**
      * Map of class name to class for the location classes, to speed
@@ -121,7 +121,7 @@ public class Game extends FreeColGameObject {
                             net.sf.freecol.common.model.Tile.class);
         locationClasses.put("Unit",
                             net.sf.freecol.common.model.Unit.class);
-    };
+    }
 
 
     /** The Specification this game uses. */
@@ -206,7 +206,7 @@ public class Game extends FreeColGameObject {
      * Game.newInstance uses this so it must be public.
      */
     public Game() {
-        super((Game)null);
+        super(null);
 
         // Games always have a zero identifier.
         setId("0");
@@ -305,9 +305,9 @@ public class Game extends FreeColGameObject {
         try {
             return Introspector.instantiate(returnClass,
                 new Class[] { Game.class, String.class },
-                new Object[] { game, (String)null }); // No intern!
+                new Object[] { game, null}); // No intern!
         } catch (Introspector.IntrospectorException ex) {
-            ; // Allow another try on failure
+            // Allow another try on failure
         }
 
         if (game != null
@@ -1710,9 +1710,9 @@ public class Game extends FreeColGameObject {
         nextId = xr.getAttribute(NEXT_ID_TAG, -1);
 
         this.clientUserName = xr.getAttribute(CLIENT_USER_NAME_TAG,
-                                              (String)null);
+                null);
 
-        String str = xr.getAttribute(UUID_TAG, (String)null);
+        String str = xr.getAttribute(UUID_TAG, null);
         if (str == null) {
             this.uuid = UUID.randomUUID();
         } else {
@@ -1720,7 +1720,7 @@ public class Game extends FreeColGameObject {
                 UUID u = UUID.fromString(str);
                 this.uuid = u;
             } catch (IllegalArgumentException iae) {
-                ;// Preserve existing uuid
+                // Preserve existing uuid
             }
         }
 
@@ -1729,7 +1729,7 @@ public class Game extends FreeColGameObject {
         spanishSuccession = xr.getAttribute(SPANISH_SUCCESSION_TAG, false);
 
         initialActiveUnitId = xr.getAttribute(INITIAL_ACTIVE_UNIT_ID,
-                                              (String)null);
+                null);
 
         // currentPlayer handled in readChildren()
     }
@@ -1747,7 +1747,7 @@ public class Game extends FreeColGameObject {
         // The current player is special.  Defer lookup of the current
         // player tag until we read the children, because that is
         // where the players are defined.
-        String current = xr.getAttribute(CURRENT_PLAYER_TAG, (String)null);
+        String current = xr.getAttribute(CURRENT_PLAYER_TAG, null);
 
         super.readChildren(xr);
 

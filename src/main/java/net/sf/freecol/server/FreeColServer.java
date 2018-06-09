@@ -165,7 +165,7 @@ public final class FreeColServer {
     public static final String DEFAULT_SPEC = "freecol";
 
     /** The server is either starting, loading, being played, or ending. */
-    public static enum ServerState { PRE_GAME, LOAD_GAME, IN_GAME, END_GAME }
+    public enum ServerState { PRE_GAME, LOAD_GAME, IN_GAME, END_GAME }
 
 
     // Serializable fundamentals
@@ -824,7 +824,7 @@ public final class FreeColServer {
     private void saveGame(File file, String owner, OptionGroup options,
                           Unit active, BufferedImage image) throws IOException {
         try (
-            JarOutputStream fos = new JarOutputStream(new FileOutputStream(file));
+            JarOutputStream fos = new JarOutputStream(new FileOutputStream(file))
         ) {
             if (image != null) {
                 fos.putNextEntry(new JarEntry(FreeColSavegameFile.THUMBNAIL_FILE));
@@ -991,7 +991,7 @@ public final class FreeColServer {
 
         ServerGame serverGame = null;
         try (
-            FreeColXMLReader xr = fis.getSavedGameFreeColXMLReader();
+            FreeColXMLReader xr = fis.getSavedGameFreeColXMLReader()
         ) {
             // Switch to the read scope that creates server objects.
             xr.setReadScope(FreeColXMLReader.ReadScope.SERVER);
@@ -1000,7 +1000,7 @@ public final class FreeColServer {
             xr.nextTag();
 
             if (freeColServer != null) {
-                String owner = xr.getAttribute(OWNER_TAG, (String)null);
+                String owner = xr.getAttribute(OWNER_TAG, null);
                 if (MAP_EDITOR_NAME.equals(owner) && specification == null) {
                     throw new FreeColException("error.mapEditorGame");
                 }
@@ -1010,14 +1010,14 @@ public final class FreeColServer {
                 freeColServer.setPublicServer(xr.getAttribute(PUBLIC_SERVER_TAG,
                                                               false));
 
-                String r = xr.getAttribute(RANDOM_STATE_TAG, (String)null);
+                String r = xr.getAttribute(RANDOM_STATE_TAG, null);
                 freeColServer.setServerRandom(Utils.restoreRandomState(r));
                     
                 FreeColDebugger.setDebugModes(xr.getAttribute(DEBUG_TAG,
-                                                              (String)null));
+                        null));
 
                 // @compat 0.11.6
-                active = xr.getAttribute(ACTIVE_UNIT_TAG, (String)null);
+                active = xr.getAttribute(ACTIVE_UNIT_TAG, null);
                 // end @compat 0.11.6
             }
 
@@ -1145,7 +1145,7 @@ public final class FreeColServer {
      * @return The updated {@code Game}.
      * @exception FreeColException on map generation failure.
      */
-    public Game buildGame() throws FreeColException {
+    public Game buildGame() {
         final ServerGame serverGame = getGame();
         final Specification spec = serverGame.getSpecification();
 
@@ -1320,10 +1320,10 @@ public final class FreeColServer {
      */
     private ServerInfo getServerInfo() {
         int slots = count(getGame().getLiveEuropeanPlayers(),
-            p -> !p.isREF() && ((ServerPlayer)p).isAI()
+            p -> !p.isREF() && p.isAI()
                 && !((ServerPlayer)p).isConnected());
         int players = count(getGame().getLivePlayers(),
-            p -> !((ServerPlayer)p).isAI()
+            p -> !p.isAI()
                 && ((ServerPlayer)p).isConnected());
         return new ServerInfo(getName(),
                               null, -1, // Missing these at this point

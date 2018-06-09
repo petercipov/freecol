@@ -186,7 +186,7 @@ public class StringOption extends AbstractOption<String> {
         final String tag = xr.getLocalName();
 
         if (CHOICE_TAG.equals(tag)) {
-            choices.add(xr.getAttribute(VALUE_TAG, (String)null));
+            choices.add(xr.getAttribute(VALUE_TAG, null));
             xr.closeTag(CHOICE_TAG);
 
         } else {

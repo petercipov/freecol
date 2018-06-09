@@ -217,12 +217,12 @@ public class DiplomacySession extends TimedSession {
      */
     public boolean isCompatible(FreeColGameObject fcgo1,
                                 FreeColGameObject fcgo2) {
-        return ( Objects.equals(fcgo1, (FreeColGameObject)this.unit)
-            && ( Objects.equals(fcgo2, (FreeColGameObject)this.settlement)
-                || Objects.equals(fcgo2, (FreeColGameObject)this.otherUnit)))
-            || (Objects.equals(fcgo2, (FreeColGameObject)this.unit)
-                && (Objects.equals(fcgo1, (FreeColGameObject)this.settlement)
-                    || Objects.equals(fcgo1, (FreeColGameObject)this.otherUnit)));
+        return ( Objects.equals(fcgo1, this.unit)
+            && ( Objects.equals(fcgo2, this.settlement)
+                || Objects.equals(fcgo2, this.otherUnit)))
+            || (Objects.equals(fcgo2, this.unit)
+                && (Objects.equals(fcgo1, this.settlement)
+                    || Objects.equals(fcgo1, this.otherUnit)));
     }
     
     /**

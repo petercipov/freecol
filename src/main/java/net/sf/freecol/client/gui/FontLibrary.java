@@ -43,7 +43,7 @@ public class FontLibrary {
      * <li>HEADER -- a stylized old-fashioned typeface for headers</li>
      * </ul>
      */
-    public static enum FontType {
+    public enum FontType {
         NORMAL,
         SIMPLE,
         HEADER
@@ -61,7 +61,7 @@ public class FontLibrary {
      * <li>BIG -- used for panel headers</li>
      * </ul>
      */
-    public static enum FontSize {
+    public enum FontSize {
         TINY,
         SMALLER,
         SMALL,

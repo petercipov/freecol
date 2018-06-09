@@ -49,7 +49,7 @@ public class NativeTrade extends FreeColGameObject {
         = StringTemplate.template("");
 
     /** The type of native trade command. */
-    public static enum NativeTradeAction {
+    public enum NativeTradeAction {
         // Requests from European trader
         OPEN(false, true),         // Start a new trade session
         CLOSE(true, true),         // End an existing session
@@ -105,7 +105,7 @@ public class NativeTrade extends FreeColGameObject {
         public boolean isEuropean() {
             return this.fromEuropeans;
         }
-    };
+    }
 
     /** The unit that is trading. */
     private Unit unit;
@@ -586,9 +586,9 @@ public class NativeTrade extends FreeColGameObject {
         this.sell = xr.getAttribute(SELL_TAG, false);
 
         this.is = xr.getAttribute(game, SETTLEMENT_TAG,
-            IndianSettlement.class, (IndianSettlement)null);
+            IndianSettlement.class, null);
 
-        this.unit = xr.getAttribute(game, UNIT_TAG, Unit.class, (Unit)null);
+        this.unit = xr.getAttribute(game, UNIT_TAG, Unit.class, null);
     }
 
     /**

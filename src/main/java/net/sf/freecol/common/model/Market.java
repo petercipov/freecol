@@ -51,7 +51,7 @@ public final class Market extends FreeColGameObject implements Ownable {
      * Constant for specifying the access to this {@code Market}
      * when selling goods.
      */
-    public static enum Access {
+    public enum Access {
         EUROPE,
         CUSTOM_HOUSE,
     }
@@ -587,7 +587,7 @@ public final class Market extends FreeColGameObject implements Ownable {
         super.readAttributes(xr);
 
         owner = xr.findFreeColGameObject(getGame(), OWNER_TAG,
-                                         Player.class, (Player)null, true);
+                                         Player.class, null, true);
     }
 
     /**

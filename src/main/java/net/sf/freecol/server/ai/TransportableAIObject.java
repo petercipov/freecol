@@ -387,7 +387,7 @@ public abstract class TransportableAIObject extends ValuedAIObject {
 
         transport = (xr.hasAttribute(TRANSPORT_TAG))
             ? xr.makeAIObject(aiMain, TRANSPORT_TAG,
-                              AIUnit.class, (AIUnit)null, true)
+                              AIUnit.class, null, true)
             : null;
     }
 

@@ -580,7 +580,7 @@ public final class FreeColClient {
     public boolean isReadyToStart() {
         if (isInGame()) return false;
         final Game game = getGame();
-        return (game == null) ? false : game.getMap() != null;
+        return (game != null) && game.getMap() != null;
     }
 
     /**
@@ -882,7 +882,7 @@ public final class FreeColClient {
         }
         final FreeColServer fcs;
         try {
-            fcs = new FreeColServer(fsg, (Specification)null, port, name);
+            fcs = new FreeColServer(fsg, null, port, name);
         } catch (XMLStreamException xse) {
             return failToMain(xse, FreeCol.badFile("error.couldNotLoad", saveFile));
         } catch (Exception ex) {

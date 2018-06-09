@@ -93,7 +93,7 @@ public class CollectionUtils {
     public static <T> Set<T> makeUnmodifiableSet(T... members) {
         Set<T> tmp = new HashSet<>();
         for (T t : members) tmp.add(t);
-        return Collections.<T>unmodifiableSet(tmp);
+        return Collections.unmodifiableSet(tmp);
     }
 
     /**
@@ -107,7 +107,7 @@ public class CollectionUtils {
     public static <T> List<T> makeUnmodifiableList(T... members) {
         List<T> tmp = new ArrayList<>();
         for (T t : members) tmp.add(t);
-        return Collections.<T>unmodifiableList(tmp);
+        return Collections.unmodifiableList(tmp);
     }
 
     /**
@@ -129,7 +129,7 @@ public class CollectionUtils {
         for (int i = 0; i < keys.length; i++) {
             tmp.put(keys[i], values[i]);
         }
-        return Collections.<K,V>unmodifiableMap(tmp);
+        return Collections.unmodifiableMap(tmp);
     }
 
     /**
@@ -411,8 +411,7 @@ public class CollectionUtils {
      * @return True if all members pass the predicate test.
      */
     public static <T> boolean all(T[] array, Predicate<? super T> predicate) {
-        return (array == null) ? true
-            : all_internal(Arrays.stream(array), predicate);
+        return (array == null) || all_internal(Arrays.stream(array), predicate);
     }
 
     /**
@@ -425,7 +424,7 @@ public class CollectionUtils {
      */
     public static <T> boolean all(Collection<T> c,
                                   Predicate<? super T> predicate) {
-        return (c == null) ? true : all_internal(c.stream(), predicate);
+        return (c == null) || all_internal(c.stream(), predicate);
     }
 
     /**
@@ -438,7 +437,7 @@ public class CollectionUtils {
      */
     public static <T> boolean all(Stream<T> stream,
                                   Predicate<? super T> predicate) {
-        return (stream == null) ? true : all_internal(stream, predicate);
+        return (stream == null) || all_internal(stream, predicate);
     }
 
     /**
@@ -508,7 +507,7 @@ public class CollectionUtils {
      */
     public static <T> boolean any(Collection<T> c,
                                   Predicate<? super T> predicate) {
-        return (c == null) ? false : any_internal(c.stream(), predicate);
+        return (c != null) && any_internal(c.stream(), predicate);
     }
 
     /**
@@ -532,7 +531,7 @@ public class CollectionUtils {
      */
     public static <T> boolean any(Stream<T> stream,
                                   Predicate<? super T> predicate) {
-        return (stream == null) ? false : any_internal(stream, predicate);
+        return (stream != null) && any_internal(stream, predicate);
     }
 
     /**
@@ -770,7 +769,7 @@ public class CollectionUtils {
         File[] files;
         return (dir == null || !dir.isDirectory()
             || (files = dir.listFiles()) == null)
-            ? Stream.<File>empty()
+            ? Stream.empty()
             : Arrays.stream(files);
     }
 
@@ -821,7 +820,7 @@ public class CollectionUtils {
      * @return The item found, or null if not found.
      */
     public static <T> T find(Collection<T> c, Predicate<? super T> predicate) {
-        return find_internal(c.stream(), predicate, (T)null);
+        return find_internal(c.stream(), predicate, null);
     }
 
     /**
@@ -998,7 +997,7 @@ public class CollectionUtils {
      */
     public static <T, R> Stream<R> flatten(Stream<T> stream,
         Function<? super T, ? extends Stream<? extends R>> mapper) {
-        return (stream == null) ? Stream.<R>empty()
+        return (stream == null) ? Stream.empty()
             : flatten_internal(stream, alwaysTrue(), mapper);
     }
 
@@ -1015,7 +1014,7 @@ public class CollectionUtils {
     public static <T, R> Stream<R> flatten(Stream<T> stream,
         Predicate<? super T> predicate,
         Function<? super T, ? extends Stream<? extends R>> mapper) {
-        return (stream == null) ? Stream.<R>empty()
+        return (stream == null) ? Stream.empty()
             : flatten_internal(stream, predicate, mapper);
     }
 
@@ -1272,7 +1271,7 @@ public class CollectionUtils {
      */
     public static <T,R> Stream<R> map(Stream<T> stream,
         Function<? super T,? extends R> mapper) {
-        return (stream == null) ? Stream.<R>empty()
+        return (stream == null) ? Stream.empty()
             : map_internal(stream, mapper);
     }
 
@@ -1819,7 +1818,7 @@ public class CollectionUtils {
      */
     public static <T> boolean none(Stream<T> stream,
                                    Predicate<? super T> predicate) {
-        return (stream == null) ? true : none_internal(stream, predicate);
+        return (stream == null) || none_internal(stream, predicate);
     }
 
     /**
@@ -2037,7 +2036,7 @@ public class CollectionUtils {
      */
     public static <T extends Comparable<? super T>> List<T> sort(Stream<T> stream) {
         final Comparator<T> comparator = Comparator.naturalOrder();
-        return (stream == null) ? Collections.<T>emptyList()
+        return (stream == null) ? Collections.emptyList()
             : sort_internal(stream, comparator);
     }
 
@@ -2051,7 +2050,7 @@ public class CollectionUtils {
      */
     public static <T> List<T> sort(Stream<T> stream,
                                    Comparator<? super T> comparator) {
-        return (stream == null) ? Collections.<T>emptyList()
+        return (stream == null) ? Collections.emptyList()
             : sort_internal(stream, comparator);
     }
 
@@ -2277,7 +2276,7 @@ public class CollectionUtils {
     public static <T> Collector<List<T>,?,List<T>> toAppendedList() {
         final BinaryOperator<List<T>> squash = (l1, l2) ->
             (l1.isEmpty()) ? l2 : (l1.addAll(l2)) ? l1 : l1;
-        return Collectors.reducing(Collections.<T>emptyList(), squash);
+        return Collectors.reducing(Collections.emptyList(), squash);
     }
         
     /**
@@ -2310,7 +2309,7 @@ public class CollectionUtils {
      * @return A list of the stream contents.
      */
     public static <T> List<T> toList(Stream<T> stream) {
-        return (stream == null) ? Collections.<T>emptyList()
+        return (stream == null) ? Collections.emptyList()
             : toList_internal(stream);
     }
     
@@ -2333,7 +2332,7 @@ public class CollectionUtils {
      * @return A list collectors.
      */
     public static <T> Collector<T,?,List<T>> toListNoNulls() {
-        return Collector.<T,List<T>>of((Supplier<List<T>>)ArrayList::new,
+        return Collector.of(ArrayList::new,
             (left, right) -> { if (right != null) left.add(right); },
             (left, right) -> { left.addAll(right); return left; },
             Collector.Characteristics.IDENTITY_FINISH);
@@ -2372,7 +2371,7 @@ public class CollectionUtils {
     public static <T> List<T> transform(T[] array,
                                         Predicate<? super T> predicate) {
         return transform_internal(Arrays.stream(array), predicate,
-                                  Function.<T>identity(), null,
+                                  Function.identity(), null,
                                   Collectors.toList());
     }
 
@@ -2442,7 +2441,7 @@ public class CollectionUtils {
      */
     public static <T> List<T> transform(Collection<T> c,
                                         Predicate<? super T> predicate) {
-        return transform_internal(c.stream(), predicate, Function.<T>identity(),
+        return transform_internal(c.stream(), predicate, Function.identity(),
                                   null, Collectors.toList());
     }
 
@@ -2512,8 +2511,8 @@ public class CollectionUtils {
      */
     public static <T> List<T> transform(Stream<T> stream,
                                         Predicate<? super T> predicate) {
-        final Stream<T> s = (stream == null) ? Stream.<T>empty() : stream;
-        return transform_internal(s, predicate, Function.<T>identity(),
+        final Stream<T> s = (stream == null) ? Stream.empty() : stream;
+        return transform_internal(s, predicate, Function.identity(),
                                   null, Collectors.toList());
     }
 
@@ -2530,7 +2529,7 @@ public class CollectionUtils {
     public static <T,R> List<R> transform(Stream<T> stream,
         Predicate<? super T> predicate,
         Function<? super T, ? extends R> mapper) {
-        final Stream<T> s = (stream == null) ? Stream.<T>empty() : stream;
+        final Stream<T> s = (stream == null) ? Stream.empty() : stream;
         return transform_internal(s, predicate, mapper, null,
                                   Collectors.toList());
     }
@@ -2550,7 +2549,7 @@ public class CollectionUtils {
         Predicate<? super T> predicate,
         Function<? super T, ? extends R> mapper,
         Comparator<? super R> comparator) {
-        final Stream<T> s = (stream == null) ? Stream.<T>empty() : stream;
+        final Stream<T> s = (stream == null) ? Stream.empty() : stream;
         return transform_internal(s, predicate, mapper, comparator,
                                   Collectors.toList());
     }
@@ -2571,7 +2570,7 @@ public class CollectionUtils {
         Predicate<? super T> predicate,
         Function<? super T, ? extends R> mapper,
         Collector<R,?,C> collector) {
-        final Stream<T> s = (stream == null) ? Stream.<T>empty() : stream;
+        final Stream<T> s = (stream == null) ? Stream.empty() : stream;
         return transform_internal(s, predicate, mapper, null, collector);
     }
 

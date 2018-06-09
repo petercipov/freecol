@@ -675,12 +675,12 @@ public final class GoodsType extends FreeColSpecObjectType {
         price = xr.getAttribute(PRICE_TAG, INFINITY);
 
         madeFrom = xr.getType(spec, MADE_FROM_TAG, GoodsType.class,
-                              (GoodsType)null);
+                null);
 
         storable = xr.getAttribute(STORABLE_TAG, true);
 
         storedAs = xr.getType(spec, STORED_AS_TAG, GoodsType.class,
-                              (GoodsType)null);
+                null);
 
         productionWeight = xr.getAttribute(PRODUCTION_WEIGHT_TAG,
             DEFAULT_PRODUCTION_WEIGHT);

@@ -40,7 +40,7 @@ public class ProductionType extends FreeColSpecObject {
     public static final String TAG = "production";
     
     public static final List<AbstractGoods> EMPTY_LIST
-        = Collections.<AbstractGoods>emptyList();
+        = Collections.emptyList();
 
 
     /** Whether this production type applies only to colony center tiles. */
@@ -211,7 +211,7 @@ public class ProductionType extends FreeColSpecObject {
      * @return A stream of the input {@code AbstractGoods}.
      */
     public final Stream<AbstractGoods> getInputs() {
-        return (this.inputs == null) ? Stream.<AbstractGoods>empty()
+        return (this.inputs == null) ? Stream.empty()
             : this.inputs.stream();
     }
 
@@ -250,7 +250,7 @@ public class ProductionType extends FreeColSpecObject {
      * @return A stream of the output {@code AbstractGoods}.
      */
     public final Stream<AbstractGoods> getOutputs() {
-        return (this.outputs == null) ? Stream.<AbstractGoods>empty()
+        return (this.outputs == null) ? Stream.empty()
             : this.outputs.stream();
     }
 
@@ -447,10 +447,10 @@ public class ProductionType extends FreeColSpecObject {
 
         unattended = xr.getAttribute(UNATTENDED_TAG, false);
 
-        productionLevel = xr.getAttribute(PRODUCTION_LEVEL_TAG, (String)null);
+        productionLevel = xr.getAttribute(PRODUCTION_LEVEL_TAG, null);
         // @compat 0.11.3
         if (productionLevel == null) {
-            productionLevel = xr.getAttribute(OLD_PRODUCTION_LEVEL_TAG, (String)null);
+            productionLevel = xr.getAttribute(OLD_PRODUCTION_LEVEL_TAG, null);
         }
         // end @compat 0.11.3
     }
@@ -477,10 +477,10 @@ public class ProductionType extends FreeColSpecObject {
 
         if (INPUT_TAG.equals(tag)) {
             GoodsType type = xr.getType(spec, GOODS_TYPE_TAG,
-                                        GoodsType.class, (GoodsType)null);
+                                        GoodsType.class, null);
             if (type == null) {
                 logger.warning("Skipping input with null type: "
-                    + xr.getAttribute(GOODS_TYPE_TAG, (String)null));
+                    + xr.getAttribute(GOODS_TYPE_TAG, null));
             } else {
                 addInput(type, xr.getAttribute(VALUE_TAG, -1));
             }
@@ -488,10 +488,10 @@ public class ProductionType extends FreeColSpecObject {
 
         } else if (OUTPUT_TAG.equals(tag)) {
             GoodsType type = xr.getType(spec, GOODS_TYPE_TAG,
-                                        GoodsType.class, (GoodsType)null);
+                                        GoodsType.class, null);
             if (type == null) {
                 logger.warning("Skipping output with null type: "
-                    + xr.getAttribute(GOODS_TYPE_TAG, (String)null));
+                    + xr.getAttribute(GOODS_TYPE_TAG, null));
             } else {
                 addOutput(type, xr.getAttribute(VALUE_TAG, -1));
             }

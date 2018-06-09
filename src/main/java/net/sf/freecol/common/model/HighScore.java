@@ -65,7 +65,7 @@ public class HighScore extends FreeColObject {
      * On retirement, an object will be named in honour of the
      * player.  The nature of the object depends on the player's score.
      */
-    public static enum ScoreLevel {
+    public enum ScoreLevel {
         CONTINENT(40000),
         COUNTRY(35000),
         STATE(30000),
@@ -397,7 +397,7 @@ public class HighScore extends FreeColObject {
 
         try (
             FileInputStream fis = new FileInputStream(hsf);
-            FreeColXMLReader xr = new FreeColXMLReader(fis);
+            FreeColXMLReader xr = new FreeColXMLReader(fis)
         ) {
             xr.nextTag();
 
@@ -429,7 +429,7 @@ public class HighScore extends FreeColObject {
         try (
             FileOutputStream fos = new FileOutputStream(hsf);
             FreeColXMLWriter xw = new FreeColXMLWriter(fos,
-                FreeColXMLWriter.WriteScope.toSave(), true);
+                FreeColXMLWriter.WriteScope.toSave(), true)
         ) {
             xw.writeStartDocument("UTF-8", "1.0");
             xw.writeStartElement(HIGH_SCORES_TAG);
@@ -568,9 +568,9 @@ public class HighScore extends FreeColObject {
 
         playerName = xr.getAttribute(PLAYER_NAME_TAG, "anonymous");
 
-        nationId = xr.getAttribute(NATION_ID_TAG, (String)null);
+        nationId = xr.getAttribute(NATION_ID_TAG, null);
 
-        nationTypeId = xr.getAttribute(NATION_TYPE_ID_TAG, (String)null);
+        nationTypeId = xr.getAttribute(NATION_TYPE_ID_TAG, null);
 
         score = xr.getAttribute(SCORE_TAG, 0);
 

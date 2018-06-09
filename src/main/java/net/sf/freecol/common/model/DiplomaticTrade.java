@@ -45,7 +45,7 @@ public class DiplomaticTrade extends FreeColGameObject {
     public static final String TAG = "diplomaticTrade";
 
     /** A context for the trade. */
-    public static enum TradeContext {
+    public enum TradeContext {
         CONTACT,    /** First contact between Europeans */
         DIPLOMATIC, /** Scout negotiating */
         TRADE,      /** Carrier trading */
@@ -62,7 +62,7 @@ public class DiplomaticTrade extends FreeColGameObject {
     }
 
     /** A type for the trade status. */
-    public static enum TradeStatus {
+    public enum TradeStatus {
         PROPOSE_TRADE,
         ACCEPT_TRADE,
         REJECT_TRADE
@@ -483,13 +483,13 @@ public class DiplomaticTrade extends FreeColGameObject {
         super.readAttributes(xr);
 
         this.context = xr.getAttribute(CONTEXT_TAG, TradeContext.class,
-                                       (TradeContext)null);
+                null);
 
         this.sender = xr.getAttribute(getGame(), SENDER_TAG,
-                                      Player.class, (Player)null);
+                                      Player.class, null);
 
         this.recipient = xr.getAttribute(getGame(), RECIPIENT_TAG,
-                                         Player.class, (Player)null);
+                                         Player.class, null);
 
         this.status = xr.getAttribute(STATUS_TAG, TradeStatus.class,
                                       TradeStatus.REJECT_TRADE);

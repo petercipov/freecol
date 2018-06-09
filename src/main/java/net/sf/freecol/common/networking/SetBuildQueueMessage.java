@@ -81,7 +81,7 @@ public class SetBuildQueueMessage extends AttributeMessage {
      */
     private static Map<String, String> getAttributeMap(FreeColXMLReader xr) {
         Map<String, String> ret = xr.getArrayAttributeMap();
-        ret.put(COLONY_TAG, xr.getAttribute(COLONY_TAG, (String)null));
+        ret.put(COLONY_TAG, xr.getAttribute(COLONY_TAG, null));
         return ret;
     }
 

@@ -49,11 +49,11 @@ public class Operand extends Scope {
 
     private static final Logger logger = Logger.getLogger(Operand.class.getName());
 
-    public static enum OperandType {
+    public enum OperandType {
         UNITS, BUILDINGS, SETTLEMENTS, FOUNDING_FATHERS, YEAR, OPTION, NONE
     }
 
-    public static enum ScopeLevel {
+    public enum ScopeLevel {
         SETTLEMENT, PLAYER, GAME, NONE
     }
 
@@ -253,7 +253,7 @@ public class Operand extends Scope {
         default:
             break;
         }
-        return player.invokeMethod(methodName, Integer.class, (Integer)null);
+        return player.invokeMethod(methodName, Integer.class, null);
     }
 
     /**
@@ -277,7 +277,7 @@ public class Operand extends Scope {
         default:
             break;
         }
-        return colony.invokeMethod(getMethodName(), Integer.class, (Integer)null);
+        return colony.invokeMethod(getMethodName(), Integer.class, null);
     }
 
 

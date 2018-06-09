@@ -116,7 +116,7 @@ public class UpdateGameOptionsMessage extends ObjectMessage {
         final OptionGroup gameOptions = getGameOptions();
 
         if (freeColClient.isInGame()) {
-            ; // Ignored
+            // Ignored
         } else {
             pgc(freeColClient).updateGameOptionsHandler(gameOptions);
         }

@@ -720,7 +720,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
         } else { // does not have a customs house
             for (AIGoods aig : getExportGoods()) {
                 if (aig == null) {
-                    ; // removeExportGoods(aig);
+                    // removeExportGoods(aig);
                 } else if (aig.checkIntegrity(false) < 0) {
                     goodsLog(aig, "reaps", lb);
                     dropExportGoods(aig);
@@ -1276,7 +1276,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
      * @return A list of planned {@code BuildableType}.
      */
     public List<BuildableType> getPlannedBuildableTypes() {
-        return (colonyPlan == null) ? Collections.<BuildableType>emptyList()
+        return (colonyPlan == null) ? Collections.emptyList()
             : colonyPlan.getBuildableTypes();
     }
 
@@ -1358,7 +1358,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
             !aig.isDisposed() && aig.getGoods() != null
                 && aig.getGoods().getLocation() == colony;
         List<AIObject> objects = transform(getExportGoods(), ourGoodsPred,
-                                           aig -> (AIObject)aig);
+                                           aig -> aig);
         objects.addAll(wishes);
         wishes.clear();
         objects.addAll(tileImprovementPlans);
@@ -1450,7 +1450,7 @@ public class AIColony extends AIObject implements PropertyChangeListener {
         final AIMain aiMain = getAIMain();
 
         colony = xr.getAttribute(aiMain.getGame(), ID_ATTRIBUTE_TAG,
-                                 Colony.class, (Colony)null);
+                                 Colony.class, null);
     }
 
     /**
@@ -1479,12 +1479,12 @@ public class AIColony extends AIObject implements PropertyChangeListener {
 
         if (AI_GOODS_LIST_TAG.equals(tag)) {
             addExportGoods(xr.makeAIObject(aiMain, ID_ATTRIBUTE_TAG,
-                                           AIGoods.class, (AIGoods)null, true));
+                                           AIGoods.class, null, true));
             xr.closeTag(AI_GOODS_LIST_TAG);
 
         } else if (GOODS_WISH_LIST_TAG.equals(tag)) {
             wishes.add(xr.makeAIObject(aiMain, ID_ATTRIBUTE_TAG,
-                                       GoodsWish.class, (GoodsWish)null, true));
+                                       GoodsWish.class, null, true));
             xr.closeTag(GOODS_WISH_LIST_TAG);
 
         } else if (TILE_IMPROVEMENT_PLAN_LIST_TAG.equals(tag)
@@ -1493,12 +1493,12 @@ public class AIColony extends AIObject implements PropertyChangeListener {
             // end @compat 0.11.3
                    ) {
             tileImprovementPlans.add(xr.makeAIObject(aiMain, ID_ATTRIBUTE_TAG,
-                    TileImprovementPlan.class, (TileImprovementPlan)null, true));
+                    TileImprovementPlan.class, null, true));
             xr.closeTag(tag);// FIXME: tag -> TILE_IMPROVEMENT_PLAN_LIST_TAG
 
         } else if (WORKER_WISH_LIST_TAG.equals(tag)) {
             wishes.add(xr.makeAIObject(aiMain, ID_ATTRIBUTE_TAG,
-                                       WorkerWish.class, (WorkerWish)null, true));
+                                       WorkerWish.class, null, true));
             xr.closeTag(WORKER_WISH_LIST_TAG);
 
         } else {

@@ -161,7 +161,7 @@ public class UnitChangeType extends FreeColSpecObjectType {
      */
     public List<UnitTypeChange> getUnitChanges(UnitType from) {
         List<UnitTypeChange> ret = this.changes.get(from);
-        return (ret == null) ? Collections.<UnitTypeChange>emptyList() : ret;
+        return (ret == null) ? Collections.emptyList() : ret;
     }
 
     /**

@@ -227,7 +227,7 @@ final class ReceivingThread extends Thread {
      * @exception SAXException if a problem occured during parsing.
      * @exception XMLStreamException if a problem occured during parsing.
      */
-    private void listen() throws IOException, SAXException, XMLStreamException {
+    private void listen() {
         String tag;
         int replyId = -1;
         try {
@@ -317,14 +317,10 @@ final class ReceivingThread extends Thread {
             while (shouldRun()) {
                 try {
                     listen();
-                    timesFailed = 0;
-                } catch (SAXException|XMLStreamException ex) {
-                    if (!shouldRun()) break;
-                    logger.log(Level.WARNING, getName() + ": XML fail", ex);
                     if (++timesFailed > MAXIMUM_RETRIES) {
                         disconnect();
                     }
-                } catch (IOException ioe) {
+                } catch (Exception ioe) {
                     if (!shouldRun()) break;
                     logger.log(Level.WARNING, getName() + ": IO fail", ioe);
                     disconnect();

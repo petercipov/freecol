@@ -60,8 +60,7 @@ public final class ServerInputHandler extends FreeColServerHolder
      * {@inheritDoc}
      */
     @Override
-    public Message handle(Connection connection, Message message)
-        throws FreeColException {
+    public Message handle(Connection connection, Message message) {
         final FreeColServer freeColServer = getFreeColServer();
         ServerPlayer serverPlayer = freeColServer.getPlayer(connection);
         if (serverPlayer == null) {
@@ -83,7 +82,7 @@ public final class ServerInputHandler extends FreeColServerHolder
      */
     @Override
     public Message read(Connection connection)
-        throws FreeColException, XMLStreamException {
+        throws FreeColException {
         return Message.read(getGame(), connection.getFreeColXMLReader());
     }
 }

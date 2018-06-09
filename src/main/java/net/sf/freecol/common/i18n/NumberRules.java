@@ -98,7 +98,7 @@ public class NumberRules {
 
     public static void load(InputStream in) {
         try (
-            FreeColXMLReader xr = new FreeColXMLReader(in);
+            FreeColXMLReader xr = new FreeColXMLReader(in)
         ) {
             readFromXML(xr);
         } catch (Exception e) {
@@ -141,13 +141,13 @@ public class NumberRules {
     }
 
     private static void readChild(FreeColXMLReader xr) throws XMLStreamException {
-        String loc = xr.getAttribute(LOCALES_TAG, (String)null);
+        String loc = xr.getAttribute(LOCALES_TAG, null);
         String[] locales = (loc == null) ? null : loc.split(" ");
         if (locales != null) {
             DefaultNumberRule numberRule = new DefaultNumberRule();
             while (xr.moreTags()) {
                 if (PLURAL_RULE_TAG.equals(xr.getLocalName())) {
-                    String plu = xr.getAttribute(COUNT_TAG, (String)null);
+                    String plu = xr.getAttribute(COUNT_TAG, null);
                     Category category = Category.valueOf(plu);
                     Rule rule = new Rule(xr.getElementText());
                     numberRule.addRule(category, rule);

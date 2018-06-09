@@ -33,7 +33,7 @@ import static net.sf.freecol.common.util.CollectionUtils.*;
  */
 public class BuildQueue<T extends BuildableType> implements Consumer {
 
-    public static enum CompletionAction {
+    public enum CompletionAction {
         /**
          * Always remove the completed item. Not used by any build
          * queue at the moment.
@@ -58,7 +58,7 @@ public class BuildQueue<T extends BuildableType> implements Consumer {
          * implemented as a build queue at the moment, however).
          */
         ADD_RANDOM
-    };
+    }
 
 
     /** A list of Buildable items. */
@@ -145,8 +145,8 @@ public class BuildQueue<T extends BuildableType> implements Consumer {
         if (buildable == null) {
             clear();
         } else {
-            if (buildable instanceof BuildingType // FIXME: OO
-                && this.queue.contains(buildable)) {
+            // FIXME: OO
+            if (buildable instanceof BuildingType) {
                 this.queue.remove(buildable);
             }
             this.queue.add(0, buildable);
@@ -194,7 +194,7 @@ public class BuildQueue<T extends BuildableType> implements Consumer {
     @Override
     public List<AbstractGoods> getConsumedGoods() {
         T current = getCurrentlyBuilding();
-        return (current == null) ? Collections.<AbstractGoods>emptyList()
+        return (current == null) ? Collections.emptyList()
             : current.getRequiredGoodsList();
     }
 
@@ -219,7 +219,7 @@ public class BuildQueue<T extends BuildableType> implements Consumer {
      */
     @Override
     public Stream<Modifier> getModifiers(String id) {
-        return Stream.<Modifier>empty();
+        return Stream.empty();
     }
 
 

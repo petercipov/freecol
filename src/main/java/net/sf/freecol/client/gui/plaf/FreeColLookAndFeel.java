@@ -76,7 +76,7 @@ public class FreeColLookAndFeel extends MetalLookAndFeel {
      *
      * @exception FreeColException If the ui directory could not be found.
      */
-    public FreeColLookAndFeel() throws FreeColException {
+    public FreeColLookAndFeel() {
         super();
 
         setCurrentTheme(new DefaultMetalTheme() {

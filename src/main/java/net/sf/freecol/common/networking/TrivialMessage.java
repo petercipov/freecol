@@ -92,7 +92,7 @@ public abstract class TrivialMessage extends Message {
      */
     protected TrivialMessage(String tag, @SuppressWarnings("unused") Game game,
                              FreeColXMLReader xr)
-        throws FreeColException, XMLStreamException {
+        throws XMLStreamException {
         this(tag);
 
         xr.closeTag(tag);
@@ -139,7 +139,7 @@ public abstract class TrivialMessage extends Message {
     @Override
     protected void setStringAttribute(String key, String value) {
         if (key == null || value == null) {
-            ; // Always OK to set nothing
+            // Always OK to set nothing
         } else { // Nope
             throw new RuntimeException(getType() + ".setStringAttribute NYI");
         }
@@ -150,7 +150,7 @@ public abstract class TrivialMessage extends Message {
      */
     @Override
     protected Map<String,String> getStringAttributeMap() {
-        return Collections.<String,String>emptyMap();
+        return Collections.emptyMap();
     }
 
     /**
@@ -166,7 +166,7 @@ public abstract class TrivialMessage extends Message {
      */
     @Override
     protected List<FreeColObject> getChildren() {
-        return Collections.<FreeColObject>emptyList();
+        return Collections.emptyList();
     }
     
     /**
@@ -175,7 +175,7 @@ public abstract class TrivialMessage extends Message {
     @Override
     protected void setChildren(List<? extends FreeColObject> fcos) {
         if (fcos == null || fcos.isEmpty()) {
-            ; // Always OK to set nothing
+            // Always OK to set nothing
         } else { // Nope
             throw new RuntimeException(getType() + ".setChildren NYI");
         }
@@ -187,7 +187,7 @@ public abstract class TrivialMessage extends Message {
     @Override
     protected <T extends FreeColObject> void appendChild(T fco) {
         if (fco == null) {
-            ; // Always OK to add nothing
+            // Always OK to add nothing
         } else {
             throw new RuntimeException(getType() + ".append NYI");
         }
@@ -199,7 +199,7 @@ public abstract class TrivialMessage extends Message {
     @Override
     protected <T extends FreeColObject> void appendChildren(Collection<T> fcos) {
         if (fcos == null) {
-            ; // Always OK to add nothing
+            // Always OK to add nothing
         } else {
             throw new RuntimeException(getType() + ".append NYI");
         }

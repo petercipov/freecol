@@ -134,7 +134,7 @@ public class Event extends FreeColSpecObjectType {
      * @return A list of limits.
      */
     public final Collection<Limit> getLimitValues() {
-        return (limits == null) ? Collections.<Limit>emptyList()
+        return (limits == null) ? Collections.emptyList()
             : limits.values();
     }
 
@@ -216,7 +216,7 @@ public class Event extends FreeColSpecObjectType {
     protected void readAttributes(FreeColXMLReader xr) throws XMLStreamException {
         super.readAttributes(xr);
 
-        value = xr.getAttribute(VALUE_TAG, (String)null);
+        value = xr.getAttribute(VALUE_TAG, null);
 
         // @compat 0.11.3
         if (xr.hasAttribute(OLD_SCORE_VALUE_TAG)) {

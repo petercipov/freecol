@@ -128,7 +128,7 @@ public class TranslationReport {
                     System.out.println(key + "=" + master.getProperty(key));
                 }
                 lstat.missingKeys = missingKeys.size();
-                System.out.println("");
+                System.out.println();
             } else {
                 System.out.println("** No properties missing.\n");
             }
@@ -139,7 +139,7 @@ public class TranslationReport {
                     System.out.println(key + "=" + master.getProperty(key));
                 }
                 lstat.copiedKeys = copiedFromMaster.size();
-                System.out.println("");
+                System.out.println();
             } else {
                 System.out.println("** No properties copied.\n");
             }
@@ -151,7 +151,7 @@ public class TranslationReport {
                     System.out.println("INCORRECT: " + key + "=" + properties.getProperty(key));
                 }
                 lstat.missingVariables = missingVariables.size();
-                System.out.println("");
+                System.out.println();
             } else {
                 System.out.println("** No properties with missing variables.\n");
             }
@@ -195,7 +195,7 @@ public class TranslationReport {
                     System.out.println(key + "=" + properties.getProperty(key));
                 }
                 lstat.superfluousKeys = superfluousKeys.size();
-                System.out.println("");
+                System.out.println();
             } else {
                 System.out.println("** No superfluous properties.\n");
             }
@@ -208,7 +208,7 @@ public class TranslationReport {
                     System.out.println("INCORRECT: " + key + "=" + properties.getProperty(key));
                 }
                 lstat.superfluousVariables = superfluousVariables.size();
-                System.out.println("");
+                System.out.println();
             } else {
                 System.out.println("** No properties with superfluous variables.\n");
             }
