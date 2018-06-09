@@ -235,6 +235,7 @@ public class FAFile {
      * It is not particularly efficient and is intended as a temporary
      * workaround.
      */
+    @SuppressWarnings("InputStreamSlowMultibyteRead")
     private static class CREatingInputStream extends InputStream {
         /**
          * Constructor.
@@ -259,7 +260,7 @@ public class FAFile {
             } while(c == '\r');
             return c;
         }
-        
+
         private final InputStream in;
     }
 }

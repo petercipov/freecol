@@ -1327,11 +1327,12 @@ public final class InGameController extends FreeColClientHolder {
             if (!carrier.couldCarry(u)) continue;
             try {
                 update |= askEmbark(u, carrier);
+            } catch (Exception ex) {
+                logger.log(Level.WARNING, "moveAutoload", ex);
             } finally {
-                if (u.getLocation() != carrier) {
+                if (!Objects.equals(u.getLocation(), carrier)) {
                     changeState(u, UnitState.SKIPPED);
                 }
-                continue;
             }
         }
         if (update) updateGUI(null, false);
@@ -1412,9 +1413,10 @@ public final class InGameController extends FreeColClientHolder {
                     // server to move the unit.
                     try {
                         moveDirection(dUnit, direction, false);
-                    } finally {
-                        continue;
+                    } catch(Exception ex) {
+                        logger.log(Level.WARNING, "moveDisembark", ex);
                     }
+                    continue;
                 }
             } else {
                 moveDirection(u, direction, false);

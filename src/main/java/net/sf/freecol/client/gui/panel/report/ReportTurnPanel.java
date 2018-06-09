@@ -22,10 +22,8 @@ package net.sf.freecol.client.gui.panel.report;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,11 +67,11 @@ public final class ReportTurnPanel extends ReportPanel {
     private static final Logger logger = Logger.getLogger(ReportTurnPanel.class.getName());
 
     /** Map message identifiers to label. */
-    private final Hashtable<String, List<JComponent>> labelsByMessage
-        = new Hashtable<>();
+    private final Map<String, List<JComponent>> labelsByMessage
+        = new ConcurrentHashMap<>();
     /** Map message identifiers to text pane. */
-    private final Hashtable<String, List<JComponent>> textPanesByMessage
-        = new Hashtable<>();
+    private final Map<String, List<JComponent>> textPanesByMessage
+        = new ConcurrentHashMap<>();
     /** The messages to display. */
     private final List<ModelMessage> messages = new ArrayList<>();
 

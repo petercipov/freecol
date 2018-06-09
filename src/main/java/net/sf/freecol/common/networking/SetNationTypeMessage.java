@@ -31,6 +31,8 @@ import net.sf.freecol.common.model.StringTemplate;
 import net.sf.freecol.server.FreeColServer;
 import net.sf.freecol.server.model.ServerPlayer;
 
+import java.util.Objects;
+
 
 /**
  * The message that sets the player nationType.
@@ -111,7 +113,7 @@ public class SetNationTypeMessage extends AttributeMessage {
             ok = false;
             break;
         case NONE:
-            ok = nationType == spec.getDefaultNationType();
+            ok = Objects.equals(nationType, spec.getDefaultNationType());
             break;
         default:
             ok = false;

@@ -177,7 +177,9 @@ public class SoundPlayer {
         }
 
         private synchronized void goToSleep() throws InterruptedException {
-            wait();
+            while(playList.isEmpty()) {
+                wait();
+            }
         }
 
         public synchronized boolean keepPlaying() {
@@ -199,20 +201,15 @@ public class SoundPlayer {
         @Override
         public void run() {
             for (;;) {
-                if (playList.isEmpty()) {
-                    try {
-                        goToSleep();
-                    } catch (InterruptedException e) {
-                        continue;
-                    }
-                } else {
-                    try (
-                        AudioInputStream in = playList.remove(0);
-                    ) {
-                        playSound(in);
-                    } catch (IOException e) {
-                        logger.log(Level.WARNING, "Failure playing audio.", e);
-                    }
+                try {
+                    goToSleep();
+                } catch (InterruptedException e) {
+                    continue;
+                }
+                try (AudioInputStream in = playList.remove(0)) {
+                    playSound(in);
+                } catch (IOException e) {
+                    logger.log(Level.WARNING, "Failure playing audio.", e);
                 }
             }
         }

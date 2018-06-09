@@ -128,20 +128,23 @@ public class OggVorbisDecoderFactory {
 
         @Override
         public int read(byte[] buf) throws IOException {
-            return read(buf, buf.length);
+            return read(buf, 0, buf.length);
         }
 
         /**
          * Reads into the supplied buffer.
          *
          * @param buf The buffer to read to.
+         * @param wrOffset  the start offset in array <code>buf</code>
+         *      at which the data is written
          * @param n The number of bytes to read.
          * @return Negative on error, zero on end of stream, otherwise the
          *     number of bytes added to the buffer.
          * @throws IOException if JOrbis loses.
          */
-        public int read(byte[] buf, int n) throws IOException {
-            int wr = 0, wrOffset = 0;
+        @Override
+        public int read(byte[] buf, int wrOffset, int n) throws IOException {
+            int wr = 0;
             while (n > 0) {
                 if (bufCount <= 0) {
                     int ret = getBody(inputStream);
@@ -412,7 +415,12 @@ public class OggVorbisDecoderFactory {
         }
 
         public int read(byte[] buf, int n) throws IOException {
-            return os.read(buf, n);
+            return os.read(buf, 0, n);
+        }
+
+        @Override
+        public int read(byte[] b, int off, int len) throws IOException {
+            return os.read(b, off, len);
         }
 
         @Override

@@ -844,7 +844,7 @@ public class DebugUtils {
             all.remove(first);
             lb.add(first, "\nat ", first.getLocation(), "\n");
             while (player.hasNextGoingToUnit()
-                && (u = player.getNextGoingToUnit()) != first) {
+                && !Objects.equals((u = player.getNextGoingToUnit()), first)) {
                 lb.add(u, "\nat ", u.getLocation(), "\n");
                 all.remove(u);
             }
@@ -957,7 +957,7 @@ public class DebugUtils {
                                       final Colony colony) {
         final Specification spec = colony.getSpecification();
         final Predicate<GoodsType> goodsPred = gt ->
-            !gt.isFoodType() || gt == spec.getPrimaryFoodType();
+            !gt.isFoodType() || Objects.equals(gt, spec.getPrimaryFoodType());
         final Function<GoodsType, ChoiceItem<GoodsType>> mapper = gt ->
             new ChoiceItem<GoodsType>(Messages.getName(gt), gt);
 
@@ -1157,7 +1157,7 @@ public class DebugUtils {
             lb.add(Messages.message(p.getNationLabel()),
                    " ", ((tension == null) ? "(none)"
                        : Integer.toString(tension.getValue())),
-                   ((mostHated == p) ? " (most hated)" : ""),
+                   (Objects.equals(mostHated, p) ? " (most hated)" : ""),
                    " ", Messages.message(sis.getAlarmLevelKey(p)),
                    " ", sis.getContactLevel(p), "\n");
         }

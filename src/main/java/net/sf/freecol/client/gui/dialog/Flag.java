@@ -85,6 +85,7 @@ public class Flag {
      * horizontal or diagonal bars. The decoration limits the shape
      * and possible positions of the "union".
      */
+    @SuppressWarnings("ImmutableEnumChecker")
     public enum Decoration {
         NONE(UnionShape.RECTANGLE),
         CROSS(UnionShape.RECTANGLE, UnionPosition.CANTON),

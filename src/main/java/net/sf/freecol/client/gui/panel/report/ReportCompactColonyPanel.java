@@ -576,9 +576,9 @@ public final class ReportCompactColonyPanel extends ReportPanel
             n = 0;
             boolean center = false; 
             for (TileImprovementSuggestion tis : s.tileSuggestions) {
-                if (tis.tileImprovementType == ti) {
+                if (Objects.equals(tis.tileImprovementType, ti)) {
                     n++;
-                    if (tis.tile == s.colony.getTile()) center = true;
+                    if (Objects.equals(tis.tile, s.colony.getTile())) center = true;
                 }
             }
             if (n > 0) {
@@ -588,8 +588,7 @@ public final class ReportCompactColonyPanel extends ReportPanel
                     if (any(tis.tile.getUnits(),
                             u -> (u.getState() == Unit.UnitState.IMPROVING
                                 && u.getWorkImprovement() != null
-                                && u.getWorkImprovement().getType()
-                                    == tis.tileImprovementType))) {
+                                && Objects.equals(u.getWorkImprovement().getType(), tis.tileImprovementType)))) {
                         c = cWarn; // Work is underway
                     }
                     t = stpld("report.colony.tile." + ti.getSuffix()

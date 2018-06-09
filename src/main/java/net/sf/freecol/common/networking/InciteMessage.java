@@ -31,6 +31,8 @@ import net.sf.freecol.common.model.Unit.MoveType;
 import net.sf.freecol.server.FreeColServer;
 import net.sf.freecol.server.model.ServerPlayer;
 
+import java.util.Objects;
+
 
 /**
  * The message sent when inciting a native settlement.
@@ -132,7 +134,7 @@ public class InciteMessage extends AttributeMessage {
         if (enemy == null) {
             return serverPlayer.clientError("Not a player: "
                 + getStringAttribute(ENEMY_TAG));
-        } else if (enemy == serverPlayer) {
+        } else if (Objects.equals(enemy, serverPlayer)) {
             return serverPlayer.clientError("Inciting against oneself!");
         } else if (!enemy.isEuropean()) {
             return serverPlayer.clientError("Inciting against non-European!");

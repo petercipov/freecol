@@ -26,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -207,7 +208,7 @@ public final class EuropePanel extends PortPanel {
                 inPortPanel.update();
                 docksPanel.update();
                 cargoPanel.update();
-                if (unit == cargoPanel.getCarrier()) {
+                if (Objects.equals(unit, cargoPanel.getCarrier())) {
                     cargoPanel.setCarrier(null);
                 }
             }
@@ -351,8 +352,9 @@ public final class EuropePanel extends PortPanel {
             case ACTIVE: case FORTIFIED: case FORTIFYING:
             case SENTRY: case SKIPPED:
                 return true;
+            default:
+                return false;
             }
-            return false;
         }
     }
 

@@ -20,6 +20,7 @@
 package net.sf.freecol.server.ai.mission;
 
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -441,7 +442,7 @@ public class BuildColonyMission extends Mission {
 
                 // Go to the nearest smaller colony?
                 final Predicate<Colony> smallPred = c ->
-                    c != colony && c.getUnitCount() < colony.getUnitCount();
+                        !Objects.equals(c, colony) && c.getUnitCount() < colony.getUnitCount();
                 final Comparator<Colony> closeComp = cachingIntComparator(c ->
                     unit.getTurnsToReach(c));
                 Colony best = minimize(player.getColonies(), smallPred,

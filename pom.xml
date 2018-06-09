@@ -24,9 +24,6 @@
                 <configuration>
                     <compilerId>javac-with-errorprone</compilerId>
                     <showWarnings>true</showWarnings>
-                    <compilerArgs>
-                        <arg>-XepAllErrorsAsWarnings</arg>
-                    </compilerArgs>
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
                     <!-- maven-compiler-plugin defaults to targeting Java 5 -->
                     <source>${java.version}</source>

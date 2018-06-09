@@ -154,13 +154,13 @@ public class MetaServerUtils {
         // This update is really a "Hi! I am still here!"-message,
         // since an additional update should be sent when a new
         // player is added to/removed from this server etc.
-        Timer t = new Timer(true);
+        final Timer t = new Timer(true);
         if (t == null) return false;
         updaters.put(t, si);
         t.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                    ServerInfo si = updaters.get(this);
+                    ServerInfo si = updaters.get(t);
                     if (si == null || !updateServer(si)) cancel();
                 }
             }, UPDATE_INTERVAL, UPDATE_INTERVAL);

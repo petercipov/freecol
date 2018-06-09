@@ -110,6 +110,7 @@ public class SetGoodsLevelsMessage extends ObjectMessage {
     /**
      * {@inheritDoc}
      */
+    @Override
     public MessagePriority getPriority() {
         return MessagePriority.NORMAL;
     }

@@ -33,6 +33,8 @@ import net.sf.freecol.common.model.Unit;
 import net.sf.freecol.server.FreeColServer;
 import net.sf.freecol.server.model.ServerPlayer;
 
+import java.util.Objects;
+
 
 /**
  * The message sent when the client requests claiming land.
@@ -109,7 +111,7 @@ public class ClaimLandMessage extends AttributeMessage {
         Settlement settlement = null;
         if (Unit.class.isAssignableFrom(c)) {
             unit = serverPlayer.getOurFreeColGameObject(claimantId, Unit.class);
-            if (unit.getTile() != tile) {
+            if (!Objects.equals(unit.getTile(), tile)) {
                 return serverPlayer.clientError("Unit not at tile: " + tileId);
             }
         } else if (Settlement.class.isAssignableFrom(c)) {
@@ -138,7 +140,7 @@ public class ClaimLandMessage extends AttributeMessage {
         Settlement ownerSettlement = tile.getOwningSettlement();
         if (owner == null) { // unclaimed, always free
             price = 0;
-        } else if (owner == serverPlayer) { // capture vacant colony tiles only
+        } else if (Objects.equals(owner, serverPlayer)) { // capture vacant colony tiles only
             if (settlement != null && ownerSettlement != null
                 && tile.isInUse()) {
                 return serverPlayer.clientError("Can not claim tile "
@@ -147,7 +149,7 @@ public class ClaimLandMessage extends AttributeMessage {
             price = 0;
         } else if (owner.isEuropean()) {
             if (tile.getOwningSettlement() == null  // its not "nailed down"
-                || tile.getOwningSettlement() == settlement) { // pre-attached
+                || Objects.equals(tile.getOwningSettlement(), settlement)) { // pre-attached
                 price = 0;
             } else { // must fail
                 return serverPlayer.clientError("Can not claim tile " 

@@ -25,6 +25,8 @@ import net.sf.freecol.common.i18n.Messages;
 import net.sf.freecol.common.io.FreeColXMLReader;
 import net.sf.freecol.common.io.FreeColXMLWriter;
 
+import java.util.Objects;
+
 
 /**
  * A trade item consisting of just some gold.
@@ -113,7 +115,7 @@ public class GoldTradeItem extends TradeItem {
     @Override
     public int evaluateFor(Player player) {
         return (!isValid()) ? INVALID_TRADE_ITEM
-            : (getSource() == player) ? -getGold()
+            : Objects.equals(getSource(), player) ? -getGold()
             : getGold();
     }
 

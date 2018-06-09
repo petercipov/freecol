@@ -33,6 +33,8 @@ import net.sf.freecol.server.ai.AIPlayer;
 import net.sf.freecol.server.model.ServerGame;
 import net.sf.freecol.server.model.ServerPlayer;
 
+import java.util.Objects;
+
 
 /**
  * The message sent when logging out.
@@ -138,9 +140,11 @@ public class LogoutMessage extends AttributeMessage {
                 break;
             case RECONNECT:
                 break;
+            case LOGOUT:
+                break;
             }
             if (endTurn
-                && freeColServer.getGame().getCurrentPlayer() == serverPlayer) {
+                && Objects.equals(freeColServer.getGame().getCurrentPlayer(), serverPlayer)) {
                 cs = freeColServer.getInGameController().endTurn(serverPlayer);
             }
             break;

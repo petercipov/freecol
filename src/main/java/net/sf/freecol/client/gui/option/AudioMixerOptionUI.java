@@ -22,6 +22,7 @@ package net.sf.freecol.client.gui.option;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -95,7 +96,7 @@ public final class AudioMixerOptionUI extends OptionUI<AudioMixerOption> {
                 gui.playSound("sound.intro.general");
             } else if (ae.getSource() == cbox) {
                 MixerWrapper value = (MixerWrapper) cbox.getSelectedItem();
-                if (getOption().getValue() != value) {
+                if (!Objects.equals( getOption().getValue(), value)) {
                     getOption().setValue(value);
                     updateMixerLabel();
                 }

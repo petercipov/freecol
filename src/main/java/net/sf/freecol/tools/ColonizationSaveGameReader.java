@@ -125,7 +125,7 @@ public class ColonizationSaveGameReader {
 
     public static class Colonist {
 
-        public final String[] OCCUPATION = {
+        public final String[] OCCUPATIONS = {
             "Farmer",
             "Sugar planter",
             "Tobacco planter",
@@ -174,7 +174,7 @@ public class ColonizationSaveGameReader {
         }
 
         public String occupationFor(int speciality) {
-            return OCCUPATION[speciality];
+            return OCCUPATIONS[speciality];
         }
 
         public String tileFor(int speciality) {

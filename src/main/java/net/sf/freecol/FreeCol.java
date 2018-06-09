@@ -25,18 +25,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Writer;
 import java.net.InetAddress;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.*;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
 
 import net.sf.freecol.client.ClientOptions;
 import net.sf.freecol.client.FreeColClient;
@@ -48,7 +43,6 @@ import net.sf.freecol.common.io.FreeColDirectories;
 import net.sf.freecol.common.io.FreeColSavegameFile;
 import net.sf.freecol.common.io.FreeColModFile;
 import net.sf.freecol.common.io.FreeColTcFile;
-import net.sf.freecol.common.logging.DefaultHandler;
 import net.sf.freecol.common.model.NationOptions.Advantages;
 import net.sf.freecol.common.model.Specification;
 import net.sf.freecol.common.model.StringTemplate;
@@ -282,18 +276,7 @@ public final class FreeCol {
 
         // Now we have the log file path, start logging.
         final Logger baseLogger = Logger.getLogger("");
-        for (Handler handler : baseLogger.getHandlers()) {
-            baseLogger.removeHandler(handler);
-        }
-        try {
-            Writer writer = FreeColDirectories.getLogWriter();
-            baseLogger.addHandler(new DefaultHandler(consoleLogging, writer));
-            for (LogLevel ll : logLevels) ll.buildLogger();
-        } catch (FreeColException e) {
-            System.err.println("Logging initialization failure: "
-                + e.getMessage());
-            e.printStackTrace();
-        }
+
         Thread.setDefaultUncaughtExceptionHandler((Thread thread, Throwable e) -> {
                 baseLogger.log(Level.WARNING, "Uncaught exception from thread: " + thread, e);
             });

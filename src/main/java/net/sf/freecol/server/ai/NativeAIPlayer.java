@@ -19,13 +19,7 @@
 
 package net.sf.freecol.server.ai;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
@@ -195,7 +189,7 @@ public class NativeAIPlayer extends MissionAIPlayer {
             // FIXME: maybe make this dependent on difficulty level?
             int n = randoms[randomIdx++];
             IndianSettlement settlement = settlements.get(n);
-            if (settlement != is) {
+            if (!Objects.equals(settlement, is)) {
                 is.tradeGoodsWithSettlement(settlement);
             }
         }
@@ -222,7 +216,7 @@ public class NativeAIPlayer extends MissionAIPlayer {
             Role r = is.canImproveUnitMilitaryRole(u);
             if (r != null) {
                 Role old = u.getRole();
-                if (getAIUnit(u).equipForRole(r) && u.getRole() != old) {
+                if (getAIUnit(u).equipForRole(r) && !Objects.equals(u.getRole(), old)) {
                     lb.add(u, " upgraded from ", old.getSuffix(), ", ");
                 }
             }
@@ -272,7 +266,7 @@ public class NativeAIPlayer extends MissionAIPlayer {
         for (Tile t : is.getTile().getSurroundingTiles(is.getRadius() + 1)) {
             if (!t.isLand() || t.getUnitCount() == 0) {
                 ; // Do nothing
-            } else if ((enemy = t.getFirstUnit().getOwner()) == player) {
+            } else if (Objects.equals((enemy = t.getFirstUnit().getOwner()), player)) {
                 // Its one of ours!
                 for (Unit u : t.getUnitList()) {
                     AIUnit aiu;
@@ -315,7 +309,7 @@ public class NativeAIPlayer extends MissionAIPlayer {
         final Comparator<Unit> isComparator = cachingIntComparator(u -> {
                 final Tile t = u.getTile();
                 return t.getDistanceTo(isTile)
-                    - ((u.getHomeIndianSettlement() == is) ? homeBonus : 0);
+                    - (Objects.equals(u.getHomeIndianSettlement(), is) ? homeBonus : 0);
             });
 
         // Do we need more or less defenders?
@@ -709,7 +703,7 @@ public class NativeAIPlayer extends MissionAIPlayer {
         final Player player = getPlayer();
         AIUnit aiu;
         IndianDemandMission mission;
-        if (unit.getOwner() == player) { // Its one of ours
+        if (Objects.equals(unit.getOwner(), player)) { // Its one of ours
             if ((aiu = getAIUnit(unit)) != null // and its valid and demanding
                 && (mission = aiu.getMission(IndianDemandMission.class)) != null
                 && accept != null) {

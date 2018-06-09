@@ -99,34 +99,15 @@ public class VideoComponent extends JPanel {
         return FreeColImageBorder.imageBorder;
     }
 
-    ///**
-    // * Adds a listener for video playback events.
-    // *
-    // * @param videoListener A listener for video playback events.
-    // */
-    //public void addVideoListener(VideoListener videoListener) {
-    //    videoListeners.add(videoListener);
-    //}
-    //
-    ///**
-    // * Removes the given listener.
-    // *
-    // * @param videoListener The listener to be removed from this
-    // *     {@code VideoComponent}.
-    // */
-    //public void removeVideoListener(VideoListener videoListener) {
-    //    videoListeners.remove(videoListener);
-    //}
-
     @Override
-    public void addMouseListener(MouseListener l) {
+    public synchronized void addMouseListener(MouseListener l) {
         super.addMouseListener(l);
 
         applet.addMouseListener(l);
     }
 
     @Override
-    public void removeMouseListener(MouseListener l) {
+    public synchronized  void removeMouseListener(MouseListener l) {
         super.removeMouseListener(l);
 
         applet.removeMouseListener(l);
