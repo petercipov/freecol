@@ -134,7 +134,7 @@ public final class FreeColActionUI extends OptionUI<FreeColAction>
             return " ";
         }
 
-        String s = KeyEvent.getKeyModifiersText(keyStroke.getModifiers());
+        String s = KeyEvent.getModifiersExText(keyStroke.getModifiers());
         if (!s.isEmpty()) s += "+";
         return s + KeyEvent.getKeyText(keyStroke.getKeyCode());
     }
@@ -246,7 +246,7 @@ public final class FreeColActionUI extends OptionUI<FreeColAction>
 
         @Override
         public void keyReleased(KeyEvent e) {
-            KeyStroke ks = KeyStroke.getKeyStroke(e.getKeyCode(), e.getModifiers());
+            KeyStroke ks = KeyStroke.getKeyStroke(e.getKeyCode(), e.getModifiersEx());
             if (FreeColActionUI.this.optionGroupUI != null) {
                 FreeColActionUI.this.optionGroupUI.removeKeyStroke(ks);
             }

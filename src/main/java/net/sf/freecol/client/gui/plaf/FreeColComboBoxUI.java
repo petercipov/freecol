@@ -43,7 +43,7 @@ public class FreeColComboBoxUI extends MetalComboBoxUI {
     }
 
     @Override
-    protected ListCellRenderer createRenderer() {
-        return new FreeColComboBoxRenderer();
+    protected ListCellRenderer<Object> createRenderer() {
+        return new FreeColComboBoxRenderer<>();
     }
 }

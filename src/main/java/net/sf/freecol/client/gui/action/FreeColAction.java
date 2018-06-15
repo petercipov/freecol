@@ -79,7 +79,7 @@ public abstract class FreeColAction extends AbstractAction
 
             if (e.getKeyCode() == mnemonic) {
                 ActionEvent ae = new ActionEvent(e.getSource(), e.getID(), (String) getValue(Action.NAME),
-                                                 e.getModifiers());
+                                                 e.getModifiersEx());
                 actionPerformed(ae);
 
                 e.consume();

@@ -22,6 +22,11 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
+                    <compilerArgs>
+                        <arg>-Xlint:deprecation</arg>
+                        <arg>-Xlint:unchecked</arg>
+                        <arg>-Werror</arg>
+                    </compilerArgs>
                     <compilerId>javac-with-errorprone</compilerId>
                     <showWarnings>true</showWarnings>
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>

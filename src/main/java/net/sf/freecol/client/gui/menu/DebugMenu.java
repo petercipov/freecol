@@ -320,7 +320,7 @@ public class DebugMenu extends JMenu {
         //compareMaps.setMnemonic(KeyEvent.VK_C);
         compareMaps.setAccelerator(KeyStroke.getKeyStroke('C',
             Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()
-                | InputEvent.ALT_MASK));
+                | InputEvent.ALT_DOWN_MASK));
         this.add(compareMaps);
         compareMaps.addActionListener((ActionEvent ae) -> {
                 DebugUtils.checkDesyncAction(freeColClient);
